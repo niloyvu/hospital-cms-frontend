@@ -1,0 +1,135 @@
+<div class="card-header card-header-infinity d-flex justify-content-between">
+    <h4 class="card-title"> {{blogId? 'Update': 'Create'}} Blog</h4>
+    <div>
+        <button nz-button routerLink="/website-cms/blogs/list" nzType="default">
+            <i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>
+            Back
+        </button>
+    </div>
+</div>
+<div class="card-body">
+    <form nz-form [formGroup]="blogForm" (ngSubmit)="onSubmitForm()">
+        <div class="row">
+            <input formControlName="id" type="hidden" />
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Title is required!">
+                        <input nz-input type="text" formControlName="title" id="title" placeholder="Enter title" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Blog type is required!">
+                        <nz-form-label nzFor="category" nzRequired>Category</nz-form-label>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a category" name="category"
+                            formControlName="category_id">
+                            <nz-option *ngFor="let blog of blogCategories" [nzLabel]="blog?.title" [nzValue]="blog?.id">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-alert class="mb-2" *ngIf="featureImageError" nzType="error" nzMessage="{{featureImageError}}" nzShowIcon>
+                </nz-alert>
+                <nz-form-label nzFor="image" nzRequired>
+                    Feature Image
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzValidateStatus="warning"
+                        nzWarningTip="Suggested webp Background Image and Ratio: 565 * 535 px | Maximum Size: 1MB">
+                        <input #featureImageFileInput (change)="onFileSelected($event, 'featureImage')" style="display: none;"
+                            accept="image/*" type="file">
+                        <button (click)="featureImageFileInput.click()" nz-button nz-tooltip nzTooltipPlacement="rightTop"
+                            nzTooltipTitle="Only Image File" nzType="primary" type="button">
+                            <i class="fa fa-cloud-upload mr-2"></i>
+                            Select Image
+                        </button>
+
+                        <div class="mt-2" *ngIf="featureImageFile">
+                            <img [src]="featureImageFile" class="w-25" alt="blog feature image" />
+                            <button nz-button type="button" nzDanger (click)="removeImage('featureImage')" class="ml-2">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-alert class="mb-2" *ngIf="detailsPageImageError" nzType="error"
+                    nzMessage="{{detailsPageImageError}}" nzShowIcon>
+                </nz-alert>
+                <nz-form-label nzFor="details_page_image" nzRequired>
+                    Details Page Image
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzValidateStatus="warning"
+                        nzWarningTip="Suggested webp image and Ratio: 1136 * 640 px | Maximum Size: 1MB">
+                        <input #detailsPageFileInput (change)="onFileSelected($event, 'detailsPage')"
+                            style="display: none;" accept="image/*" type="file">
+                        <button (click)="detailsPageFileInput.click()" nz-button nz-tooltip
+                            nzTooltipPlacement="rightTop" nzTooltipTitle="Only Image File" nzType="primary"
+                            type="button">
+                            <i class="fa fa-cloud-upload mr-2"></i>
+                            Select Image
+                        </button>
+
+                        <div class="mt-2" *ngIf="detailsPageImageFile">
+                            <img [src]="detailsPageImageFile" class="w-25" alt="details page background image" />
+                            <button nz-button type="button" nzDanger (click)="removeImage('detailsPage')" class="ml-2">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="details">
+                    Blog Details
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Blog details is required!">
+                        <editor placeholder="Write details..." formControlName="details" [init]="editorConfig"
+                            style="height: 100%;">
+                        </editor>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Status</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Active" nzUnCheckedChildren="In-active"
+                            formControlName="status" name="status" id="status">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Feature</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                            formControlName="feature" name="feature" id="feature">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+
+        <div class="text-right mt-3">
+            <button type="submit"
+                [disabled]="blogForm.invalid || !featureImageFile || !detailsPageImageFile || isDisabled" type="submit"
+                nz-button nzType="primary">
+                {{blogId? 'Update': 'Create'}}
+            </button>
+        </div>
+    </form>
+</div>

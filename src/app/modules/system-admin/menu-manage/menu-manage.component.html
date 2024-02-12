@@ -1,0 +1,177 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity d-flex justify-content-between">
+                        <h4 class="card-title">Menu Management</h4>
+                        <button nz-button (click)="openCreateModelGroup()" nzType="default">
+                          <i class="fa fa-plus mr-2"></i>
+                            Add Group
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <mat-tree *ngIf="showTree" [dataSource]="dataSource" [treeControl]="treeControl">
+                                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                                        <button mat-icon-button disabled></button>
+                                        <span *ngIf="node.component_layer == 1" class="title-level text-capitalize" placement="top"><i
+                                class="fa fa-info-circle ml-2 text-warning"
+                                nzTooltipTitle="{{node.note}}"
+                                nzTooltipPlacement="top" nz-tooltip></i> {{node.component_name}} <sup style="color: #f44336;">[Group]</sup> <sup
+                                *ngIf="node.status == 1" style="color: #4BB543;"> [Active]</sup> 
+                                           <sup *ngIf="node.status == 0" style="color: #FF0000;"> (Inactive)</sup>
+                  
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 3" class="m-2" (click)="openEditModelChild(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small"*ngIf="node.component_layer == 2" class="m-2" (click)="openEditModelComponent(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 1" class="m-2" (click)="openEditModelGroup(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 4" class="m-2" (click)="openEditModelSubChild(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                        </span>
+                                        <span *ngIf="node.component_layer == 2" class="title-level text-capitalize" placement="top"><i
+                                class="fa fa-info-circle ml-2 text-warning"
+                                nzTooltipTitle="{{node.note}}"
+                                nzTooltipPlacement="top" nz-tooltip></i> {{node.component_name}} <sup style="color: #23904d;">[Component]</sup> <sup
+                                *ngIf="node.status == 1" style="color: #4BB543;"> [ Active ]</sup> <sup *ngIf="node.status == 0"
+                                                                                                        style="color: #FF0000;"> [ Inactive ]</sup>
+                  
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 3" class="m-2" (click)="openEditModelChild(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 2" class="m-2" (click)="openEditModelComponent(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 1" class="m-2" (click)="openEditModelGroup(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 4" class="m-2" (click)="openEditModelSubChild(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                        </span>
+                                        <span *ngIf="node.component_layer == 3" class="title-level text-capitalize" placement="top"><i
+                                class="fa fa-info-circle ml-2 text-warning"
+                                nzTooltipTitle="{{node.note}}"
+                                nzTooltipPlacement="top" nz-tooltip></i> {{node.component_name}} <sup style="color:#ae1961">[Child]</sup> <sup
+                                *ngIf="node.status == 1" style="color: #4BB543;"> [Active]</sup> <sup *ngIf="node.status == 0"
+                                                                                                      style="color: #FF0000;"> [Inactive]</sup>
+                  
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 3" class="m-2" (click)="openEditModelChild(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 2" class="m-2" (click)="openEditModelComponent(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 1" class="m-2" (click)="openEditModelGroup(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 4" class="m-2" (click)="openEditModelSubChild(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                        </span>
+                                        <span *ngIf="node.component_layer == 4" class="title-level text-capitalize" placement="top"><i
+                                class="fa fa-info-circle ml-2 text-warning"
+                                nzTooltipTitle="{{node.note}}"
+                                nzTooltipPlacement="top" nz-tooltip></i> {{node.component_name}} <sup style="color: #f44336;">[Sub-Child]</sup> <sup
+                                *ngIf="node.status == 1" style="color: #4BB543;"> [Active]</sup> <sup *ngIf="node.status == 0"
+                                                                                                      style="color: #FF0000;"> (Inactive)</sup>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 3" class="m-2" (click)="openEditModelChild(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 2" class="m-2" (click)="openEditModelComponent(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small" *ngIf="node.component_layer == 1" class="m-2" (click)="openEditModelGroup(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                                          <a nz-button  nzSize="small"  *ngIf="node.component_layer == 4" class="m-2" (click)="openEditModelSubChild(node)">
+                                            <i class="fa fa-pencil"> </i>
+                                          </a>
+                  
+                                        </span>
+                                        <span>
+                                            <button nz-button nzType="primary" nzSize="small" *ngIf="node.component_layer == 1 && node.is_component == 0" (click)="openCreateModelComponent(node)"> <i class="fa fa-plus"></i></button>
+                                            <button nz-button nzType="primary" nzSize="small" *ngIf="node.component_layer == 2 && node.is_component == 0" (click)="openCreateModelChild(node)"> <i class="fa fa-plus"></i></button>
+                                            <button nz-button nzType="primary" nzSize="small" *ngIf="node.component_layer == 3 && node.is_component == 0" (click)="openCreateModelSubChild(node)"> <i class="fa fa-plus"></i></button>
+                                        </span>
+                                    </mat-tree-node>
+                                    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+                                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.component_name">
+                                          <mat-icon class="mat-icon-rtl-mirror">
+                                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                          </mat-icon>
+                                        </button>
+                                        <span *ngIf="node.component_layer == 1" class="title-level text-capitalize" placement="top"><i
+                                class="fa fa-info-circle ml-2 text-warning"
+                                nzTooltipTitle="{{node.note}}"
+                                nzTooltipPlacement="top" nz-tooltip></i> {{node.component_name}} <sup style="color: #f44336;">[Group]</sup> <sup
+                                *ngIf="node.status == 1" style="color: #4BB543;"> [Active]</sup> <sup *ngIf="node.status == 0"
+                                                                                                      style="color: #FF0000;"> (Inactive)</sup>
+                                              <a  nz-button  nzSize="small" *ngIf="node.component_layer == 1" class="m-2" (click)="openEditModelGroup(node)">
+                                                <i class="fa fa-pencil"> </i>
+                                              </a>
+                                              <a  nz-button nzSize="small" *ngIf="node.component_layer == 2" class="m-2" (click)="openEditModelComponent(node)">
+                                                <i class="fa fa-pencil"> </i>
+                                              </a>
+                                {{node.length}}
+                                          </span>
+                                        <span *ngIf="node.component_layer == 2" class="title-level text-capitalize" placement="top"><i
+                                class="fa fa-info-circle ml-2 text-warning"
+                                nzTooltipTitle="{{node.note}}"
+                                nzTooltipPlacement="top" nz-tooltip></i> {{node.component_name}} <sup style="color: #23904d;">[Component]</sup> <sup
+                                *ngIf="node.status == 1" style="color: #4BB543;"> [Active]</sup> <sup *ngIf="node.status == 0"
+                                                                                                      style="color: #FF0000;"> (Inactive)</sup>
+                                              <a  nz-button nzSize="small" *ngIf="node.component_layer == 1" class="m-2" (click)="openEditModelGroup(node)">
+                                                <i class="fa fa-pencil"> </i>
+                                              </a>
+                                              <a  nz-button nzSize="small"*ngIf="node.component_layer == 2" class="m-2" (click)="openEditModelComponent(node)">
+                                                <i class="fa fa-pencil"> </i>
+                                              </a>
+                                {{node.length}}
+                                          </span>
+                                        <span *ngIf="node.component_layer == 3" class="title-level text-capitalize" placement="top"><i
+                                class="fa fa-info-circle ml-2 text-warning"
+                                nzTooltipTitle="{{node.note}}"
+                                nzTooltipPlacement="top" nz-tooltip></i> {{node.component_name}} <sup style="color:#ae1961">[Child]</sup> <sup
+                                *ngIf="node.status == 1" style="color: #4BB543;"> [Active]</sup> <sup *ngIf="node.status == 0"
+                                                                                                      style="color: #FF0000;"> [Inactive]</sup>
+                                              <a  nz-button  nzSize="small" *ngIf="node.component_layer == 1" class="m-2" (click)="openEditModelGroup(node)">
+                                                <i class="fa fa-pencil"> </i>
+                                              </a>
+                                              <a  nz-button  nzSize="small" *ngIf="node.component_layer == 2" class="m-2" (click)="openEditModelComponent(node)">
+                                                <i class="fa fa-pencil"> </i>
+                                              </a>
+                                              <a  nz-button  nzSize="small" *ngIf="node.component_layer == 3" class="m-2" (click)="openEditModelChild(node)">
+                                                <i class="fa fa-pencil"> </i>
+                                              </a>
+                                {{node.length}}
+                                          </span>
+                                        <span *ngIf="node.component_layer == 4" class="title-level text-capitalize" placement="top"><i
+                                class="fa fa-info-circle ml-2 text-warning"
+                                nzTooltipTitle="{{node.note}}"
+                                nzTooltipPlacement="top" nz-tooltip></i> {{node.component_name}} <sup style="color:#ae1961">[Sub-Child]</sup>
+                                            <a nz-button  nzSize="small" *ngIf="node.component_layer == 4" class="m-2" (click)="openEditModelSubChild(node)">
+                                              <i class="fa fa-pencil text-danger"> </i>
+                                            </a>
+                                {{node.length}}
+                                        </span>
+                                        <button nz-button  nzSize="small" *ngIf="node.component_layer == 1 && node.is_component == 0" (click)="openCreateModelComponent(node)"> <i class="fa fa-plus"></i></button>
+                                        <button nz-button  nzSize="small" *ngIf="node.component_layer == 2 && node.is_component == 0" (click)="openCreateModelChild(node)"> <i class="fa fa-plus"></i></button>
+                                        <button nz-button  nzSize="small" *ngIf="node.component_layer == 3 && node.is_component == 0" (click)="openCreateModelSubChild(node)"> <i class="fa fa-plus"></i></button>
+                                    </mat-tree-node>
+                                </mat-tree>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

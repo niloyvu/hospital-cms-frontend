@@ -1,0 +1,285 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity d-flex justify-content-between">
+                        <h4 class="card-title">Website Orders</h4>
+                        <button nz-button (click)="addOrder()" nzType="default">
+                            <i class="fa fa-plus mr-2"></i>
+                            Add Order
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+
+                            <div class="col-md-3">
+                                <nz-select style="width: 100%" [(ngModel)]="status" (ngModelChange)="onChangeStatus()"
+                                    nzShowSearch nzAllowClear nzPlaceHolder="Search by status" name="status">
+                                    <nz-option [nzLabel]="'Pending'" [nzValue]="0">Pending</nz-option>
+                                    <nz-option [nzLabel]="'Processing'" [nzValue]="1">Processing</nz-option>
+                                    <nz-option [nzLabel]="'Shipped'" [nzValue]="2">Shipped</nz-option>
+                                    <nz-option [nzLabel]="'Delivered'" [nzValue]="3">Delivered</nz-option>
+                                    <nz-option [nzLabel]="'Cancelled'" [nzValue]="4">Cancelled</nz-option>
+                                    <nz-option [nzLabel]="'Refunded'" [nzValue]="5">Refunded</nz-option>
+                                    <nz-option [nzLabel]="'Returned'" [nzValue]="6">Returned</nz-option>
+                                    <nz-option [nzLabel]="'On Hold'" [nzValue]="7">On Hold</nz-option>
+                                    <nz-option [nzLabel]="'Completed'" [nzValue]="8">Completed</nz-option>
+                                    <nz-option [nzLabel]="'Failed'" [nzValue]="9">Failed</nz-option>
+                                </nz-select>
+                            </div>
+                            <div class="col-md-3">
+                                <nz-date-picker id="date" [(ngModel)]="date" (ngModelChange)="onChangeDate()"
+                                    nzPlaceHolder="Search by date" style="width: 100%">
+                                </nz-date-picker>
+                            </div>
+                            <div class="col-md-3">
+                                <nz-select style="width: 100%" [(ngModel)]="orderType" (ngModelChange)="onChangeOrderType()"
+                                    nzShowSearch nzAllowClear nzPlaceHolder="Search by order type" name="status">
+                                    <nz-option [nzLabel]="'Online'" [nzValue]="1"></nz-option>
+                                    <nz-option [nzLabel]="'Offline'" [nzValue]="2"></nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <nz-divider></nz-divider>
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-between">
+                                <label class="">
+                                    Show
+                                    <select [(ngModel)]="resultPerPage" (ngModelChange)="changeResultPerPage($event)"
+                                        aria-controls="DataTables_Table_0" class="sort">
+                                        <option value="1000">All</option>
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="100">500</option>
+                                    </select>
+                                    entries
+                                </label>
+                                <label class="search">Search:
+                                    <input type="search" id="search" [(ngModel)]="searchValues"
+                                        (ngModelChange)="searchByData($event)" placeholder="Enter text.."
+                                        aria-controls="DataTables_Table_0">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered medium ">
+                                <thead>
+                                    <tr>
+                                        <th (click)="sortBy('id')" style="width: 50px;"
+                                            class="text-left align-middle sort-icon">
+                                            SL
+                                            <i *ngIf="columnsSortBy==='id' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='id' && !dataOrderBy" class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('product_id')" class="text-left align-middle sort-icon">
+                                            Product
+                                            <i *ngIf="columnsSortBy==='product_id' && dataOrderBy"
+                                                class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='product_id' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+
+                                        <th (click)="sortBy('name')" class="text-left align-middle sort-icon">
+                                            Name
+                                            <i *ngIf="columnsSortBy==='name' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='name' && !dataOrderBy" class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+
+                                        <th (click)="sortBy('phone')" class="text-left align-middle sort-icon">
+                                            Phone
+                                            <i *ngIf="columnsSortBy==='phone' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='phone' && !dataOrderBy" class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('district')" class="text-left align-middle sort-icon">
+                                            District
+                                            <i *ngIf="columnsSortBy==='district' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='district' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('thana')" class="text-left align-middle sort-icon">
+                                            Thana
+                                            <i *ngIf="columnsSortBy==='thana' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='thana' && !dataOrderBy" class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('quantity')" class="text-center align-middle sort-icon">
+                                            Quantity
+                                            <i *ngIf="columnsSortBy==='quantity' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='quantity' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('product_price')" class="text-right align-middle sort-icon">
+                                            Product Price
+                                            <i *ngIf="columnsSortBy==='product_price' && dataOrderBy"
+                                                class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='product_price' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('delivery_charge')"
+                                            class="text-right align-middle sort-icon">
+                                            Delivery Charge
+                                            <i *ngIf="columnsSortBy==='delivery_charge' && dataOrderBy"
+                                                class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='delivery_charge' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('total_amount')" class="text-left align-middle sort-icon">
+                                            Total Price
+                                            <i *ngIf="columnsSortBy==='total_amount' && dataOrderBy"
+                                                class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='total_amount' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+
+                                        <th (click)="sortBy('order_type')" class="text-center align-middle sort-icon">
+                                            Order Type
+                                            <i *ngIf="columnsSortBy==='order_type' && dataOrderBy"
+                                                class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='order_type' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('status')" class="text-center align-middle sort-icon">
+                                            Status
+                                            <i *ngIf="columnsSortBy==='status' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='status' && !dataOrderBy" class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+
+                                        <th class="text-center align-middle sort-icon">
+                                            Date
+                                        </th>
+                                        <th class="text-center align-middle sort-icon">
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let order of orders | paginate: {
+                                                                        currentPage: this.pageNumber,
+                                                                        itemsPerPage: this.resultPerPage,
+                                                                        id: 'table'
+                                                                        }; let i=index;">
+                                        <td class="text-center">{{getSl(i + 1)}}</td>
+
+                                        <td>
+                                            {{order?.product.title | titlecase}}
+                                        </td>
+                                        <td>
+                                            {{order?.name}}
+                                        </td>
+                                        <td>
+                                            {{order?.phone}}
+                                        </td>
+                                        <td class="text-center">
+                                            {{order?.district}}
+                                        </td>
+                                        <td class="text-center">
+                                            {{order?.thana}}
+                                        </td>
+                                        <td class="text-center">
+                                            {{order?.quantity}}
+                                        </td>
+                                        <td class="text-right">
+                                            ৳ {{order?.product_price | number}}
+                                        </td>
+                                        <td class="text-right">
+                                            ৳ {{order?.delivery_charge}}
+                                        </td>
+                                        <td class="text-right">
+                                            ৳ {{order?.total_amount | number}}
+                                        </td>
+
+                                        <td class="text-center">
+                                            <nz-tag [nzColor]="order?.order_type == 1?'#87d068':'#108ee9'">
+                                                {{order?.order_type == 1? 'Online' : 'Offline'}}
+                                            </nz-tag>
+                                        </td>
+                                        <td class="text-center">
+                                            <nz-tag [nzColor]="order?.status | orderStatusColor">
+                                                {{order?.status_name | titlecase}}
+                                            </nz-tag>
+                                        </td>
+                                        <td class="text-center">
+                                            {{order?.created_at | date }}
+                                        </td>
+                                        <td class="text-center">
+                                            <button nz-button nzType="default" nzSize="small"
+                                                (click)="updateOrder(order)">
+                                                <i class="fa fa-pencil mr-2"></i>
+                                                Edit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!totalItems" class="table-empty">
+                                        <td colspan="14">
+                                            <nz-empty></nz-empty>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="table-total-count"> Total Appointments: {{totalItems}}</p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <pagination-controls (pageChange)="pageChange($event)" id="table" class="my-pagination">
+                                </pagination-controls>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

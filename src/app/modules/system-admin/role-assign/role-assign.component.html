@@ -1,0 +1,117 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity">
+                        <h4 class="card-title">Assign Users List</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-right">
+                            <button (click)="openDialog()" class="btn-sm mb-2" color="primary" mat-raised-button
+                                    nz-tooltip nzTooltipPlacement="topRight" nzTooltipTitle="Role Assign to User">
+                                <i class="fa fa-plus"></i> Assign New User
+                            </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="">
+                                    Show
+                                    <select (ngModelChange)="changedPageItem($event)" [(ngModel)]="itemPerPage"
+                                            aria-controls="DataTables_Table_0" class="sort">
+                                        <option value="1000">All</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="500">500</option>
+                                    </select>
+                                    entries
+                                </label>
+                            </div>
+                            <div class="col-md-6  text-right mb-2">
+                                <label class="">Search: <input (ngModelChange)="itemSearchChange($event)"
+                                                               [(ngModel)]="itemSearch"
+                                                               aria-controls="DataTables_Table_0" type="search"></label>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <nz-table nzBordered nzSize="small">
+                                <thead>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>Name & Email</th>
+                                    <th>Company [ Role ]</th>
+                                    <th>[ Action ]</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let user of usercollection | paginate: {
+                                currentPage: pagereqest,
+                                itemsPerPage: itemPerPage,
+                                totalItems: totalitem
+                                } ; index as i;">
+                                    <td>{{getSL(i + 1)}}</td>
+                                    <td class="text-capitalize">
+                                        <small>
+                                            <strong>Name: {{user.first_name}} {{user.middle_name}} {{user.last_name}}</strong><br>
+                                            <strong>Email: </strong> <span
+                                                class="text-danger text-lowercase">{{user.email}}</span><br>
+                                            <strong>OTP Type: </strong>
+                                            <span *ngIf="user.otp_type=='1'" class="text-danger">Phone</span>
+                                            <span *ngIf="user.otp_type=='2'" class="text-danger">Email</span>
+                                            <span *ngIf="user.otp_type=='3'" class="text-danger">Phone & Email</span> |
+                                            <strong>Security Code: </strong> <span
+                                                class="text-danger">{{user.security_code}}</span><br>
+                                            <strong>Prefix Code: </strong> <span
+                                                class="text-danger">{{user.prefix_code}}</span>
+                                            |
+                                            <strong>Prefix Name: </strong> <span
+                                                class="text-danger">{{user.prefix_name}}</span>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <p class="text-capitalize company-permission"
+                                           *ngFor="let role of user.roles;index as ri">
+                                            <i *ngIf="role.status == 0" class="text-danger fa fa-times"></i> {{ri + 1}}.
+                                            <strong>{{role.companyname}}</strong> [
+                                            <span *ngIf="role.role_id != null">{{role.role_name}}</span>
+                                            <span *ngIf="role.role_id == null" class="text-warning">Individual</span> ]
+                                            <span *ngIf="role.company_id == user.company_id"> [ <i
+                                                    class="text-success">Primary</i> ]</span>
+                                            <a *ngIf="role.role_id == null" class="label badge-inverse-primary"
+                                               [routerLink]="['/role/individual-user-role',role.id+'c'+role.company_id]">
+                                                <i class="fa fa-pencil "></i> Edit Permissions
+                                            </a>
+
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <button nz-button nzType="primary" class="edit-data" nzSize="small"
+                                                (click)="EditDialog(user)"><i class="fa fa-pencil mr-2"></i> Edit
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </nz-table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="table-total-count">Total Records {{totalitem}}</p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <pagination-controls (pageChange)="pageChange($event)"
+                                                     class="my-pagination"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

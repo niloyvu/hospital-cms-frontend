@@ -1,0 +1,145 @@
+<h2 mat-dialog-title style="margin: 0;">
+    {{data? 'Update': 'Create'}} Dentist
+    <button [mat-dialog-close]="true" class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+
+<form [formGroup]="dentistForm" (ngSubmit)="onSubmitForm()">
+    <mat-dialog-content class="mat-typography">
+        <div class="row">
+            <input formControlName="id" type="hidden" />
+
+            <div class="col-md-12">
+                <nz-alert class="mb-2" *ngIf="imageError" nzType="error" nzMessage="{{imageError}}" nzShowIcon>
+                </nz-alert>
+                <nz-form-label nzFor="image" nzRequired>
+                    Image
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzValidateStatus="warning"
+                        nzWarningTip="Suggested webp Transparent Background Image and Ratio: 565 * 800 px | Maximum Size: 1MB">
+                        <input #fileInput (change)="onFileSelected($event)" style="display: none;" accept="image/*"
+                            type="file">
+                        <button nz-button (click)="fileInput.click()" nz-tooltip nzTooltipPlacement="rightTop"
+                            nzTooltipTitle="Only Image File" nzType="primary" type="button">
+                            <i class="fa fa-cloud-upload mr-2"></i>
+                            Select Image
+                        </button>
+
+                        <div class="mt-2" *ngIf="imageFile">
+                            <img [src]="imageFile" alt="hero section image" height="200" width="250" />
+                            <button nz-button type="button" nzDanger (click)="removeImage()" class="ml-2">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Name is required!">
+                        <input nz-input type="text" formControlName="name" id="name" placeholder="Enter name" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="phone">Phone</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzHasFeedback [nzErrorTip]="phoneErrorTemplate">
+                        <input nz-input type="text" formControlName="phone" id="phone" placeholder="Enter phone" />
+                        <ng-template #phoneErrorTemplate let-control>
+                            <ng-container *ngIf="control.hasError('minlength')">Phone must be 11 digits
+                                long!</ng-container>
+                            <ng-container *ngIf="control.hasError('maxlength')">Phone must be 11 digits
+                                long!</ng-container>
+                            <ng-container *ngIf="control.hasError('required')">Phone is required!</ng-container>
+                        </ng-template>
+                    </nz-form-control>
+
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzHasFeedback [nzErrorTip]="emailErrorTemplate">
+                        <input nz-input type="email" formControlName="email" id="email" placeholder="Enter email" />
+                        <ng-template #emailErrorTemplate let-control>
+                            <ng-container *ngIf="control.hasError('email')">The input is not valid
+                                E-mail!</ng-container>
+                            <ng-container *ngIf="control.hasError('required')">Please input your E-mail!</ng-container>
+                        </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="title">Designation
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Designation is required!">
+                        <input nz-input type="text" formControlName="designation" id="designation"
+                            placeholder="Enter designation" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Address is required!">
+                        <input nz-input type="text" formControlName="address" id="address"
+                            placeholder="Enter address" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="description">Short Description</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzHasFeedback nzErrorTip="Please write something here!">
+                        <nz-textarea-count [nzMaxCharacterCount]="200">
+                            <textarea formControlName="description" nz-input rows="2"
+                                placeholder="Write any thing"></textarea>
+                        </nz-textarea-count>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Status</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                            formControlName="status" name="status" id="status">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Feature</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                            formControlName="feature" name="feature" id="feature">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button [mat-dialog-close]="true" class="mr-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            Close
+        </button>
+        <button [disabled]="dentistForm.invalid || isDisabled || !imageFile" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data? 'Update': 'Create'}}
+        </button>
+
+    </mat-dialog-actions>
+</form>

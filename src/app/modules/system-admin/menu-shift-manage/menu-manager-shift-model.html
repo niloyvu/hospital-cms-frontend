@@ -1,0 +1,83 @@
+<h2 mat-dialog-title> {{data.save_type == 'Create' ? 'Shift Menu' : 'Update Shifted Menu' }} 
+    <button [mat-dialog-close]="true" class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+<form #levelForm="ngForm" (ngSubmit)="onClickSubmit()">
+    <mat-dialog-content class="mat-typography">
+        <div class="col-md-12 p-0">
+            <div class="row">
+                <div class="col-md-12">
+                    <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="shiftFromId" nzRequired>Menu Shift From</nz-form-label>
+                    <nz-form-control [nzSm]="14"[nzXs]="24" class="ant-error-message" nzErrorTip="Menu Shift From is required!">
+                        <nz-cascader
+                        style="width: 100%;"
+                        nzChangeOnSelect
+                        [nzOptions]="data.shiftFrom"
+                        [(ngModel)]="data.shiftFromId"
+                        (ngModelChange)="onShiftFromChanges($event)"
+                        [ngModelOptions]="{standalone: true}"
+                      >
+                    </nz-cascader>
+                    </nz-form-control>
+                    </nz-form-item>  
+                </div>
+                <div class="col-md-12">
+                    <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="shiftToId" nzRequired>Menu Shift To</nz-form-label>
+                    <nz-form-control [nzSm]="14"[nzXs]="24" class="ant-error-message" nzErrorTip="Menu Shift to is required!">
+                        <nz-cascader
+                        style="width: 100%;"
+                        nzChangeOnSelect
+                        [nzOptions]="data.shiftTo"
+                        [(ngModel)]="data.shiftToId"
+                        (ngModelChange)="onShifToChanges($event)"
+                        [ngModelOptions]="{standalone: true}"
+                      >
+                    </nz-cascader>
+                    </nz-form-control>
+                    </nz-form-item>  
+                </div>
+                <div class="col-md-12">
+                    <nz-form-item>
+                         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="note">Description</nz-form-label>
+                         <nz-form-control [nzSm]="14"[nzXs]="24" >
+                             <textarea  [(ngModel)]="data.note" name="note" rows="4" nz-input #note="ngModel" placeholder="Description"></textarea>
+                         </nz-form-control>
+                     </nz-form-item>
+                 </div>
+                <div class="col-md-12" *ngIf="data.save_type=='update' ">
+                    <nz-form-item>
+                    <nz-form-label    [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="status" nzRequired>Select Status</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" class="ant-error-message" nzErrorTip="Status is required!">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Status"  [(ngModel)]="data.status" id="status" name="status" style="width: 100%;" >
+                        <nz-option nzCustomContent nzLabel="Pending" [nzValue]="1">
+                            Pending
+                        </nz-option>
+                        <nz-option nzCustomContent nzLabel="Routing Done" [nzValue]="2">
+                            Routing Done
+                        </nz-option>
+
+                    </nz-select>
+                    </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+
+        </div>
+        </div>
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button [mat-dialog-close]="true" class="mr-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            Close
+        </button>
+        <button [disabled]="!levelForm.form.valid||submitButtonEnable" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data.save_type|titlecase}}
+        </button>
+    </mat-dialog-actions>
+</form>

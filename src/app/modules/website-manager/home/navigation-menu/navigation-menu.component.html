@@ -1,0 +1,89 @@
+<div class="card-header card-header-infinity d-flex justify-content-between">
+    <h4 class="card-title">Manage Navigation Links</h4>
+    <button nz-button (click)="createMenuLink()">
+        <i class="fa fa-plus mr-2"></i>
+        Add Navigation Link
+    </button>
+</div>
+<div class="card-body">
+
+    <div class="table-responsive">
+        <table class="table table-bordered medium ">
+            <thead>
+                <tr>
+                    <th style="width: 50px;" class="text-left align-middle">
+                        SL
+                    </th>
+                    <th class="text-left align-middle">
+                        Name
+                    </th>
+                    <th class="text-left align-middle">
+                        Path
+                    </th>
+                    <th class="text-left align-middle">
+                        Order
+                    </th>
+                    <th class="text-center align-middle">
+                        Created At
+                    </th>
+                    <th class="text-center align-middle">
+                        Updated At
+                    </th>
+                    <th class="text-center align-middle">
+                        Button
+                    </th>
+                    <th class="text-center align-middle">
+                        Status
+                    </th>
+                    <th class="text-center align-middle">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let link of menuLinks; let i=index">
+                    <td class="text-center">{{i + 1}}</td>
+                    <td>
+                        {{link?.name}}
+                    </td>
+                    <td>
+                        {{link?.path}}
+                    </td>
+                    <td>
+                        {{link?.order}}
+                    </td>
+                    <td class="text-center">
+                        {{link?.created_at | date}}
+                    </td>
+                    <td class="text-center">
+                        {{link?.updated_at | date}}
+                    </td>
+
+                    <td class="text-center" style="width: 100px;">
+                        <nz-tag [nzColor]="link?.is_button?'processing':'error'">
+                            {{link?.is_button?'Yes':'No'}}
+                        </nz-tag>
+                    </td>
+
+                    <td class="text-center" style="width: 100px;">
+                        <nz-tag [nzColor]="link?.status?'processing':'error'">
+                            {{link?.status?'Active':'Inactive'}}
+                        </nz-tag>
+                    </td>
+
+                    <td class="text-center" style="width: 100px;">
+                        <button nz-button nzType="default" nzSize="small" (click)="updateMenuLink(link)">
+                            <i class="fa fa-pencil mr-2"></i>
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+                <tr *ngIf="menuLinks?.length == 0" class="table-empty">
+                    <td colspan="10">
+                        <nz-empty></nz-empty>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

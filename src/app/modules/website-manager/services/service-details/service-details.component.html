@@ -1,0 +1,145 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="card form-head-color " data-color="azure">
+                        <div class="card-header card-header-infinity d-flex justify-content-between">
+                            <h4 class="card-title">{{serviceName | titlecase}} Service Details</h4>
+                            <div>
+                                <button nz-button routerLink="/website/services" nzType="default">
+                                    <i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>
+                                    Back
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form nz-form [formGroup]="serviceDetailsForm" (ngSubmit)="onSubmitForm()">
+                                <div class="row">
+                                    <input formControlName="id" type="hidden" />
+
+                                    <div class="col-md-12">
+                                        <nz-alert class="mb-2" *ngIf="imageError" nzType="error"
+                                            nzMessage="{{imageError}}" nzShowIcon>
+                                        </nz-alert>
+                                        <nz-form-label nzFor="image" nzRequired>
+                                            Service Image
+                                        </nz-form-label>
+                                        <nz-form-item>
+                                            <nz-form-control nzValidateStatus="warning"
+                                                nzWarningTip="Suggested webp Image and Ratio: 1920 * 400 px | Maximum Size: 1MB">
+                                                <input #fileInput (change)="onFileSelected($event,'image')"
+                                                    style="display: none;" id="image" name="image" accept="image/*"
+                                                    type="file">
+                                                <button (click)="fileInput.click()" nz-button nz-tooltip
+                                                    nzTooltipPlacement="rightTop" nzTooltipTitle="Only Image File"
+                                                    nzType="primary" type="button">
+                                                    <i class="fa fa-cloud-upload mr-2"></i>
+                                                    Select Image
+                                                </button>
+
+                                                <div class="mt-2" *ngIf="imageFile">
+                                                    <img [src]="imageFile" class="w-25" alt="service page image" />
+                                                    <button nz-button type="button" nzDanger
+                                                        (click)="removeImage('image')" class="ml-2">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <nz-form-label nzRequired nzFor="service_details">
+                                            Service Details
+                                        </nz-form-label>
+                                        <nz-form-item>
+                                            <nz-form-control nzErrorTip="Service details is required!">
+                                                <editor placeholder="Write details..." formControlName="service_details"
+                                                    [init]="editorConfig">
+                                                </editor>
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <nz-form-label nzRequired nzFor="video_title">Video Title</nz-form-label>
+                                        <nz-form-item>
+                                            <nz-form-control nzErrorTip="Title is required!">
+                                                <input nz-input type="text" formControlName="video_title" id="title"
+                                                    placeholder="Enter title" />
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <nz-alert class="mb-2" *ngIf="thumbnailError" nzType="error"
+                                            nzMessage="{{thumbnailError}}" nzShowIcon>
+                                        </nz-alert>
+                                        <nz-form-label nzFor="thumbnail" nzRequired>
+                                            Video Thumbnail
+                                        </nz-form-label>
+                                        <nz-form-item>
+                                            <nz-form-control nzValidateStatus="warning"
+                                                nzWarningTip="Suggested webp thumbnail and Ratio: 1136 * 640 px | Maximum Size: 1MB">
+                                                <input #fileInputThumbnail
+                                                    (change)="onFileSelected($event , 'thumbnail')"
+                                                    style="display: none;" name="thumbnail" id="thumbnail"
+                                                    accept="image/*" type="file">
+                                                <button (click)="fileInputThumbnail.click()" nz-button nz-tooltip
+                                                    nzTooltipPlacement="rightTop" nzTooltipTitle="Only Image File"
+                                                    nzType="primary" type="button">
+                                                    <i class="fa fa-cloud-upload mr-2"></i>
+                                                    Select Thumbnail
+                                                </button>
+
+                                                <div class="mt-2" *ngIf="thumbnailFile">
+                                                    <img [src]="thumbnailFile" class="w-25" alt="service page image" />
+                                                    <button nz-button type="button" nzDanger
+                                                        (click)="removeImage('thumbnail')" class="ml-2">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <nz-form-label nzRequired>Video Link</nz-form-label>
+                                        <nz-form-item>
+                                            <nz-form-control nzErrorTip="Video link is required!">
+                                                <input nz-input type="text" formControlName="video_link" id="video_link"
+                                                    placeholder="Enter video link"/>
+
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <nz-form-label nzRequired nzFor="video_details">
+                                            Video Details
+                                        </nz-form-label>
+                                        <nz-form-item>
+                                            <nz-form-control nzErrorTip="Service details is required!">
+                                                <editor placeholder="Write details..." formControlName="video_details"
+                                                    [init]="editorConfig">
+                                                </editor>
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+                                </div>
+
+                                <div class="text-right mt-3">
+                                    <button type="submit"
+                                        [disabled]="serviceDetailsForm.invalid || isDisabled || !imageFile || !thumbnailFile"
+                                        type="submit" nz-button nzType="primary">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

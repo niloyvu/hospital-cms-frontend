@@ -1,0 +1,56 @@
+<div class="card-header card-header-infinity d-flex justify-content-between">
+    <h4 class="card-title">Hero Form Text Manage</h4>
+</div>
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form nz-form [formGroup]="heroForm" (ngSubmit)="onSubmitForm()">
+                <div class="row">
+                    <input formControlName="id" type="hidden" />
+
+                    <div class="col-md-12">
+                        <nz-form-label nzRequired nzFor="contact_us">Contact
+                            Us</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Contact us is required!">
+                                <editor placeholder="Write the contact information..." formControlName="contact_us"
+                                    [init]="editorConfig">
+                                </editor>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzRequired nzFor="location">Location</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Location is required!">
+                                <editor placeholder="Write the location information..." formControlName="location"
+                                    [init]="editorConfig">
+                                </editor>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzRequired nzFor="opening_hours">Opening
+                            Hours</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Opening hours is required!">
+                                <editor placeholder="Write the contact information..." formControlName="opening_hours"
+                                    [init]="editorConfig">
+                                </editor>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                </div>
+
+                <div class="text-right mb-2">
+                    <button nz-button type="submit" [disabled]="heroForm.invalid || isDisabled" nzType="primary">
+                        Update
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>

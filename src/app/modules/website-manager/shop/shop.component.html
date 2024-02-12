@@ -1,0 +1,32 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity d-flex justify-content-between">
+                        <h4 class="card-title">Shop Manage</h4>
+                    </div>
+                    <div class="card-body">
+                        <nz-tabset nzType="card" nzLinkRouter>
+                            <nz-tab>
+                                <a *nzTabLink nz-tab-link routerLink="/website-cms/shop/products">
+                                    Products
+                                </a>
+                            </nz-tab>
+                            <nz-tab>
+                                <a *nzTabLink nz-tab-link routerLink="/website-cms/shop/header">
+                                    Header
+                                </a>
+                            </nz-tab>
+                            <nz-tab>
+                                <a *nzTabLink nz-tab-link routerLink="/website-cms/shop/category">
+                                    Category
+                                </a>
+                            </nz-tab>
+                        </nz-tabset>
+                    </div>
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>

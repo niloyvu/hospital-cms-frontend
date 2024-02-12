@@ -1,0 +1,185 @@
+<h2 mat-dialog-title>{{type|titlecase}} New User
+    <button [mat-dialog-close]="true" class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+<form #createForm="ngForm" (ngSubmit)="onsubmit()">
+    <mat-dialog-content class="mat-typography">
+        <div class="row">
+            <div class="col-md-12">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="3" [nzXs]="24" class="ant-label" nzFor="first_name" nzRequired> Full Name
+                    </nz-form-label>
+                    <nz-form-control class="ant-error-message" nzErrorTip="First Name is required!">
+                        <input [(ngModel)]="data.first_name" id="first_name" name="first_name" nz-input
+                               placeholder="First Name" required style="width: 95%;"/>
+                    </nz-form-control>
+                    <nz-form-control class="ant-error-message">
+                        <input [(ngModel)]="data.middle_name" id="middle_name" name="middle_name" nz-input
+                               placeholder="Middle Name" style="width: 95%;"/>
+                    </nz-form-control>
+                    <nz-form-control class="ant-error-message" nzErrorTip="Last Name is required!">
+                        <input [(ngModel)]="data.last_name" id="last_name" name="last_name" nz-input
+                               placeholder="Last Name" required style="width: 100%;"/>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="user_name" nzRequired>User Name
+                    </nz-form-label>
+                    <nz-form-control class="ant-error-message" nzErrorTip="User Name is required!">
+                        <input [(ngModel)]="data.user_name" id="user_name" name="user_name" nz-input
+                               placeholder="User Name" required type="text" style="width: 100%;"/>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="email" nzRequired>Email
+                    </nz-form-label>
+                    <nz-form-control class="ant-error-message" nzErrorTip="Email is required!">
+                        <input [(ngModel)]="data.email" id="email" name="email" nz-input placeholder="Email" required
+                               type="email" style="width: 100%;"/>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="password"
+                                   nzRequired="{{data.save_type=='update'?'false':'true'}}">Password
+                    </nz-form-label>
+                    <nz-form-control class="ant-error-message" nzErrorTip="Password is required!">
+                        <input [(ngModel)]="data.password" id="password" name="password" nz-input placeholder="Password"
+                               required="{{data.save_type=='update'?'false':'true'}}" type="password"
+                        />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="role_id" nzRequired>Role
+                    </nz-form-label>
+                    <nz-form-control class="ant-error-message" nzErrorTip="Role is required!">
+                        <nz-select [(ngModel)]="data.role_id" name="role_id" id="role_id" nzPlaceHolder="Role"
+                                   nzShowSearch required>
+                            <nz-option *ngFor="let role of role_collection" [nzLabel]="role.name" [nzValue]="role.id">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="3" [nzXs]="24" class="ant-label" nzFor="phone_number" nzRequired>Phone
+                    </nz-form-label>
+                    <nz-form-control class="ant-error-message" nzErrorTip="Country is required!">
+                        <nz-input-group nzCompact>
+                            <nz-select (ngModelChange)="countryWisePhoneCode($event)" [(ngModel)]="data.country_id"
+                                       name="country_id" id="country_id" nzPlaceHolder="Country" nzShowSearch required
+                                       style="width: 30%;">
+                                <nz-option *ngFor="let code of data.country_list" [nzLabel]="code.nice_name"
+                                           [nzValue]="code.id">
+                                </nz-option>
+                            </nz-select>
+                            <input [(ngModel)]="data.country_code" id="country_code" name="country_code" nz-input
+                                   readonly style="width: 20%;" type="text"/>
+                            <input [(ngModel)]="data.phone_number" id="phone_number" name="phone_number" nz-input
+                                   placeholder="Phone Number" required type="text" style="width: 50%;"/>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="3" [nzXs]="24" class="ant-label" nzFor="alternate_phone" nzRequired>Alt Phone
+                    </nz-form-label>
+                    <nz-form-control class="ant-error-message">
+                        <nz-input-group nzCompact>
+                            <nz-select (ngModelChange)="countryWiseAltPhoneCode($event)"
+                                       [(ngModel)]="data.alternate_country"
+                                       name="alternate_country" id="alternate_country" nzPlaceHolder="Country"
+                                       nzShowSearch
+                                       style="width: 30%;">
+                                <nz-option *ngFor="let code of data.country_list" [nzLabel]="code.nice_name"
+                                           [nzValue]="code.id">
+                                </nz-option>
+                            </nz-select>
+                            <input [(ngModel)]="data.alternate_country_code" id="alternate_country_code"
+                                   name="alternate_country_code" nz-input
+                                   readonly style="width: 20%;" type="text"/>
+                            <input [(ngModel)]="data.alternate_phone" id="alternate_phone" name="alternate_phone"
+                                   nz-input
+                                   placeholder="Alternate Phone" type="text" style="width: 50%;"/>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6"></div>
+            <nz-divider style="margin: 0 0 15px;"></nz-divider>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="prefix_name" nzRequired>Prefix Name
+                    </nz-form-label>
+                    <nz-form-control class="ant-error-message" nzErrorTip="Prefix Name is required!">
+                        <input [(ngModel)]="data.prefix_name" id="prefix_name" name="prefix_name" nz-input
+                               placeholder="Prefix Name" required type="text" style="width: 100%;"/>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="prefix_code" nzRequired>Prefix Code
+                    </nz-form-label>
+                    <nz-form-control class="ant-error-message" nzErrorTip="Prefix Code is required!">
+                        <input [(ngModel)]="data.prefix_code" id="prefix_code" name="prefix_code" nz-input
+                               placeholder="Prefix Code" required type="text" style="width: 100%;"/>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="user_id" nzRequired>Status
+                    </nz-form-label>
+                    <nz-form-control>
+                        <nz-switch [ngModel]="true" nzCheckedChildren="Active" nzUnCheckedChildren="In-active"
+                                   [(ngModel)]="data.status" (ngModelChange)="changeStatus($event)"
+                                   name="status"></nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="sequrity_code">Sequirity Code
+                    </nz-form-label>
+                    <nz-form-control class="ant-error-message">
+                        <input [(ngModel)]="data.sequrity_code" id="sequrity_code" name="sequrity_code" nz-input
+                               placeholder="User Sequrity Code" type="number" style="width: 100%;"/>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button [mat-dialog-close]="true" class="mr-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            Close
+        </button>
+        <ng-container *ngIf="type!=='view'">
+            <button [disabled]="!createForm.form.valid||submitButton" color="primary" mat-raised-button>
+                <i class="icofont icofont-save"></i>
+                {{type|titlecase}}
+            </button>
+        </ng-container>
+    </mat-dialog-actions>
+</form>

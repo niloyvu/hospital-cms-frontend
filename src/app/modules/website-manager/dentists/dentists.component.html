@@ -1,0 +1,259 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity d-flex justify-content-between">
+                        <h4 class="card-title">Manage Dentists</h4>
+                        <button nz-button *ngIf="tabIndex == 0" (click)="createService()" nzType="primary">
+                            <i class="fa fa-plus mr-2"></i>
+                            Add Dentist
+                        </button>
+                    </div>
+                    <div class="card-body">
+                       
+                        <nz-tabset nzType="card" (nzSelectedIndexChange)="tabIndex = $event">
+                            <nz-tab nzTitle="Dentists">
+                                <div class="row">
+                                 
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <label class="">
+                                            Show
+                                            <select [(ngModel)]="resultPerPage"
+                                                (ngModelChange)="changeResultPerPage($event)"
+                                                aria-controls="DataTables_Table_0" class="sort">
+                                                <option value="1000">All</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="100">500</option>
+                                            </select>
+                                            entries
+                                        </label>
+                                        <label class="search">Search:
+                                            <input type="search" id="search" [(ngModel)]="searchValues"
+                                                (ngModelChange)="searchByData($event)" placeholder="Dentist name"
+                                                aria-controls="DataTables_Table_0">
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered medium ">
+                                        <thead>
+                                            <tr>
+                                                <th (click)="sortBy('id')" style="width: 50px;"
+                                                    class="text-left align-middle sort-icon">
+                                                    SL
+                                                    <i *ngIf="columnsSortBy==='id' && dataOrderBy"
+                                                        class="material-icons">
+                                                        south
+                                                    </i>
+                                                    <i *ngIf="columnsSortBy==='id' && !dataOrderBy"
+                                                        class="material-icons">
+                                                        north
+                                                    </i>
+                                                </th>
+                                                <th>Image</th>
+                                                <th (click)="sortBy('name')" class="text-left align-middle sort-icon">
+                                                    Name
+                                                    <i *ngIf="columnsSortBy==='name' && dataOrderBy"
+                                                        class="material-icons">
+                                                        south
+                                                    </i>
+                                                    <i *ngIf="columnsSortBy==='name' && !dataOrderBy"
+                                                        class="material-icons">
+                                                        north
+                                                    </i>
+                                                </th>
+                                                <th (click)="sortBy('email')" class="text-left align-middle sort-icon">
+                                                    Email
+                                                    <i *ngIf="columnsSortBy==='email' && dataOrderBy"
+                                                        class="material-icons">
+                                                        south
+                                                    </i>
+                                                    <i *ngIf="columnsSortBy==='email' && !dataOrderBy"
+                                                        class="material-icons">
+                                                        north
+                                                    </i>
+                                                </th>
+                                                <th (click)="sortBy('phone')" class="text-left align-middle sort-icon">
+                                                    Phone
+                                                    <i *ngIf="columnsSortBy==='phone' && dataOrderBy"
+                                                        class="material-icons">
+                                                        south
+                                                    </i>
+                                                    <i *ngIf="columnsSortBy==='phone' && !dataOrderBy"
+                                                        class="material-icons">
+                                                        north
+                                                    </i>
+                                                </th>
+                                                <th (click)="sortBy('designation')"
+                                                    class="text-left align-middle sort-icon">
+                                                    Designation
+                                                    <i *ngIf="columnsSortBy==='designation' && dataOrderBy"
+                                                        class="material-icons">
+                                                        south
+                                                    </i>
+                                                    <i *ngIf="columnsSortBy==='designation' && !dataOrderBy"
+                                                        class="material-icons">
+                                                        north
+                                                    </i>
+                                                </th>
+                                                <th (click)="sortBy('address')"
+                                                    class="text-left align-middle sort-icon">
+                                                    Address
+                                                    <i *ngIf="columnsSortBy==='address' && dataOrderBy"
+                                                        class="material-icons">
+                                                        south
+                                                    </i>
+                                                    <i *ngIf="columnsSortBy==='address' && !dataOrderBy"
+                                                        class="material-icons">
+                                                        north
+                                                    </i>
+                                                </th>
+                                                <th class="text-left align-middle">
+                                                    Description
+                                                </th>
+
+                                                <th (click)="sortBy('status')"
+                                                    class="text-center align-middle sort-icon">
+                                                    Status
+                                                    <i *ngIf="columnsSortBy==='status' && dataOrderBy"
+                                                        class="material-icons">
+                                                        south
+                                                    </i>
+                                                    <i *ngIf="columnsSortBy==='status' && !dataOrderBy"
+                                                        class="material-icons">
+                                                        north
+                                                    </i>
+                                                </th>
+                                                <th (click)="sortBy('feature')"
+                                                    class="text-center align-middle sort-icon">
+                                                    Feature
+                                                    <i *ngIf="columnsSortBy==='feature' && dataOrderBy"
+                                                        class="material-icons">
+                                                        south
+                                                    </i>
+                                                    <i *ngIf="columnsSortBy==='feature' && !dataOrderBy"
+                                                        class="material-icons">
+                                                        north
+                                                    </i>
+                                                </th>
+                                                <th class="text-center align-middle sort-icon">
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let dentist of dentists | paginate: {
+                                                                        currentPage: this.pageNumber,
+                                                                        itemsPerPage: this.resultPerPage,
+                                                                        id: 'table'
+                                                                        }; let i=index;">
+                                                <td class="text-center">{{getSl(i + 1)}}</td>
+                                                <td class="text-center" style="width: 100px;">
+                                                    <img [src]="rootUrl+dentist.image" width="100" height="60"
+                                                        [alt]="dentist.image" />
+                                                </td>
+                                                <td class="text-capitalize text-left w-auto">
+                                                    <a class="nav-link link"
+                                                        [routerLink]="['/website-cms/dentist/', convertToSlug(dentist.name), dentist.id]">
+                                                        {{dentist.name}}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    {{dentist.email}}
+                                                </td>
+                                                <td>
+                                                    {{dentist.phone}}
+                                                </td>
+                                                <td>
+                                                    {{dentist.designation}}
+                                                </td>
+                                                <td>
+                                                    {{dentist.address}}
+                                                </td>
+                                                <td class="text-center">
+                                                    <i class="fa fa-commenting"
+                                                        style="font-size: 24px; text-align: center;" aria-hidden="true"
+                                                        nz-popover [nzPopoverTitle]="title"
+                                                        [nzPopoverContent]="template" nzPopoverPlacement="top"></i>
+                                                    <ng-template #title>
+                                                        <i class="fa fa-info-circle text-info"></i>
+                                                        <strong> Description </strong>
+                                                    </ng-template>
+                                                    <ng-template #template>
+                                                        <p class="m-0">{{dentist.description}}</p>
+                                                    </ng-template>
+                                                </td>
+                                                <td class="text-center" style="width: 100px;">
+                                                    <nz-tag [nzColor]="dentist?.status?'processing':'error'">
+                                                        {{dentist?.status?'Active':'Inactive'}}
+                                                    </nz-tag>
+                                                </td>
+                                                <td class="text-center" style="width: 100px;">
+                                                    <nz-tag [nzColor]="dentist?.feature?'processing':'error'">
+                                                        {{dentist?.feature?'Yes':'No'}}
+                                                    </nz-tag>
+                                                </td>
+                                                <td class="text-center" style="width: 100px;">
+                                                    <button nz-button nzType="default" nzSize="small"
+                                                        (click)="updateService(dentist)">
+                                                        <i class="fa fa-pencil mr-2"></i>
+                                                        Edit
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="!totalItems" class="table-empty">
+                                                <td colspan="10">
+                                                    <nz-empty></nz-empty>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="table-total-count"> Total Services: {{totalItems}}</p>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <pagination-controls (pageChange)="pageChange($event)" id="table"
+                                            class="my-pagination">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+
+                            </nz-tab>
+                            <nz-tab nzTitle="Page Header">
+                                <ng-template nz-tab>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <nz-alert nzType="info" class="mb-2"
+                                                nzDescription="All Dentists Page Header Section" nzShowIcon>
+                                            </nz-alert>
+                                            <app-page-header [apiEndpoint]="'website/dentist-page-header'"
+                                                [pageType]="pageType.ListPage"></app-page-header>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <nz-alert nzType="info" class="mb-2"
+                                                nzDescription="Dentist Details Page Header Section" nzShowIcon>
+                                            </nz-alert>
+                                            <app-page-header [apiEndpoint]="'website/dentist-page-header'"
+                                                [pageType]="pageType.DetailsPage"></app-page-header>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </nz-tab>
+                            <nz-tab nzTitle="Working Process">
+                                <ng-template nz-tab>
+                                    <app-working-process></app-working-process>
+                                </ng-template>
+                            </nz-tab>
+                        </nz-tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

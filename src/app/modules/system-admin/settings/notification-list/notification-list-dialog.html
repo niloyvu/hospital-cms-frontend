@@ -1,0 +1,93 @@
+<h2 mat-dialog-title>{{data.save_type |titlecase}} Notification
+    <button [mat-dialog-close]="true" class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+<form #createForm="ngForm" (ngSubmit)="onsubmit()">
+    <mat-dialog-content class="mat-typography">
+         <h3>Component : {{data.component_name}}</h3>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Channel Type</th>
+                <th>Operation Type</th>
+                <th>Message Text</th>
+                <th>Status</th>
+                <th>
+                    <a nz-button nzType="primary" (click)="addRow()" nzShape="circle"><i class="fa fa-plus text-white"></i></a>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let option of optionList;index as i">
+                <th class="align-middle">1</th>
+                <td class="align-middle pt-4">  
+                    <nz-form-item>
+                        <nz-form-control  class="ant-error-message" nzErrorTip="Channel is required!">
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a channel"  [(ngModel)]="option.channel_id" name="channel_id{{i}}">
+                                <nz-option *ngFor="let channel of data.activeChannelList" [nzLabel]="channel.login_with" [nzValue]="channel.id"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </td>
+                <td class="align-middle pt-4">
+                    <nz-form-item>
+                        <nz-form-control class="ant-error-message" nzErrorTip="Type is required!">
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a Type"  [(ngModel)]="option.op_type_code"  name="op_type_code{{i}}">
+                                <nz-option  *ngFor="let type of data.channel_op_type" [nzLabel]="'('+type.op_type_code+') - ' + type.title" [nzValue]="type.op_type_code"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </td>
+                <td class="align-middle pt-4">
+                    <nz-form-item>
+                        <nz-form-control   class="ant-error-message" nzErrorTip="Text is required!">
+                            <textarea [(ngModel)]="option.text" name="text{{i}}" nz-input placeholder="Message Text"  required ></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </td>
+                <td class="align-middle pt-4">
+                    <nz-form-item>
+                        <nz-switch [(ngModel)]="option.opt_status"  id="opt_status" name="opt_status{{i}}"
+                        [nzCheckedChildren]="checkedTemplate"
+                        [nzUnCheckedChildren]="unCheckedTemplate"
+                    ></nz-switch>
+                    <ng-template #checkedTemplate><i class="fa fa-check"></i></ng-template>
+                    <ng-template #unCheckedTemplate><i class="fa fa-times"></i></ng-template>
+                    </nz-form-item>
+                </td>
+                <td class="align-middle">
+                    <a nz-button nzType="primary" (click)="delete_row(option)" nzDanger nzShape="circle"><i class="fa fa-times text-white"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="remarks" nzRequired>Remarks</nz-form-label>
+            <nz-form-control  [nzSm]="18" [nzXs]="24" class="ant-error-message" nzErrorTip="Remarks is required!">
+                <textarea [(ngModel)]="data.remarks" id="remarks" name="remarks" nz-input placeholder="Remarks" style="width: 100%;" required></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+                <nz-form-label   [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="status" nzRequired>Status</nz-form-label>
+                <nz-form-control  [nzSm]="18" [nzXs]="24" class="ant-error-message" nzErrorTip="Status is required!">
+                    <nz-select  nzPlaceHolder="Select Status" nzErrorTip="Status is required!" [(ngModel)]="data.status" id="status" name="status" required>
+                        <nz-option nzLabel="Active" [nzValue]="1">Active</nz-option>
+                        <nz-option nzLabel="Inactive" [nzValue]="0">Inactive</nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button [mat-dialog-close]="true" class="mr-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            close
+        </button>
+        <button [disabled]="!createForm.form.valid || submitButtonEnable" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data.save_type |titlecase}}
+        </button>
+    </mat-dialog-actions>
+</form>

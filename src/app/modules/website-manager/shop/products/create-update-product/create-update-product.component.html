@@ -1,0 +1,135 @@
+<div class="card-header card-header-infinity d-flex justify-content-between">
+    <h4 class="card-title"> {{productId? 'Update': 'Create'}} Product</h4>
+    <div>
+        <button nz-button routerLink="/website-cms/shop/products" nzType="default">
+            <i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>
+            Back
+        </button>
+    </div>
+</div>
+<div class="card-body">
+    <form nz-form [formGroup]="productForm" (ngSubmit)="onSubmitForm()">
+        <div class="row">
+            <input formControlName="id" type="hidden" />
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Title is required!">
+                        <input nz-input type="text" formControlName="title" id="title" placeholder="Enter title" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Blog type is required!">
+                        <nz-form-label nzFor="category" nzRequired>Category</nz-form-label>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a category" name="category"
+                            formControlName="category_id">
+                            <nz-option *ngFor="let product of productCategories" [nzLabel]="product?.title"
+                                [nzValue]="product?.id">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Price is required!">
+                        <nz-form-label nzFor="price" nzRequired>Price</nz-form-label>
+                        <input nz-input type="number" formControlName="price" id="price" placeholder="Enter price" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Quantity is required!">
+                        <nz-form-label nzFor="quantity" nzRequired>Quantity</nz-form-label>
+                        <input nz-input type="number" formControlName="quantity" id="quantity" placeholder="Enter quantity" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-alert class="mb-2" *ngIf="imageError" nzType="error" nzMessage="{{imageError}}" nzShowIcon>
+                </nz-alert>
+                <nz-form-label nzFor="image" nzRequired>
+                    Feature Image
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzValidateStatus="warning"
+                        nzWarningTip="Suggested webp Background Image and Ratio: 1366 * 640 px | Maximum Size: 1MB">
+                        <input #fileInput (change)="onFileSelected($event)" style="display: none;" accept="image/*"
+                            type="file">
+                        <button (click)="fileInput.click()" nz-button nz-tooltip nzTooltipPlacement="rightTop"
+                            nzTooltipTitle="Only Image File" nzType="primary" type="button">
+                            <i class="fa fa-cloud-upload mr-2"></i>
+                            Select Image
+                        </button>
+
+                        <div class="mt-2" *ngIf="imageFile">
+                            <img [src]="imageFile" class="w-25" alt="service page background image" />
+                            <button nz-button type="button" nzDanger (click)="removeImage()" class="ml-2">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="short_description">
+                    Short Description
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Short description is required!">
+                        <editor placeholder="Write short description..." formControlName="short_description" [init]="editorConfigForShortDescription"
+                            style="height: 100%;">
+                        </editor>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="details">
+                    Product Details
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Product details is required!">
+                        <editor placeholder="Write details..." formControlName="details" [init]="editorConfig"
+                            style="height: 100%;">
+                        </editor>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Status</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Active" nzUnCheckedChildren="In-active"
+                            formControlName="status" name="status" id="status">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Feature</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                            formControlName="feature" name="feature" id="feature">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+
+        <div class="text-right mt-3">
+            <button type="submit" [disabled]="productForm.invalid || !imageFile || isDisabled" type="submit" nz-button
+                nzType="primary">
+                {{productId? 'Update': 'Create'}}
+            </button>
+        </div>
+    </form>
+</div>

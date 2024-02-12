@@ -1,0 +1,139 @@
+<div class="card-header card-header-infinity d-flex justify-content-between">
+    <h4 class="card-title">Manage Blog Category</h4>
+    <button nz-button (click)="createBlogCategory()" nzType="default">
+        <i class="fa fa-plus mr-2"></i>
+        Create Category
+    </button>
+</div>
+<div class="card-body">
+
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-between">
+            <label class="">
+                Show
+                <select [(ngModel)]="resultPerPage" (ngModelChange)="changeResultPerPage($event)"
+                    aria-controls="DataTables_Table_0" class="sort">
+                    <option value="1000">All</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="100">500</option>
+                </select>
+                entries
+            </label>
+            <label class="search">Search:
+                <input type="search" id="search" [(ngModel)]="searchValues" (ngModelChange)="searchByData($event)"
+                    placeholder="Category name" aria-controls="DataTables_Table_0">
+            </label>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered medium ">
+            <thead>
+                <tr>
+                    <th (click)="sortBy('id')" style="width: 50px;" class="text-left align-middle sort-icon">
+                        SL
+                        <i *ngIf="columnsSortBy==='id' && dataOrderBy" class="material-icons">
+                            south
+                        </i>
+                        <i *ngIf="columnsSortBy==='id' && !dataOrderBy" class="material-icons">
+                            north
+                        </i>
+                    </th>
+
+                    <th (click)="sortBy('title')" class="text-left align-middle sort-icon">
+                        Title
+                        <i *ngIf="columnsSortBy==='title' && dataOrderBy" class="material-icons">
+                            south
+                        </i>
+                        <i *ngIf="columnsSortBy==='title' && !dataOrderBy" class="material-icons">
+                            north
+                        </i>
+                    </th>
+
+                    <th (click)="sortBy('date')" class="text-left align-middle sort-icon">
+                        Date
+                        <i *ngIf="columnsSortBy==='date' && dataOrderBy" class="material-icons">
+                            south
+                        </i>
+                        <i *ngIf="columnsSortBy==='date' && !dataOrderBy" class="material-icons">
+                            north
+                        </i>
+                    </th>
+
+                    <th (click)="sortBy('status')" class="text-center align-middle sort-icon">
+                        Status
+                        <i *ngIf="columnsSortBy==='status' && dataOrderBy" class="material-icons">
+                            south
+                        </i>
+                        <i *ngIf="columnsSortBy==='status' && !dataOrderBy" class="material-icons">
+                            north
+                        </i>
+                    </th>
+                    <th (click)="sortBy('feature')" class="text-center align-middle sort-icon">
+                        Feature
+                        <i *ngIf="columnsSortBy==='feature' && dataOrderBy" class="material-icons">
+                            south
+                        </i>
+                        <i *ngIf="columnsSortBy==='feature' && !dataOrderBy" class="material-icons">
+                            north
+                        </i>
+                    </th>
+                    <th class="text-center align-middle sort-icon">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let category of categories | paginate: {
+                                        currentPage: this.pageNumber,
+                                        itemsPerPage: this.resultPerPage,
+                                        id: 'table'
+                                        }; let i=index;">
+                    <td class="text-center">{{getSl(i + 1)}}</td>
+
+                    <td class="text-capitalize text-left w-auto">
+                        {{category.title}}
+                    </td>
+
+                    <td>
+                        {{category.created_at | date:'medium'}}
+                    </td>
+
+                    <td class="text-center" style="width: 100px;">
+                        <nz-tag [nzColor]="category?.status?'processing':'error'">
+                            {{category?.status?'Active':'Inactive'}}
+                        </nz-tag>
+                    </td>
+                    <td class="text-center" style="width: 100px;">
+                        <nz-tag [nzColor]="category?.feature?'processing':'error'">
+                            {{category?.feature?'Yes':'No'}}
+                        </nz-tag>
+                    </td>
+                    <td class="text-center" style="width: 100px;">
+                        <button nz-button (click)="updateBlogCategory(category)" nzType="default" nzSize="small">
+                            <i class="fa fa-pencil mr-2"></i>
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+                <tr *ngIf="!totalItems" class="table-empty">
+                    <td colspan="10">
+                        <nz-empty></nz-empty>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p class="table-total-count"> Total Services: {{totalItems}}</p>
+        </div>
+        <div class="col-md-6 text-right">
+            <pagination-controls (pageChange)="pageChange($event)" id="table" class="my-pagination">
+            </pagination-controls>
+        </div>
+    </div>
+</div>

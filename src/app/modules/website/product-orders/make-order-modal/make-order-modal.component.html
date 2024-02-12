@@ -1,0 +1,199 @@
+<h2 mat-dialog-title class="m-0">
+    {{data? 'Update': 'Make'}} Order
+    <button (click)="closeModal()" class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+
+<form [formGroup]="makeOrderForm" (ngSubmit)="onSubmitForm()">
+    <mat-dialog-content class="mat-typography">
+        <div class="row">
+            <div class="col-md-12 mb-2">
+                <nz-radio-group formControlName="order_type" nzName="radiogroup">
+                    <label nz-radio [nzValue]="1">Online</label>
+                    <label nz-radio [nzValue]="2">Offline</label>
+                </nz-radio-group>
+            </div>
+            <div class="col-md-12">
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Product is required!">
+                        <nz-form-label nzRequired nzFor="product_id">Product</nz-form-label>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a product" name="product_id"
+                            formControlName="product_id">
+                            <nz-option *ngFor="let product of products" [nzValue]="product.id"
+                                [nzLabel]="product.title">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-3" [class.col-md-4]="makeOrderForm.get('order_type')?.value == orderType.Offline">
+                <nz-form-label nzFor="product_price" nzRequired>Product Price</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Product price is required">
+                        <input nz-input type="text" readonly formControlName="product_price" id="product_price"
+                            placeholder="Price">
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-3" [class.col-md-4]="makeOrderForm.get('order_type')?.value == orderType.Offline">
+                <nz-form-label nzFor="quantity" nzRequired>Quantity</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Quantity is required">
+                        <input nz-input type="text" formControlName="quantity" id="quantity" placeholder="Quantity">
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-3" *ngIf="makeOrderForm.get('order_type')?.value==orderType.Online">
+                <nz-form-label nzFor="delivery_charge">Delivery Charge</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control>
+                        <input nz-input type="text" formControlName="delivery_charge" id="delivery_charge"
+                            placeholder="Price">
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-3" [class.col-md-4]="makeOrderForm.get('order_type')?.value == orderType.Offline">
+                <nz-form-label nzFor="total_amount" nzRequired>Total Amount</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control>
+                        <input nz-input type="text" readonly formControlName="total_amount" id="total_amount"
+                            placeholder="Price">
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-label nzFor="name" nzRequired>Name</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTemplate">
+                        <input nz-input type="text" formControlName="name" id="name" placeholder="Name">
+                        <ng-template #nameErrorTemplate let-control>
+                            <ng-container *ngIf="control.hasError('required')">Name is required.</ng-container>
+                            <ng-container *ngIf="control.hasError('minlength')">Name must be at least 6
+                                characters.</ng-container>
+                            <ng-container *ngIf="control.hasError('maxlength')">Name must be at most 30
+                                characters.</ng-container>
+                        </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-label nzRequired nzFor="phone">Phone</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzHasFeedback [nzErrorTip]="phoneErrorTemplate">
+                        <input nz-input type="text" formControlName="phone" id="phone" placeholder="Enter phone" />
+                        <ng-template #phoneErrorTemplate let-control>
+                            <ng-container *ngIf="control.hasError('minlength')">Phone must be 11 digits
+                                long!</ng-container>
+                            <ng-container *ngIf="control.hasError('maxlength')">Phone must be at most 11 digits
+                                long!</ng-container>
+                            <ng-container *ngIf="control.hasError('required')">Phone is required!</ng-container>
+                            <ng-container *ngIf="control.hasError('pattern')">Invalid phone numbers!</ng-container>
+                        </ng-template>
+                    </nz-form-control>
+
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control [nzErrorTip]="districtErrorTemplate">
+                        <nz-form-label nzFor="district" nzRequired>District</nz-form-label>
+                        <input nz-input type="text" formControlName="district" id="distrcit" placeholder="District">
+                        <ng-template #districtErrorTemplate let-control>
+                            <ng-container *ngIf="control.hasError('required')">District is required.</ng-container>
+                            <ng-container *ngIf="control.hasError('minlength')">District must be at least 4
+                                characters.</ng-container>
+                            <ng-container *ngIf="control.hasError('maxlength')">District must be at most 15
+                                characters.</ng-container>
+                        </ng-template>
+
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control [nzErrorTip]="thanaErrorTemplate">
+                        <nz-form-label nzFor="thana" nzRequired>Thana</nz-form-label>
+                        <input nz-input type="text" formControlName="thana" id="thana" placeholder="Thana">
+                        <ng-template #thanaErrorTemplate let-control>
+                            <ng-container *ngIf="control.hasError('required')">Thana is required.</ng-container>
+                            <ng-container *ngIf="control.hasError('minlength')">Thana must be at least 4
+                                characters.</ng-container>
+                            <ng-container *ngIf="control.hasError('maxlength')">Thana must be at most 15
+                                characters.</ng-container>
+                        </ng-template>
+
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-item>
+                    <nz-form-control [nzErrorTip]="addressErrorTemplate">
+                        <nz-form-label nzFor="address" nzRequired>Address</nz-form-label>
+                        <textarea nz-input type="text" formControlName="address" id="address" placeholder="address">
+                    </textarea>
+                        <ng-template #addressErrorTemplate let-control>
+                            <ng-container *ngIf="control.hasError('required')">Address is required.</ng-container>
+                            <ng-container *ngIf="control.hasError('minlength')">Address must be at least 10
+                                characters.</ng-container>
+                            <ng-container *ngIf="control.hasError('maxlength')">Address must be at most 50
+                                characters.</ng-container>
+                        </ng-template>
+
+                    </nz-form-control>
+                </nz-form-item>
+
+
+            </div>
+
+            <div class="col-md-12" *ngIf="data">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Status</nz-form-label>
+                        <nz-select nzShowSearch nzAllowClear formControlName="status" nzPlaceHolder="Select a status"
+                            name="status">
+                            <nz-option [nzLabel]="'Pending'" [nzValue]="0">Pending</nz-option>
+                            <nz-option [nzLabel]="'Processing'" [nzValue]="1">Processing</nz-option>
+                            <nz-option [nzLabel]="'Shipped'" [nzValue]="2">Shipped</nz-option>
+                            <nz-option [nzLabel]="'Delivered'" [nzValue]="3">Delivered</nz-option>
+                            <nz-option [nzLabel]="'Cancelled'" [nzValue]="4">Cancelled</nz-option>
+                            <nz-option [nzLabel]="'Refunded'" [nzValue]="5">Refunded</nz-option>
+                            <nz-option [nzLabel]="'Returned'" [nzValue]="6">Returned</nz-option>
+                            <nz-option [nzLabel]="'On Hold'" [nzValue]="7">On Hold</nz-option>
+                            <nz-option [nzLabel]="'Completed'" [nzValue]="8">Completed</nz-option>
+                            <nz-option [nzLabel]="'Failed'" [nzValue]="9">Failed</nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="remarks">Remarks</nz-form-label>
+                        <textarea nz-input type="text" name="remarks" placeholder="Write the remarks"
+                            formControlName="remarks" id="remarks">
+                        </textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button type="button" (click)="closeModal()" class="mr-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            Close
+        </button>
+        <button type="submit" [disabled]="makeOrderForm.invalid || isDisabled" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data? 'Update': 'Make'}} Order
+        </button>
+
+    </mat-dialog-actions>
+</form>

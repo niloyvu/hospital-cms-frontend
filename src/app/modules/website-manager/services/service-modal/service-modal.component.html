@@ -1,0 +1,104 @@
+<h2 mat-dialog-title style="margin: 0;">
+    {{data? 'Update': 'Create'}} Service
+    <button [mat-dialog-close]="true" class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+
+<form [formGroup]="serviceForm" (ngSubmit)="onSubmitForm()">
+    <mat-dialog-content class="mat-typography">
+        <div class="row">
+            <input formControlName="id" type="hidden" />
+
+            <div class="col-md-12">
+                <nz-alert class="mb-2" *ngIf="imageError" nzType="error" nzMessage="{{imageError}}" nzShowIcon>
+                </nz-alert>
+                <nz-form-label nzFor="image" nzRequired>
+                    Image
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzValidateStatus="warning"
+                        nzWarningTip="Suggested webp Transparent Background Image and Ratio: 565 * 380 px | Maximum Size: 1MB">
+                        <input #fileInput (change)="onFileSelected($event)" style="display: none;" accept="image/*"
+                            type="file">
+                        <button nz-button (click)="fileInput.click()" nz-tooltip nzTooltipPlacement="rightTop"
+                            nzTooltipTitle="Only Image File" nzType="primary" type="button">
+                            <i class="fa fa-cloud-upload mr-2"></i>
+                            Select Image
+                        </button>
+
+                        <div class="mt-2" *ngIf="imageFile">
+                            <img [src]="imageFile" alt="hero section image" height="200" width="250" />
+                            <button nz-button type="button" nzDanger (click)="removeImage()" class="ml-2">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="icon">Icon (Class Name) </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Icon is required!">
+                        <input nz-input type="text" formControlName="icon" id="icon" placeholder="Enter icon name" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="title">Title
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Title is required!">
+                        <input nz-input type="text" formControlName="title" id="title" placeholder="Enter title" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="description">Description</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Description is required!">
+                        <textarea nz-input type="text" placeholder="Write the description" formControlName="description"
+                            id="description">
+                        </textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Status</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                            formControlName="status" name="status" id="status">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Feature</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                            formControlName="feature" name="feature" id="feature">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button [mat-dialog-close]="true" class="mr-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            Close
+        </button>
+        <button [disabled]="serviceForm.invalid || isDisabled || !imageFile" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data? 'Update': 'Create'}}
+        </button>
+
+    </mat-dialog-actions>
+</form>

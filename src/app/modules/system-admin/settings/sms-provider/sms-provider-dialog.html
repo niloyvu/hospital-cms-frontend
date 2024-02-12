@@ -1,0 +1,122 @@
+<h2 mat-dialog-title>{{data.save_type}} SMS Provider
+    <button [mat-dialog-close]="true" class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+<form #createForm="ngForm" (ngSubmit)="onsubmit()">
+    <mat-dialog-content class="mat-typography">
+        <div class="col-md-10">
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="provider_name" nzRequired>Provider Name</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" class="ant-error-message" nzErrorTip="Provider Name is required!">
+                    <input [(ngModel)]="data.provider_name" id="provider_name" name="provider_name" nz-input placeholder="provider_name" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-md-10">
+            <nz-form-item>
+                <nz-form-label      [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="domain_name" nzRequired>Domain Name</nz-form-label>
+                <nz-form-control    [nzSm]="14" [nzXs]="24" class="ant-error-message" nzErrorTip="Domain Name is required!">
+                    <input [(ngModel)]="data.domain_name" id="domain_name" name="domain_name" nz-input placeholder="Domain Name" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-md-10">
+            <nz-form-item>
+                <nz-form-label    [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="end_point" nzRequired>Api End Point</nz-form-label>
+                <nz-form-control  [nzSm]="14" [nzXs]="24"  class="ant-error-message" nzErrorTip="Api End Point is required!">
+                    <input [(ngModel)]="data.end_point" id="end_point" name="end_point" nz-input placeholder="provider_name" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-md-10">
+            <nz-form-item>
+                <nz-form-label   [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="api_key" nzRequired>Api Key</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24"  class="ant-error-message" nzErrorTip="Provider Name is required!">
+                    <input [(ngModel)]="data.api_key" id="api_key" name="api_key" nz-input placeholder="api_key" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-md-10">
+            <nz-form-item>
+                <nz-form-label   [nzSm]="6" [nzXs]="24"  class="ant-label" nzFor="username" nzRequired>User Name</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" class="ant-error-message" nzErrorTip="User Name is required!">
+                    <input [(ngModel)]="data.username" id="username" name="username" nz-input placeholder="User Name" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-md-10">
+            <nz-form-item>
+                <nz-form-label   [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="password" nzRequired>Password</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24"  class="ant-error-message" nzErrorTip="Password is required!">
+                    <input [(ngModel)]="data.password" id="password" name="password" nz-input placeholder="Password" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-md-10">
+            <nz-form-item>
+                <nz-form-label    [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="report_end_point" nzRequired>Report End Point</nz-form-label>
+                <nz-form-control  [nzSm]="14" [nzXs]="24"  class="ant-error-message" nzErrorTip="Report End Point is required!">
+                    <input [(ngModel)]="data.report_end_point" id="report_end_point" name="report_end_point" nz-input placeholder="Report End Point" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-md-10">
+            <nz-form-item>
+                <nz-form-label    [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="balance_end_point" nzRequired>Balance End Point</nz-form-label>
+                <nz-form-control  [nzSm]="14" [nzXs]="24"  class="ant-error-message" nzErrorTip="Balance End Point is required!">
+                    <input [(ngModel)]="data.balance_end_point" id="balance_end_point" name="balance_end_point" nz-input placeholder="Balance End Point" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-md-10">
+            <nz-form-item>
+                <nz-form-label    [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="remarks" nzRequired>Remarks</nz-form-label>
+                <nz-form-control  [nzSm]="14" [nzXs]="24"  class="ant-error-message" nzErrorTip="Balance End Point is required!">
+                    <input [(ngModel)]="data.remarks" id="remarks" name="remarks" nz-input placeholder="Remarks" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+       
+        <div class="col-md-10">
+            <nz-form-item>
+            <nz-form-label    [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="sms_type" nzRequired>SMS Type</nz-form-label>
+            <nz-select  nzShowSearch nzAllowClear nzPlaceHolder="Select SMS Type" nzErrorTip="SMS Type is required!" [(ngModel)]="data.sms_type" id="sms_type" name="sms_type" style="width: 59%;" >
+                <nz-option nzCustomContent nzLabel="MASKING" nzValue="MASK">
+                MASKING
+                </nz-option>
+                <nz-option nzCustomContent nzLabel="NON MASKING" nzValue="NOMASK">
+                 NON MASKING
+                </nz-option>
+                
+              </nz-select>
+            </nz-form-item>
+        </div>
+
+        <div class="col-md-10" *ngIf="data.save_type=='update' ">
+            <nz-form-item>
+            <nz-form-label    [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="status" nzRequired>Select Status</nz-form-label>
+            <nz-select  nzShowSearch nzAllowClear nzPlaceHolder="Select Status" nzErrorTip="Status is required!" [(ngModel)]="data.status" id="status" name="status" style="width: 59%;" >
+                <nz-option nzCustomContent nzLabel="Active" [nzValue]="1">
+                Active
+                </nz-option>
+                <nz-option nzCustomContent nzLabel="Inactive" [nzValue]="0">
+                Inactive
+                </nz-option>
+                
+              </nz-select>
+            </nz-form-item>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button [mat-dialog-close]="true" class="mr-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            close
+        </button>
+        <button [disabled]="!createForm.form.valid || submitButtonEnable" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data.save_type |titlecase}}
+        </button>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,56 @@
+<div class="limiter" style="background-image: url('./assets/img/bg.jpg'); background-size: cover;
+height: 100vh;">
+    <div class="container">
+        <div class="login-panel">
+            <form [formGroup]="userLoginForm" (ngSubmit)="submitLoginForm()">
+                <div class="login-form-logo">
+                    <img src="./assets/img/logo.png" alt="logo">
+                </div>
+                <div class="login-text">
+                    Login
+                </div>
+                <mat-card-content>
+                    <div class="login-container">
+
+                        <div *ngIf="loginError" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{failedMessage}}
+                            <button type="button" class="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="login-form">
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="Email or Username " formControlName="email" required>
+                                <mat-error class="error" *ngIf="userNameFormControl.hasError('required')">
+                                    <i class="fa fa-exclamation-circle mr-2"></i>
+                                    Email or Username is <strong>required!</strong></mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="login-form">
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="Password" type="password" formControlName="password"
+                                    autocomplete="off" required>
+                                <mat-error *ngIf="userPasswordControl.hasError('required')"><i
+                                        class="fa fa-exclamation-circle mr-2"></i>Password is
+                                    <strong>required!</strong></mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions class="submit-login">
+                    <button mat-raised-button [disabled]="!userLoginForm.valid" class="w-100" color="primary">
+                        <mat-icon class="mr-2">login</mat-icon>
+                        Login
+                    </button>
+                    <p class="mt-3 forget-password">
+                        Forget Password ?
+                    </p>
+                    <p class="mt-3 copyright-text">
+                        Copyright &copy; {{currentYear | date: 'yyyy'}}
+                        <a href="http://infinfotech.com/">DR. REYAD DENTAL PERFECTION</a>. <br/> All rights reserved.
+                    </p>
+                </mat-card-actions>
+            </form>
+        </div>
+    </div>
+</div>

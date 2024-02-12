@@ -1,0 +1,434 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- first division -->
+            <div class="col-md-12">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity d-flex justify-content-between">
+                        <h4 class="card-title">All Mail Service Provider List</h4>
+                        <button nz-button (click)="openDialog()" nzType="default">
+                          <i class="fa fa-plus mr-2"></i>
+                          Create New 
+                      </button>
+                    </div>
+                    <div class="card-body">
+                        
+                        <!-- <div class="text-right">
+                            <button (click)="openDialog()" class="btn-sm mb-2" color="primary" mat-raised-button nz-tooltip nzTooltipPlacement="topRight" nzTooltipTitle="Create New User">
+                                <i class="fa fa-plus"></i> Create New 
+                            </button>
+                        </div> -->
+
+                        <div class="row justify-content-between mb-4">
+            
+                            <div class="col-md-3">
+                                <nz-select nzShowSearch class="w-100" [(ngModel)]="itemPerPage" (ngModelChange)="changedPageItem()">
+                                  <nz-option nzLabel="15" nzValue="15"></nz-option>
+                                  <nz-option nzLabel="20" nzValue="20"></nz-option>
+                                  <nz-option nzLabel="50" nzValue="50"></nz-option>
+                                  <nz-option nzLabel="100" nzValue="100"></nz-option>
+                                  <nz-option nzLabel="500" nzValue="500"></nz-option>
+                                  <nz-option nzLabel="All" nzValue="1000"></nz-option>
+                                </nz-select>
+                            </div>
+                            <div class="col-md-6">
+                                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                                  <input type="text" nz-input placeholder="Search by User Type" [(ngModel)]="searchValues" (ngModelChange)="filter($event)" />
+                                </nz-input-group>
+                                <ng-template #suffixIconButton>
+                                  <button nz-button nzType="primary" nzSearch>
+                                    <i nz-icon nzType="close" *ngIf="searchValues!==''"
+                                    (click)="clearFilter()"></i>
+                                    <i nz-icon nzType="search" *ngIf="searchValues===''"></i>
+                                  </button>
+                                </ng-template>
+                              
+                              </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover pinTbl">
+                              <thead>
+                              <tr>
+                                <th scope="col" (click)="sort('id')">SL
+                                  <i *ngIf="sortColumn==='id' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumn==='id' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                
+                                <th (click)="sort('mail_driver')">Driver Name
+                                  <i *ngIf="sortColumn==='mail_driver' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumn==='mail_driver' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                <th (click)="sort('mail_host')">Host Name
+                                  <i *ngIf="sortColumn==='mail_host' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumn==='mail_host' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                <th (click)="sort2('mail_address')">Email Address
+                                  <i *ngIf="sortColumnUP==='mail_address' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='mail_address' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                               
+                                <th (click)="sort('mail_username')">Username
+                                  <i *ngIf="sortColumn==='mail_username' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumn==='mail_username' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                <th (click)="sort('mail_password')">Password
+                                  <i *ngIf="sortColumn==='mail_password' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumn==='mail_password' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                <th (click)="sort('mail_port')">Port Number
+                                  <i *ngIf="sortColumn==='mail_port' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumn==='mail_port' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                <th (click)="sort('mail_encryption')">Encryption Method
+                                  <i *ngIf="sortColumn==='mail_encryption' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumn==='mail_encryption' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                               
+                                <th (click)="sort('remarks')">Remarks
+                                  <i *ngIf="sortColumn==='remarks' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumn==='remarks' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                  
+                                <th (click)="sort('status')">Status
+                                    <i *ngIf="sortColumn==='status' && dataOrderBy" class="material-icons pull-right">
+                                        arrow_drop_down
+                                    </i>
+                                    <i *ngIf="sortColumn==='status' && !dataOrderBy" class="material-icons pull-right">
+                                        arrow_drop_up
+                                    </i>
+                                </th>
+                                <th (click)="sort('create_by')">Created By
+                                  <i *ngIf="sortColumn==='create_by' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumn==='create_by' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i></th>
+                                <th (click)="sort('created_at')">Created At
+                                  <i *ngIf="sortColumn==='created_at' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumn==='created_at' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i></th>
+                                
+                                 
+                                <th>Action</th>
+                              </tr>
+                              </thead>
+                              <tbody *ngIf="list?.length>0">
+                              <tr *ngFor="let info of list | paginate: {
+                                currentPage: pageRequest,
+                                itemsPerPage: itemPerPage,
+                                totalItems: totalitem
+                                }  ; index as i;">
+                                <td>{{getSL(i + 1)}}</td>
+                                <td>{{info.mail_driver}}</td>
+                                <td>{{info.mail_host}}</td>
+                                <td>{{info.mail_address}}</td>
+                               
+                                <td>{{info.mail_username}}</td>
+                                <td>{{info.mail_password}}</td>
+                                <td>{{info.mail_port}}</td>
+                                <td>{{info.mail_encryption}}</td>
+                               <td class="text-center">
+                                  <!-- <button nz-button nz-popover  nzPopoverTitle="SMS Provider Note" [nzPopoverContent]="noteTemplate" nzPopoverPlacement="top"> -->
+                                  <i class="fa fa-commenting" style="font-size: 24px;" aria-hidden="true"  nz-popover  nzPopoverTitle="SMS Provider Note" [nzPopoverContent]="noteTemplate" nzPopoverPlacement="top"></i>
+                                  <!-- </button> -->
+                                  <ng-template #noteTemplate>
+                                    <div>
+                                      <p class="m-0">{{info.remarks}}</p>
+                                    </div>
+                                  </ng-template>
+                              </td>
+                                <td><p
+                                  class="badge text-wrap {{info.status == 1 ? 'badge-success' : 'badge-danger'}}">
+                                  <span *ngIf="info.status == 1">Active</span>
+                                  <span *ngIf="info.status == 0">Inactive</span>
+                                </p>
+                                </td>
+                               
+                                <td>{{info.users.user_name}}</td>
+                                <td>{{info.created_at | date }}</td>
+                             
+                                
+                                <td>
+                                  <button (click)="EditDialog(info)" nz-button nz-tooltip nzShape="circle" nzTooltipPlacement="topRight" nzTooltipTitle="Edit User" nzType="primary"><i class="fa fa-pencil"></i></button>
+                                </td>
+                              </tr>
+                              </tbody>
+                             
+                            </table>
+                        </div>
+                          <div class="row">
+                
+                            <div class="col-md-6">
+                              <span>Total Records: {{totalitem}}</span>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="pull-right">
+                                <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls>
+                              </div>
+                            </div>
+                          </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Second division -->
+            <div class="col-md-12">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity">
+                        <h4 class="card-title">Updated Mail Service Provider List</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row justify-content-between mb-4">
+            
+                            <div class="col-md-3">
+                                <nz-select nzShowSearch class="w-100" [(ngModel)]="itemPerPageUP" (ngModelChange)="changedPageUpdate()">
+                                  <nz-option nzLabel="15" nzValue="15"></nz-option>
+                                  <nz-option nzLabel="20" nzValue="20"></nz-option>
+                                  <nz-option nzLabel="50" nzValue="50"></nz-option>
+                                  <nz-option nzLabel="100" nzValue="100"></nz-option>
+                                  <nz-option nzLabel="500" nzValue="500"></nz-option>
+                                  <nz-option nzLabel="All" nzValue="1000"></nz-option>
+                                </nz-select>
+                            </div>
+                            <div class="col-md-6">
+                                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                                  <input type="text" nz-input placeholder="Search by User Type" [(ngModel)]="searchValuesUP" (ngModelChange)="filter2($event)" />
+                                </nz-input-group>
+                                <ng-template #suffixIconButton>
+                                  <button nz-button nzType="primary" nzSearch>
+                                    <i nz-icon nzType="close" *ngIf="searchValuesUP!==''"
+                                    (click)="clearFilter2()"></i>
+                                    <i nz-icon nzType="search" *ngIf="searchValuesUP===''"></i>
+                                  </button>
+                                </ng-template>
+                              
+                              </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover pinTbl">
+                              <thead>
+                              <tr>
+                                <th scope="col" (click)="sort2('id')">SL
+                                  <i *ngIf="sortColumnUP==='id' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='id' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                
+                                <th (click)="sort2('mail_driver')">Driver Name
+                                  <i *ngIf="sortColumnUP==='mail_driver' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='mail_driver' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                <th (click)="sort2('mail_host')">Host Name
+                                  <i *ngIf="sortColumnUP==='mail_host' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='mail_host' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                <th (click)="sort2('mail_address')">Email Address
+                                  <i *ngIf="sortColumnUP==='mail_address' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='mail_address' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                               
+                                <th (click)="sort2('mail_username')">Username
+                                  <i *ngIf="sortColumnUP==='password' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='password' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                <th (click)="sort2('mail_password')">Password
+                                  <i *ngIf="sortColumnUP==='mail_password' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='mail_password' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                <th (click)="sort2('mail_port')">Port Number
+                                  <i *ngIf="sortColumnUP==='username' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='username' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                <th (click)="sort2('mail_encryption')">Encryption Method
+                                  <i *ngIf="sortColumnUP==='mail_encryption' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='mail_encryption' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                               
+                               
+                                <th (click)="sort2('remarks')">Remarks
+                                  <i *ngIf="sortColumnUP==='remarks' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='remarks' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i>
+                                </th>
+                                  
+                                <th (click)="sort2('status')">Status
+                                    <i *ngIf="sortColumnUP==='status' && dataOrderBy" class="material-icons pull-right">
+                                        arrow_drop_down
+                                    </i>
+                                    <i *ngIf="sortColumnUP==='status' && !dataOrderBy" class="material-icons pull-right">
+                                        arrow_drop_up
+                                    </i>
+                                </th>
+                                <th (click)="sort2('create_by')">Created By
+                                  <i *ngIf="sortColumnUP==='create_by' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='create_by' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i></th>
+                                <th (click)="sort2('created_at')">Created At
+                                  <i *ngIf="sortColumnUP==='created_at' && dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_down
+                                  </i>
+                                  <i *ngIf="sortColumnUP==='created_at' && !dataOrderBy" class="material-icons pull-right">
+                                    arrow_drop_up
+                                  </i></th>
+                                  <th (click)="sort('updated_by')">Updated By
+                                    <i *ngIf="sortColumn==='updated_by' && dataOrderBy" class="material-icons pull-right">
+                                      arrow_drop_down
+                                    </i>
+                                    <i *ngIf="sortColumn==='updated_by' && !dataOrderBy" class="material-icons pull-right">
+                                      arrow_drop_up
+                                    </i></th>
+                                  <th (click)="sort('updated_at')">Update At
+                                    <i *ngIf="sortColumn==='updated_at' && dataOrderBy" class="material-icons pull-right">
+                                      arrow_drop_down
+                                    </i>
+                                    <i *ngIf="sortColumn==='updated_at' && !dataOrderBy" class="material-icons pull-right">
+                                      arrow_drop_up
+                                    </i></th>
+                                 
+                              </tr>
+                              </thead>
+                              <tbody *ngIf="updatelist?.length>0">
+                              <tr *ngFor="let info of updatelist | paginate: {
+                                currentPage: pageRequestUP,
+                                itemsPerPage: itemPerPageUP,
+                                totalItems: totalitemUpdate,
+                                id: 'pagination2'
+                                }  ; index as i;">
+                                <td>{{getSL(i + 1)}}</td>
+                                <td>{{info.mail_driver}}</td>
+                                <td>{{info.mail_host}}</td>
+                                <td>{{info.mail_address}}</td>
+                                <td>{{info.mail_username}}</td>
+                                <td>{{info.mail_password}}</td>
+                                <td>{{info.mail_port}}</td>
+                                <td>{{info.mail_encryption}}</td>
+                                <td class="text-center">
+                                  <i class="fa fa-commenting" style="font-size: 24px;" aria-hidden="true" nz-popover  nzPopoverTitle="Login Notify Provider Note" [nzPopoverContent]="upnoteTemplate" nzPopoverPlacement="top"></i>
+                                        <!-- </button> -->
+                                          <ng-template #upnoteTemplate>
+                                            <div>
+                                              <p class="m-0">{{info.remarks}}</p>
+                                            </div>
+                                          </ng-template>
+                              </td>
+                                <td><p
+                                  class="badge text-wrap {{info.status == 1 ? 'badge-success' : 'badge-danger'}}">
+                                  <span *ngIf="info.status == 1">Active</span>
+                                  <span *ngIf="info.status == 0">Inactive</span>
+                                </p>
+                                </td>
+                               
+                                <td>{{info.users.user_name}}</td>
+                                <!-- <td>{{info.update_record.mail_host}}</td> -->
+                                <td>{{info.created_at | date }}</td>
+
+                                <td>{{info.update_users.user_name}}</td>
+                                <td>{{info.updated_at | date }}</td>
+                                <!-- <td>
+                                    <button (click)="EditDialog(info)" nz-button nz-tooltip nzShape="circle" nzTooltipPlacement="topRight" nzTooltipTitle="Edit User" nzType="primary"><i class="fa fa-pencil"></i></button>
+                                </td> -->
+                              </tr>
+                              </tbody>
+                             
+                            </table>
+                        </div>
+                          <div class="row">
+                
+                            <div class="col-md-6">
+                              <span>Total Records: {{totalitemUpdate}}</span>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="pull-right">
+                                <pagination-controls (pageChange)="pageChangeUpdate($event)" id="pagination2" class="my-pagination"></pagination-controls>
+                              </div>
+                            </div>
+                          </div>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

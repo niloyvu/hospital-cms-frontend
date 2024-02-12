@@ -1,0 +1,125 @@
+.navbar-brand {
+  display: none;
+}
+
+.navbar-collapse {
+  display: block;
+  width: 100%;
+}
+
+.navbar-nav {
+  position: fixed;
+  right: 10px;
+  top: 20px;
+}
+
+
+p.navbar-brand {
+  font-weight: 600 !important;
+  letter-spacing: 1.5px !important;
+}
+
+button.mat-menu-item.active {
+  background-color: #00bcd4;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 188, 212, 0.4);
+}
+
+.mat-menu-content {
+   padding-top: 0px !important; 
+   padding-bottom: 0px !important; 
+   border-bottom: 1px dotted #C3C3C3;
+}
+
+button.mat-menu-item {
+  height: 34px;
+  line-height: 34px;
+  border-left: 2px solid #02a1e2;
+  border-bottom: 1px dotted #C3C3C3;
+}
+
+@media only screen and (min-width: 992px) {
+  .sidebar.toggled {
+    width: 80px;
+  }
+  .cllaopse-side {
+    display: block;
+  }
+  .logo-mobile {
+    display: none;
+  }
+  .navbar-brand {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .navbar-wrapper {
+    width: 100%;
+    text-align: center;
+    display: block;
+    margin: 14px auto;
+    margin-top: 4px;
+  }
+  .logo-mobile {
+    margin: 0 auto;
+    width: 104px;
+  }
+  button.navbar-toggler.mat-icon-button {
+    margin-top: 0;
+  }
+}
+
+#account-button {
+  position: relative;
+  bottom: 3px;
+}
+
+.header_link{
+  margin-top: -13px;
+}
+
+.header_button {
+  border: 1px solid #2222;
+  padding: 0px 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+.matborder {
+  border-left: 1px solid;
+}
+
+.header_button_dropdown {
+  width: 20px !important;
+  border-left: 1px solid #2222 !important;
+  border-radius: 0 !important;
+  margin-left: 8px !important;
+  position: inherit !important;
+}
+
+.blueuser-styl {
+  display: block;
+  position: fixed;
+  right: 12%;
+  top: 0%;
+  color: #f00;
+  font-weight: 700;
+}
+
+.participant{
+  background-color: #D5DBDB;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-right: 2px;
+ }
+ 
+ .participant i {
+   font-size: 50px;
+ }
+
+.mat-elevation-z4 {
+    border-left: 2px solid #667afa !important;
+}
+

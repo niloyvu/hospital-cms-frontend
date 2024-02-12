@@ -1,0 +1,109 @@
+<h2 mat-dialog-title style="margin: 0;">
+    {{data? 'Update': 'Create'}} Testimonial
+    <button [mat-dialog-close]="true" class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+
+<form [formGroup]="testimonialForm" (ngSubmit)="onSubmitForm()">
+    <mat-dialog-content class="mat-typography">
+        <div class="row">
+            <input formControlName="id" type="hidden" />
+
+            <div class="col-md-12">
+                <nz-alert class="mb-2" *ngIf="imageError" nzType="error" nzMessage="{{imageError}}" nzShowIcon>
+                </nz-alert>
+                <nz-form-label nzFor="image" nzRequired>
+                    Image
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzValidateStatus="warning"
+                        nzWarningTip="Suggested webp Transparent Background Image and Ratio: 150 * 150 px | Maximum Size: 1MB">
+                        <input #fileInput (change)="onFileSelected($event)" style="display: none;" accept="image/*"
+                            type="file">
+                        <button nz-button (click)="fileInput.click()" nz-tooltip nzTooltipPlacement="rightTop"
+                            nzTooltipTitle="Only Image File" nzType="primary" type="button">
+                            <i class="fa fa-cloud-upload mr-2"></i>
+                            Select Image
+                        </button>
+
+                        <div class="mt-2" *ngIf="imageFile">
+                            <img [src]="imageFile" alt="hero section image" height="100" width="100" />
+                            <button nz-button type="button" nzDanger (click)="removeImage()" class="ml-2">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+ 
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="name">Name
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="name is required!">
+                        <input nz-input type="text" formControlName="name" id="name" placeholder="Enter name" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="name">Designation
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Designation is required!">
+                        <input nz-input type="text" formControlName="designation" id="designation" placeholder="Enter designation" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="review">Review</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Review is required!">
+                        <nz-textarea-count [nzMaxCharacterCount]="200">
+                            <textarea formControlName="review" nz-input rows="2"
+                                placeholder="Write any thing">
+                            </textarea>
+                        </nz-textarea-count>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Status</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                            formControlName="status" name="status" id="status">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Feature</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                            formControlName="feature" name="feature" id="feature">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button [mat-dialog-close]="true" class="mr-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            Close
+        </button>
+        <button [disabled]="testimonialForm.invalid || isDisabled || !imageFile" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data? 'Update': 'Create'}}
+        </button>
+
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,128 @@
+<div class="card-header card-header-infinity d-flex justify-content-between">
+    <h4 class="card-title">Navbar Section Manage</h4>
+</div>
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form nz-form [formGroup]="navbarForm" (ngSubmit)="onSubmitForm()">
+                <div class="row">
+                    <input formControlName="id" type="hidden" />
+                    <div class="col-md-12">
+                        <nz-form-label id="phone" nzRequired>Phone Number</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Phone number is required!">
+                                <input nz-input type="text" formControlName="phone" id="phone"
+                                    placeholder="Enter phone number" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Email is required!">
+                                <input nz-input type="email" formControlName="email" id="email"
+                                    placeholder="Email address" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Address is required!">
+                                <input nz-input type="text" formControlName="address" id="address"
+                                    placeholder="Enter address" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzRequired nzFor="schedule">Schedule </nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Schedule is required!">
+                                <input nz-input type="text" formControlName="schedule" id="schedule"
+                                    placeholder="Enter schedule" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzRequired nzFor="button_text">Button Text
+                        </nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Button text is required!">
+                                <input nz-input type="text" formControlName="button_text" id="button_text"
+                                    placeholder="Enter button text" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-alert class="mb-2" *ngIf="lightModeLogoError" nzType="error"
+                            [nzMessage]="lightModeLogoError" nzShowIcon>
+                        </nz-alert>
+
+                        <nz-form-label nzFor="light_mode_logo" nzRequired>
+                            Light Mode Logo
+                        </nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzValidateStatus="warning"
+                                nzWarningTip="Suggested webp Transparent Background Image and Ratio: 126 * 37 px | Maximum Size: 1MB">
+                                <input #lightModeFileInput type="file" (change)="onClickLogoSelected($event, 'light')"
+                                    style="display: none;" accept="image/*" id="light_mode_logo">
+                                <button nz-button nzSize="small" (click)="lightModeFileInput.click()" nz-tooltip
+                                    nzTooltipPlacement="rightTop" nzTooltipTitle="Only Image File" nzType="primary"
+                                    type="button">
+                                    <i class="fa fa-cloud-upload mr-2"></i>
+                                    Select Logo
+                                </button>
+
+                                <div class="mt-2" *ngIf="lightModeLogoFile">
+                                    <img [src]="lightModeLogoFile" alt="Logo" height="37" width="126" />
+                                    <button nz-button type="button" nzDanger (click)="removeLogo('light')" class="ml-2">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-alert class="mb-2" *ngIf="darkModeLogoError" nzType="error" [nzMessage]="darkModeLogoError"
+                            nzShowIcon>
+                        </nz-alert>
+
+                        <nz-form-label nzFor="dark_mode_logo" nzRequired>
+                            Dark Mode Logo
+                        </nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzValidateStatus="warning"
+                                nzWarningTip="Suggested webp Transparent Background Image and Ratio: 126 * 37 px | Maximum Size: 1MB">
+                                <input #darkModeFileInput type="file" (change)="onClickLogoSelected($event, 'dark')"
+                                    style="display: none;" accept="image/*" id="dark_mode_logo">
+                                <button nz-button nzSize="small" (click)="darkModeFileInput.click()" nz-tooltip
+                                    nzTooltipPlacement="rightTop" nzTooltipTitle="Only Image File" nzType="primary"
+                                    type="button">
+                                    <i class="fa fa-cloud-upload mr-2"></i>
+                                    Select Logo
+                                </button>
+
+                                <div class="mt-2" *ngIf="darkModeLogoFile">
+                                    <img [src]="darkModeLogoFile" alt="Logo" height="37" width="126" />
+                                    <button nz-button type="button" nzDanger (click)="removeLogo('dark')" class="ml-2">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                </div>
+
+                <div class="text-right mb-2">
+                    <button type="submit" [disabled]="navbarForm.invalid || isDisabled" nz-button nzType="primary">
+                        Update
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

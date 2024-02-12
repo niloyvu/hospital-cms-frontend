@@ -1,0 +1,287 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mb-2">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity d-flex justify-content-between">
+                        <h4 class="card-title">All System User List</h4>
+                        <button *ngIf="isAccess('create')" nz-button (click)="createUserDialog()" nzType="default">
+                            <i class="fa fa-plus mr-2"></i>
+                            Create User
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-between">
+                                <label class="">
+                                    Show
+                                    <select [(ngModel)]="resultPerPage" (ngModelChange)="changeResultPerPage($event)"
+                                            aria-controls="DataTables_Table_0" class="sort">
+                                        <option value="1000">All</option>
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="100">500</option>
+                                    </select>
+                                    entries
+                                </label>
+                                <label class="search">Search:
+                                    <input type="search" id="search" [(ngModel)]="searchValues"
+                                           (ngModelChange)="searchByData($event)"
+                                           placeholder="" aria-controls="DataTables_Table_0">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered medium">
+                                <thead>
+                                    <tr>
+                                        <th (click)="sortBy('id')" class="text-center align-middle sort-icon">SL
+                                            <i *ngIf="columnsSortBy==='id' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                            <i *ngIf="columnsSortBy==='id' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                        </th>
+                                        <th (click)="sortBy('user_name')" class="text-center align-middle sort-icon">User
+                                            <i *ngIf="columnsSortBy==='user_name' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                            <i *ngIf="columnsSortBy==='user_name' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                        </th>
+                                        <th (click)="sortBy('email')" class="text-center align-middle sort-icon">Email & Phone
+                                            <i *ngIf="columnsSortBy==='email' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                            <i *ngIf="columnsSortBy==='email' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                        </th>
+                                        <th (click)="sortBy('role_id')" class="text-center align-middle sort-icon">Role
+                                            <i *ngIf="columnsSortBy==='role_id' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                            <i *ngIf="columnsSortBy==='role_id' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                        </th>
+                                        <th (click)="sortBy('prefix_name')" class="text-center align-middle sort-icon">
+                                            Prefix & Code
+                                            <i *ngIf="columnsSortBy==='prefix_name' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                            <i *ngIf="columnsSortBy==='prefix_name' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                        </th>
+                                        <th (click)="sortBy('status')" class="text-center align-middle sort-icon">Status
+                                            <i *ngIf="columnsSortBy==='status' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                            <i *ngIf="columnsSortBy==='status' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of collection | paginate: {
+                                                        currentPage: pageNumber,
+                                                        itemsPerPage: resultPerPage,
+                                                        totalItems: totalItems,
+                                                        id:'first'
+                                                        } ; index as i;">
+                                        <td class="text-center">{{getSl(i + 1)}}</td>
+                                        <td class="text-capitalize">
+                                            <p>Full Name: {{data.user_profile ? data.user_profile ? data.user_profile.first_name + ' ' + data.user_profile.middle_name + ' ' + data.user_profile.last_name : '' : ''}}
+                                                <br> User Name: {{data.user_name}}
+                                            </p>
+                                            <td>
+                                                <P>Email: {{data.email}}<br> Phone:
+                                                    <span>{{'(' + data.phone_country.phone_code + ') ' + data.phone_number}}</span>
+                                                </P>
+                                            </td>
+                                            <td>
+                                                <p>{{data.role ? data.role.name : ''}}</p>
+                                            </td>
+                                            <td>
+                                                <P>Prefix: {{data.prefix_name}}<br> Prefix Code: {{data.prefix_code}}
+                                                </P>
+                                            </td>
+                                            <td class="text-center">
+                                                <nz-tag *ngIf="data.status=='1'" nzColor="processing">Active</nz-tag>
+                                                <nz-tag *ngIf="data.status=='0'" nzColor="error">Inactive</nz-tag>
+                                            </td>
+                                            <td class="text-center">
+                                                <button nz-button nzType="default" (click)="updateUserDialog(data)"><i
+                                                class="fa fa-pencil mr-2"></i> Edit
+                                        </button>
+                                            </td>
+                                    </tr>
+                                    <tr *ngIf="totalItems == 0" class="table-empty">
+                                        <td colspan="8">
+                                            Data Not Found...
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="table-total-count">Total Records {{totalItems}}</p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <pagination-controls (pageChange)="pageChange($event)" id="first" class="my-pagination"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-12">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity d-flex justify-content-between">
+                        <h4 class="card-title">Activity Log of User List</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-between">
+                                <label class="">
+                                    Show
+                                    <select [(ngModel)]="updated_ResultPerPage"
+                                            (ngModelChange)="updatedChangeResultPerPage($event)"
+                                            aria-controls="DataTables_Table_0" class="sort">
+                                        <option value="1000">All</option>
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="100">500</option>
+                                    </select>
+                                    entries
+                                </label>
+                                <label class="search">Search:
+                                    <input type="search" id="updated_search" [(ngModel)]="updated_SearchValues"
+                                           (ngModelChange)="updatedSearchByData($event)"
+                                           placeholder="" aria-controls="DataTables_Table_0">
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered medium">
+                                <thead>
+                                    <tr>
+                                        <th (click)="updatedSortBy('id')" class="text-center align-middle sort-icon">SL
+                                            <i *ngIf="updated_ColumnsSortBy==='id' && updated_DataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                            <i *ngIf="updated_ColumnsSortBy==='id' && !updated_DataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                        </th>
+                                        <th class="text-center align-middle sort-icon">
+                                            Name
+                                        </th>
+                                        <th class="text-center align-middle sort-icon">
+                                            User Name
+                                        </th>
+                                        <th class="text-center align-middle sort-icon">
+                                            Role Name
+                                        </th>
+                                        <th (click)="updatedSortBy('log_name')" class="text-center align-middle sort-icon">
+                                            Action
+                                            <i *ngIf="updated_ColumnsSortBy==='log_name' && updated_DataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                            <i *ngIf="updated_ColumnsSortBy==='log_name' && !updated_DataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                        </th>
+
+                                        <th class="text-center align-middle">
+                                            Action by
+                                        </th>
+                                        <th class="text-center align-middle">
+                                            Action At
+                                        </th>
+
+                                        <th class="text-center align-middle">...</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of updated_collection | paginate: {
+                                                        currentPage: updated_PageNumber,
+                                                        itemsPerPage: updated_ResultPerPage,
+                                                        totalItems: updated_totalItems,
+                                                        id:'second'
+                                                        } ; index as i;">
+                                        <td class="text-center">{{updatedGetSl(i + 1)}}</td>
+                                        <td class="text-capitalize text-center align-middle">
+                                            <ng-container *ngIf="data.properties">
+                                                <span>
+                                                {{data.properties.profile_info ? data.properties.profile_info.first_name : '' + ' '}}
+                                            </span>
+                                                <span>
+                                                {{data.properties.profile_info ? data.properties.profile_info.middle_name : '' + ' '}}
+                                            </span>
+                                                <span>
+                                                {{data.properties.profile_info ? data.properties.profile_info.last_name : '' + ' '}}
+                                            </span>
+                                            </ng-container>
+                                        </td>
+                                        <td class="text-capitalize text-center align-middle">
+                                            {{data.properties ? data.properties.user_name : ''}}
+                                        </td>
+                                        <td class="text-capitalize text-center align-middle">
+                                            {{data.role_name ? data.role_name.name : ''}}
+                                        </td>
+                                        <td class="text-capitalize text-center align-middle">
+                                            <span *ngIf="data.log_name=='system_user_create'; else updateAction"> Create </span>
+                                            <ng-template #updateAction>
+                                                Update
+                                            </ng-template>
+                                        </td>
+                                        <td class="text-center align-middle"> {{data.causer ? data.causer.profile.first_name : ''}} {{data.causer ? data.causer.profile.middle_name : ''}} {{data.causer ? data.causer.profile.last_name : ''}}
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            {{data.created_at|date:'medium'}}
+                                        </td>
+                                        <td class="text-center">
+                                            <button nz-button nzType="default" (click)="viewUserInfoDialog(data)"><i
+                                                class="fa fa-pencil mr-2"></i> View
+                                        </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="updated_totalItems == 0" class="table-empty">
+                                        <td colspan="8">
+                                            Data Not Found...
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="table-total-count">Total Records {{updated_totalItems}}</p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <pagination-controls (pageChange)="updatedPageChange($event)" id="second" class="my-pagination"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,159 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="card form-head-color " data-color="azure">
+                        <div class="card-header card-header-infinity d-flex justify-content-between">
+                            <h4 class="card-title">Book Appointment Page Manage</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form nz-form [formGroup]="bookAppointmentPageForm" (ngSubmit)="onSubmitForm()">
+                                        <div class="row">
+                                            <input formControlName="id" type="hidden" />
+
+                                            <div class="col-md-12">
+                                                <nz-form-label nzFor="title" nzRequired>Page Title</nz-form-label>
+                                                <nz-form-item>
+                                                    <nz-form-control nzErrorTip="Title is required!">
+                                                        <input nz-input type="text" formControlName="page_title"
+                                                            id="title" placeholder="Enter page title" />
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <nz-alert class="mb-2" *ngIf="imageError" nzType="error"
+                                                    nzMessage="{{imageError}}" nzShowIcon>
+                                                </nz-alert>
+                                                <nz-form-label nzFor="image" nzRequired>
+                                                    Background Image
+                                                </nz-form-label>
+                                                <nz-form-item>
+                                                    <nz-form-control nzValidateStatus="warning"
+                                                        nzWarningTip="Suggested webp Background Image and Ratio: 1920 * 400 px | Maximum Size: 1MB">
+                                                        <input #fileInput (change)="onFileSelected($event)"
+                                                            style="display: none;" accept="image/*" type="file">
+                                                        <button (click)="fileInput.click()" nz-button nz-tooltip
+                                                            nzTooltipPlacement="rightTop"
+                                                            nzTooltipTitle="Only Image File" nzType="primary"
+                                                            type="button">
+                                                            <i class="fa fa-cloud-upload mr-2"></i>
+                                                            Select Image
+                                                        </button>
+
+                                                        <div class="mt-2" *ngIf="imageFile">
+                                                            <img [src]="imageFile" class="w-25"
+                                                                alt="service page background image" />
+                                                            <button nz-button type="button" nzDanger
+                                                                (click)="removeImage()" class="ml-2">
+                                                                <i class="fa fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <nz-form-label nzRequired nzFor="specialty_title">Title
+                                                </nz-form-label>
+                                                <nz-form-item>
+                                                    <nz-form-control nzErrorTip="Specialty title is required!">
+                                                        <input nz-input type="text" formControlName="specialty_title"
+                                                            id="specialty_title" placeholder="Enter title" />
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <nz-form-label nzRequired nzFor="subtitle">Subtitle</nz-form-label>
+                                                <nz-form-item>
+                                                    <nz-form-control nzErrorTip="Subtitle is required!">
+                                                        <input nz-input type="text" formControlName="subtitle"
+                                                            id="subtitle" placeholder="Enter subtitle" />
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+
+                                            <ng-container formArrayName="specialties">
+                                                <div class="col-md-12">
+                                                    <nz-alert nzType="info" class="mb-2"
+                                                        nzDescription="4 specialties will be good fit for your website."
+                                                        nzShowIcon>
+                                                    </nz-alert>
+                                                </div>
+
+                                                <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let specialtyGroup of bookAppointmentPageForm.get('specialties')?.value;
+                                                        let i = index; 
+                                                        let isLast = last; 
+                                                        let isFirst = first" [formGroupName]="i">
+                                                    <input formControlName="id" type="hidden" />
+                                                    <div class="col-md-12 text-right">
+                                                        <nz-tag nzColor="#f50">Specialty- {{i+1}}</nz-tag>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <nz-form-label nzFor="icon_name" nzRequired>Icon (Class
+                                                            Name)</nz-form-label>
+                                                        <nz-form-item>
+                                                            <nz-form-control nzErrorTip="Icon is required!">
+                                                                <input nz-input type="text" formControlName="icon_name"
+                                                                    id="icon_name" placeholder="Icon class name" />
+                                                            </nz-form-control>
+                                                        </nz-form-item>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
+                                                        <nz-form-item>
+                                                            <nz-form-control nzErrorTip="Title is required!">
+                                                                <input nz-input type="text" formControlName="title"
+                                                                    id="title" placeholder="Enter title" />
+                                                            </nz-form-control>
+                                                        </nz-form-item>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <nz-form-label nzFor="description"
+                                                            nzRequired>Description</nz-form-label>
+                                                        <nz-form-item>
+                                                            <nz-form-control nzErrorTip="Description is required!">
+                                                                <textarea nz-input type="text"
+                                                                    formControlName="description"
+                                                                    placeholder="Write the description"
+                                                                    id="description">
+                                                                </textarea>
+                                                            </nz-form-control>
+                                                        </nz-form-item>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <button nz-button type="button" *ngIf="isLast" class="mr-2"
+                                                            nzType="primary" (click)="addSpecialty()">
+                                                            Add Specialty
+                                                        </button>
+                                                        <button nz-button type="button" *ngIf="!isFirst" nzDanger
+                                                            (click)="removeSpecialty(i)">Remove
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="text-right mb-2">
+                                            <button nz-button type="submit"
+                                                [disabled]="bookAppointmentPageForm.invalid || isDisabled || !imageFile"
+                                                nzType="primary">
+                                                Update
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

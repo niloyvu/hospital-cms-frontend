@@ -1,0 +1,115 @@
+<form #userForm="ngForm" (ngSubmit)="onClickSubmit()">
+    <div class="card mb-0" mat-dialog-content>
+        <div class="card-header">
+            <h5>
+                <span *ngIf="type == 'create'">Assign New User to Company</span>
+                <span *ngIf="type == 'update'">Edit Assign User</span>
+            </h5>
+        </div>
+        <div class="card-block">
+            <div class="row mb-2">
+                <div class="col-md-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="user_id" nzRequired>Select user</nz-form-label>
+                        <nz-form-control nzErrorTip="User field is required!">
+                            <ng-container *ngIf="data.type=='create'">
+                                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a User"
+                                           [(ngModel)]="data.user_id" name="user_id" class="w-100" required>
+                                    <nz-option *ngFor="let user of data.user_list"
+                                               [nzLabel]="user.first_name +' '+ user.middle_name+' '+ user.last_name"
+                                               [nzValue]="user.id"></nz-option>
+                                </nz-select>
+                            </ng-container>
+                            <ng-container *ngIf="data.type=='update'">
+                                <input nz-input placeholder="User Name" [(ngModel)]="data.name" name="name"
+                                       #name="ngModel" id="name" [disabled]="true"/>
+                            </ng-container>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="controlPanel" nzRequired>User Panel Type
+                        </nz-form-label>
+                        <nz-form-control nzErrorTip="Control Panel field is required!">
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a Panel"
+                                       [(ngModel)]="data.control_panel_id" name="controlPanel" class="w-100" required>
+                                <nz-option *ngFor="let control of data.control_panel_list"
+                                           [nzLabel]="control.type_name|titlecase" [nzValue]="control.id"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <ng-container *ngFor="let addMore of data.addMore_companies_list; let i=index">
+                        <input type="hidden" [(ngModel)]="addMore.id" name="id_{{i}}"/>
+                        <nz-divider nzDashed nzText="Assign Company {{i+1}}"
+                                    style="margin-bottom: 0; margin-top: 10px;font-size: 12px;color: #eca4a4;"></nz-divider>
+                        <nz-form-item>
+                            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="company_id" nzRequired>Company</nz-form-label>
+                            <nz-form-control nzErrorTip="Company field is required!">
+                                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a Company"
+                                           [(ngModel)]="addMore.company_id" name="company_id_{{i}}"
+                                           (ngModelChange)="companyWiseRole(i, 'clear');" class="w-100" required>
+                                    <nz-option *ngFor="let com of data.companyList" [nzLabel]="com.name"
+                                               [nzValue]="com.id"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="permissiontype" nzRequired>Permission Type
+                            </nz-form-label>
+                            <nz-form-control nzErrorTip="Permission Type is required!">
+                                <nz-radio-group [(ngModel)]="addMore.permissiontype" name="permissiontype_{{i}}"
+                                                required>
+                                    <label nz-radio nzValue="0">Individual</label>
+                                    <label nz-radio nzValue="1">By Role</label>
+                                    <label nz-radio nzValue="2">Special Permission</label>
+                                </nz-radio-group>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item *ngIf="data.addMore_companies_list[i].permissiontype > '0'">
+                            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Select Role
+                            </nz-form-label>
+                            <nz-form-control nzErrorTip="Role field is required!">
+                                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a Role"
+                                           [(ngModel)]="addMore.role_id" name="role_id_{{i}}" class="w-100" required>
+                                    <nz-option *ngFor="let role of roleList" [nzLabel]="role.role_name"
+                                               [nzValue]="role.id"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="status" nzRequired>Status</nz-form-label>
+                            <nz-form-control>
+                                <nz-switch [ngModel]="false" nzCheckedChildren="Active" nzUnCheckedChildren="In-active"
+                                           [(ngModel)]="addMore.status" (change)="changeStatus($event, i)"
+                                           name="status_{{i}}"></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <button type="button" *ngIf="i != 0" nz-button nzType="primary" nzSize="small" nzDanger
+                                    (click)="removeAddmoreRow(addMore)"><i class="fa fa-trash-o mr-2"></i>Remove
+                            </button>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <button *ngIf="i+1 < this.companyCollection.length" type="button" nz-button nzType="primary"
+                                    nzSize="small" (click)="addMoreCompanyAssign()"><i
+                                    class="fa fa-plus mr-2"></i>Add more
+                            </button>
+                        </nz-form-item>
+                    </ng-container>
+                    <nz-divider nzDashed nzText=""
+                                style="margin-bottom: 3px; margin-top: 3px;font-size: 12px;color: #eca4a4;"></nz-divider>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <button mat-raised-button mat-dialog-close color="warn" class="mr-2">Cancel</button>
+                        <button type="submit" mat-raised-button color="primary"
+                                [disabled]="!userForm.form.valid"> {{type|titlecase}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

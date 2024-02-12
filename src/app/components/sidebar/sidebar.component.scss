@@ -1,0 +1,43 @@
+.mobile-logout {
+  display: none;
+}
+
+.btn-group.bootstrap-select.open .caret,
+.dropdown.open .caret,
+.dropup.open .caret,
+a[data-toggle=collapse][aria-expanded=true] .caret {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.hide_menu {
+  display: none;
+}
+
+@media screen and (max-width: 992px) {
+  .mobile-logout {
+    display: block;
+    cursor: pointer;
+  }
+}
+
+
+@media screen and (max-width: 1090px) {
+  .mobile-logout {
+    display: block;
+    cursor: pointer;
+  }
+  .hide_menu {
+    display: block;
+  }
+}
+
+button.mat-focus-indicator.mat-menu-item {
+  width: 100%;
+  height: 43px;
+}
+
+mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
+  position: absolute;
+  left: 30%;
+}

@@ -1,0 +1,305 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity d-flex justify-content-between">
+                        <h4 class="card-title">All Role List</h4>
+                        <button nz-button [routerLink]="['/system/user-role-manager/role-create/']" nzType="default">
+                            <i class="fa fa-plus mr-2"></i>
+                            Create Role
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-between">
+                                <label class="">
+                                    Show
+                                    <select [(ngModel)]="itemPerPage" (ngModelChange)="changedPageItem($event)"
+                                            aria-controls="DataTables_Table_0" class="sort">
+                                        <option value="1000">All</option>
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="100">500</option>
+                                    </select>
+                                    entries
+                                </label>
+                                <label class="search">Search:
+                                    <input type="search" id="search" [(ngModel)]="itemSearch"
+                                           (ngModelChange)="itemSearchChange($event)"
+                                           placeholder="" aria-controls="DataTables_Table_0">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered medium">
+                                <thead>
+                                <tr>
+                                    <th (click)="sort('id')" class="text-center align-middle sort-icon">SL
+                                        <i *ngIf="sortColumn==='id' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='id' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sort('name')" class="text-center align-middle sort-icon">Role Name
+                                        <i *ngIf="sortColumn==='name' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='name' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sort('role_type')" class="text-center align-middle sort-icon">Role Type
+                                        <i *ngIf="sortColumn==='role_type' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='role_type' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sort('created_by')" class="text-center align-middle sort-icon">Create
+                                        by
+                                        <i *ngIf="sortColumn==='created_by' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='created_by' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sort('created_at')" class="text-center align-middle sort-icon">Create
+                                        Date
+                                        <i *ngIf="sortColumn==='created_at' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='created_at' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sort('updated_by')" class="text-center align-middle sort-icon">Updated
+                                        by
+                                        <i *ngIf="sortColumn==='updated_by' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='updated_by' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sort('updated_at')" class="text-center align-middle sort-icon">Update
+                                        Date
+                                        <i *ngIf="sortColumn==='updated_at' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='updated_at' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sort('status')" class="text-center align-middle sort-icon">Status
+                                        <i *ngIf="sortColumn==='status' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='status' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let data of collection | paginate: {
+                                                        currentPage: pageRequest,
+                                                        itemsPerPage: itemPerPage,
+                                                        totalItems: totalItem,
+                                                        id:'first'
+                                                        } ; index as i;">
+                                    <td class="text-center">{{getSL(i + 1)}}</td>
+                                    <td class="text-capitalize">{{data.name}}</td>
+                                    <td class="text-capitalize">{{data.role_type}}</td>
+                                    <td> {{data.created_by ? data.created_by.profile.first_name : ''}} {{data.created_by ? data.created_by.profile.middle_name : ''}} {{data.created_by ? data.created_by.profile.last_name : ''}}
+                                    </td>
+                                    <td>
+                                        <small>{{data.created_at|date:'medium'}}</small>
+                                    </td>
+                                    <td> {{data.updated_by ? data.updated_by.profile.first_name : ''}} {{data.updated_by ? data.updated_by.profile.middle_name : ''}} {{data.updated_by ? data.updated_by.profile.last_name : ''}}
+                                    </td>
+                                    <td>
+                                        <small>{{data.updated_at|date:'medium'}}</small>
+                                    </td>
+                                    <td class="text-center">
+                                        <nz-tag *ngIf="data.status=='1'" nzColor="processing">Active</nz-tag>
+                                        <nz-tag *ngIf="data.status=='0'" nzColor="error">Inactive</nz-tag>
+                                    </td>
+                                    <td class="text-center">
+                                        <button nz-button nzType="default"
+                                                [routerLink]="['/system/user-role-manager/role-edit/', data.id]"><i
+                                                class="fa fa-pencil mr-2"></i> Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="totalItem == 0" class="table-empty">
+                                    <td colspan="8">
+                                        Data Not Found...
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="table-total-count">Total Records {{totalItem}}</p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <pagination-controls (pageChange)="pageChange($event)" id="first"
+                                                     class="my-pagination"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-12 mt-3">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity">
+                        <h4 class="card-title">Updated Role List</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="">
+                                    Show
+                                    <select [(ngModel)]="itemPerPageUpdate"
+                                            (ngModelChange)="changedPageItemUpdate($event)"
+                                            aria-controls="DataTables_Table_0" class="sort">
+                                        <option value="1000">All</option>
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="100">500</option>
+                                    </select>
+                                    entries
+                                </label>
+                            </div>
+                            <div class="col-md-6  text-right mb-2">
+                                <label class="search">Search:
+                                    <input type="search" id="searchUpdate" [(ngModel)]="itemSearchUpdate"
+                                           (ngModelChange)="itemSearchChangeUpdate($event)"
+                                           placeholder="" aria-controls="DataTables_Table_0">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered medium">
+                                <thead>
+                                <tr>
+                                    <th (click)="sortUpdate('id')" class="text-center align-middle sort-icon">SL
+                                        <i *ngIf="sortColumn==='id' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='id' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sortUpdate('name')" class="text-center align-middle sort-icon">Role
+                                        Name
+                                        <i *ngIf="sortColumn==='name' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='name' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sortUpdate('name')" class="text-center align-middle sort-icon">Previous
+                                        Role Name
+                                        <i *ngIf="sortColumn==='name' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='name' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sortUpdate('log_name')" class="text-center align-middle sort-icon">
+                                        Action
+                                        <i *ngIf="sortColumn==='log_name' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='log_name' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sortUpdate('causer_id')" class="text-center align-middle sort-icon">
+                                        Action Taken By
+                                        <i *ngIf="sortColumn==='causer_id' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='causer_id' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                    <th (click)="sortUpdate('created_at')" class="text-center align-middle sort-icon">
+                                        Action Take Date
+                                        <i *ngIf="sortColumn==='created_at' && dataOrderBy" class="material-icons">
+                                            south
+                                        </i>
+                                        <i *ngIf="sortColumn==='created_at' && !dataOrderBy" class="material-icons">
+                                            north
+                                        </i>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr *ngFor="let data of collection_update | paginate: {
+                                        currentPage: pageRequestUpdate,
+                                        itemsPerPage: itemPerPageUpdate,
+                                        totalItems: totalItemUpdate,
+                                        id:'second'
+                                        } ; index as i;">
+                                    <td class="text-center">{{getSL(i + 1)}}</td>
+                                    <td class="text-center">
+                                        {{data.properties ? data.properties.change_name : ''}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{data.properties ? data.properties.previous_name : ''}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{data.log_name}}
+                                    </td>
+                                    <td class="text-center"> {{data.causer ? data.causer.profile.first_name : ''}} {{data.causer ? data.causer.profile.middle_name : ''}} {{data.causer ? data.causer.profile.last_name : ''}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{data.created_at|date:'medium'}}
+                                    </td>
+
+                                </tr>
+                                <tr *ngIf="totalItemUpdate == 0" class="table-empty">
+                                    <td colspan="8">
+                                        Data Not Found...
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="table-total-count">Total Records {{totalItemUpdate}}</p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <pagination-controls (pageChange)="pageChangeUpdate($event)" class="my-pagination"
+                                                     id="second"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

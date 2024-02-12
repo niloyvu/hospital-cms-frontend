@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>{{data.save_type |titlecase}} Operation Type
+    <button [mat-dialog-close]="true" class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+<form #createForm="ngForm" (ngSubmit)="onsubmit()">
+    <mat-dialog-content class="mat-typography">
+        
+        <div class="col-md-12">
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" class="ant-label" nzFor="title" nzRequired>Operation Type</nz-form-label>
+                <nz-form-control [nzSm]="14"[nzXs]="24" class="ant-error-message" nzErrorTip="Operation Type is required!">
+                    <input   [disabled]="data.save_type == 'update' ? true : false"  [(ngModel)]="data.title"  id="title" name="title" nz-input placeholder="Operation Type" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-md-12">
+            <nz-form-item>
+                <nz-form-label    [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="remarks" nzRequired>Remarks</nz-form-label>
+                <nz-form-control  [nzSm]="14" [nzXs]="24"  class="ant-error-message">
+                    <input [(ngModel)]="data.remarks" id="remarks" name="remarks" nz-input placeholder="Remarks" required type="text" style="width: 100%;" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+       
+
+        <div class="col-md-12" *ngIf="data.save_type=='update' ">
+            <nz-form-item>
+            <nz-form-label    [nzSm]="6" [nzXs]="24"   class="ant-label" nzFor="status" nzRequired>Select Status</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" class="ant-error-message" nzErrorTip="Status is required!">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Status"  [(ngModel)]="data.status" id="status" name="status" style="width: 100%;" >
+                <nz-option nzCustomContent nzLabel="Active" [nzValue]="1">
+                Active
+                </nz-option>
+                <nz-option nzCustomContent nzLabel="Inactive" [nzValue]="0">
+                Inactive
+                </nz-option>
+                
+            </nz-select>
+            </nz-form-control>
+            </nz-form-item>
+        </div>
+    </mat-dialog-content>
+
+    
+
+    <mat-dialog-actions align="end">
+        <button [mat-dialog-close]="true" class="mr-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            close
+        </button>
+        <button [disabled]="!createForm.form.valid || submitButtonEnable" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data.save_type |titlecase}}
+        </button>
+    </mat-dialog-actions>
+</form>

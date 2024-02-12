@@ -1,0 +1,20 @@
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-6">
+            <nz-alert nzType="info" class="mb-2"
+                nzDescription="Shop List Page Header Section" nzShowIcon>
+            </nz-alert>
+            <app-page-header [apiEndpoint]="'website/shop/page-header'"
+                [pageType]="pageType.ListPage">
+            </app-page-header>
+        </div>
+        <div class="col-md-6">
+            <nz-alert nzType="info" class="mb-2"
+                nzDescription="Product Details Page Header Section" nzShowIcon>
+            </nz-alert>
+            <app-page-header [apiEndpoint]="'website/shop/page-header'"
+                [pageType]="pageType.DetailsPage">
+            </app-page-header>
+        </div>
+    </div>
+</div>

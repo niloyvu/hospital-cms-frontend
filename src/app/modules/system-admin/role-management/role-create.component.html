@@ -1,0 +1,345 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card form-head-color " data-color="azure">
+                    <div class="card-header card-header-infinity">
+                        <h4 class="card-title">Create New Role Form</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="name" nzRequired>Role Name
+                                    </nz-form-label>
+                                    <nz-form-control nzErrorTip="Role name is required!">
+                                        <input [(ngModel)]="name" type="text" name="name" nz-input placeholder="Role Name" style="width: 100%;" />
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col-md-4">
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="role_type" nzRequired>Role Type
+                                    </nz-form-label>
+                                    <nz-form-control nzErrorTip="Role Type is required!">
+                                        <nz-select [(ngModel)]="role_type"  name="module" id="module" nzPlaceHolder="Select Module" nzShowSearch>
+                                            <nz-option [nzValue]="'Admin'" [nzLabel]="'Admin'" ></nz-option>
+                                            <nz-option [nzValue]="'Management'" [nzLabel]="'Management'" ></nz-option>
+                                            <nz-option [nzValue]="'Employee'" [nzLabel]="'Employee'" ></nz-option>
+                                            <nz-option [nzValue]="'Councillor'" [nzLabel]="'Councillor'" ></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col-md-4">
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="select_module" nzRequired>Filter
+                                    </nz-form-label>
+                                    <nz-form-control nzErrorTip="Modules is required!">
+                                        <nz-select [(ngModel)]="select_module" (ngModelChange)="getComponent()" name="module" id="module" nzPlaceHolder="Select Module" nzShowSearch>
+                                            <nz-option [nzValue]="'all'" [nzLabel]="'All'" *ngIf="module_list.length>1"></nz-option>
+                                            <nz-option *ngFor="let module of module_list" [nzLabel]="module.translations ? module.translations[0]['title'] : module.component_name" [nzValue]=" module.id "></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4 ">
+                            <div class="col-sm-12 ">
+                                <div *ngIf="component_collection.length>0">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="head d-flex justify-content-between ">
+                                                <strong>Role Component Name</strong>
+                                                <mat-checkbox class="pr-3  mb-0" (change)="checkAll($event)" [color]="'primary'">Check All
+                                                </mat-checkbox>
+                                            </div>
+                                            <div class="row" *ngFor="let component of component_collection ; index as i;">
+                                                <div class="col-sm-12">
+                                                    <div class="border-1 d-flex justify-content-between">
+                                                        <div class="component">
+                                                            <i class="{{component.icon}} mr-2"> </i> {{component.component_name}}
+                                                        </div>
+                                                        <div class="permission">
+                                                            <ng-container *ngFor="let permission of component.permissions; index as j">
+                                                                <span>
+                                                                    <mat-checkbox *ngIf="permission.permission_type=='1'" class="pr-3"
+                                                                                style="height: 23px;"
+                                                                                [(ngModel)]="permission.is_permitted"
+                                                                                [color]="'primary'" (change)="permissionArray($event, permission.id)">
+                                                                        Create
+                                                                    </mat-checkbox>
+                                                                    <mat-checkbox *ngIf="permission.permission_type=='2'" class="pr-3"
+                                                                            style="height: 23px;"
+                                                                            [(ngModel)]="permission.is_permitted" name="edit_{{j}}"
+                                                                            [color]="'primary'" (change)="permissionArray($event, permission.id)">
+                                                                        Edit
+                                                                    </mat-checkbox>
+                                                                    <mat-checkbox *ngIf="permission.permission_type=='3'" class="pr-3"
+                                                                            style="height: 23px;"
+                                                                            [(ngModel)]="permission.is_permitted" name="update_{{j}}"
+                                                                            [color]="'primary'" (change)="permissionArray($event, permission.id)">
+                                                                        Update
+                                                                    </mat-checkbox>
+                                                                    <mat-checkbox *ngIf="permission.permission_type=='4'" class="pr-3"
+                                                                            style="height: 23px;"
+                                                                            [(ngModel)]="permission.is_permitted" name="delete_{{j}}"
+                                                                            [color]="'primary'" (change)="permissionArray($event, permission.id)">
+                                                                        Delete
+                                                                    </mat-checkbox>
+                                                                </span>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 pl-5" *ngIf="component.is_component=='0'">
+                                                    <div class="row" *ngFor="let childes of component.childs; index as k">
+                                                        <div class="col-sm-12">
+                                                            <div class="border-2 d-flex justify-content-between">
+                                                                <div class="component">
+                                                                    <i class="{{childes.icon}} mr-2"> </i> {{childes.component_name}}
+                                                                </div>
+                                                                <div class="permission">
+                                                                    <ng-container *ngFor="let childes_permission of childes.permissions; index as l">
+                                                                        <mat-checkbox (change)="permissionArray($event, childes_permission.id)" *ngIf="childes_permission.permission_type=='1'" class="pr-3" style="height: 23px;" [(ngModel)]="childes_permission.is_permitted" name="create_{{l}}" [color]="'primary'">
+                                                                            Create
+                                                                        </mat-checkbox>
+                                                                        <mat-checkbox (change)="permissionArray($event, childes_permission.id)" *ngIf="childes_permission.permission_type=='2'" class="pr-3" style="height: 23px;" [(ngModel)]="childes_permission.is_permitted" name="edit_{{l}}" [color]="'primary'">
+                                                                            Edit
+                                                                        </mat-checkbox>
+                                                                        <mat-checkbox (change)="permissionArray($event, childes_permission.id)" *ngIf="childes_permission.permission_type=='3'" class="pr-3" style="height: 23px;" [(ngModel)]="childes_permission.is_permitted" name="update_{{l}}" [color]="'primary'">
+                                                                            Update
+                                                                        </mat-checkbox>
+                                                                        <mat-checkbox (change)="permissionArray($event, childes_permission.id)" *ngIf="childes_permission.permission_type=='4'" class="pr-3" style="height: 23px;" [(ngModel)]="childes_permission.is_permitted" name="delete_{{l}}" [color]="'primary'">
+                                                                            Delete
+                                                                        </mat-checkbox>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12  pl-5" *ngIf="childes.is_component=='0'">
+                                                            <div class="row" *ngFor="let child of childes.childs; index as m">
+                                                                <div class="col-sm-12">
+                                                                    <div class="border-3 d-flex justify-content-between">
+                                                                        <div class="component">
+                                                                            <i class="{{child.icon}} mr-2"> </i> {{child.component_name}}
+                                                                        </div>
+                                                                        <div class="permission">
+                                                                            <ng-container *ngFor="let child_permission of child.permissions; index as n">
+                                                                                <mat-checkbox (change)="permissionArray($event, child_permission.id)" *ngIf="child_permission.permission_type=='1'" class="pr-3" style="height: 23px;" [(ngModel)]="child_permission.is_permitted" name="create_{{n}}" [color]="'primary'">
+                                                                                    Create
+                                                                                </mat-checkbox>
+                                                                                <mat-checkbox (change)="permissionArray($event, child_permission.id)" *ngIf="child_permission.permission_type=='2'" class="pr-3" style="height: 23px;" [(ngModel)]="child_permission.is_permitted" name="edit_{{n}}" [color]="'primary'">
+                                                                                    Edit
+                                                                                </mat-checkbox>
+                                                                                <mat-checkbox (change)="permissionArray($event, child_permission.id)" *ngIf="child_permission.permission_type=='3'" class="pr-3" style="height: 23px;" [(ngModel)]="child_permission.is_permitted" name="update_{{n}}" [color]="'primary'">
+                                                                                    Update
+                                                                                </mat-checkbox>
+                                                                                <mat-checkbox (change)="permissionArray($event, child_permission.id)" *ngIf="child_permission.permission_type=='4'" class="pr-3" style="height: 23px;" [(ngModel)]="child_permission.is_permitted" name="delete_{{n}}" [color]="'primary'">
+                                                                                    Delete
+                                                                                </mat-checkbox>
+                                                                            </ng-container>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12  pl-5" *ngIf="child.is_component=='0'">
+                                                                    <div class="row" *ngFor="let last_child of child.childs; index as o">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="border-4  d-flex justify-content-between">
+                                                                                <div class="component">
+                                                                                    <i class="{{last_child.icon}} mr-2"> </i> {{last_child.component_name}}
+                                                                                </div>
+                                                                                <div class="permission">
+                                                                                    <ng-container *ngFor="let last_child_permission of last_child.permissions; index as p">
+                                                                                        <mat-checkbox (change)="permissionArray($event, last_child_permission.id)" *ngIf="last_child_permission.permission_type=='1'" class="pr-3" style="height: 23px;" [(ngModel)]="last_child_permission.is_permitted" name="create_{{p}}" [color]="'primary'">
+                                                                                            Create
+                                                                                        </mat-checkbox>
+                                                                                        <mat-checkbox (change)="permissionArray($event, last_child_permission.id)" *ngIf="last_child_permission.permission_type=='2'" class="pr-3" style="height: 23px;" [(ngModel)]="last_child_permission.is_permitted" name="edit_{{p}}" [color]="'primary'">
+                                                                                            Edit
+                                                                                        </mat-checkbox>
+                                                                                        <mat-checkbox (change)="permissionArray($event, last_child_permission.id)" *ngIf="last_child_permission.permission_type=='3'" class="pr-3" style="height: 23px;" [(ngModel)]="last_child_permission.is_permitted" name="update_{{p}}" [color]="'primary'">
+                                                                                            Update
+                                                                                        </mat-checkbox>
+                                                                                        <mat-checkbox (change)="permissionArray($event, last_child_permission.id)" *ngIf="last_child_permission.permission_type=='4'" class="pr-3" style="height: 23px;" [(ngModel)]="last_child_permission.is_permitted" name="delete_{{p}}" [color]="'primary'">
+                                                                                            Delete
+                                                                                        </mat-checkbox>
+                                                                                    </ng-container>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- <nz-table nzBordered nzSize="small">
+                                        <thead>
+                                            <tr>
+                                                <th>Component Name
+                                                    <span class="float-right" style="height: 23px;">
+                                                        <mat-checkbox class="pr-3  mb-0" (change)="checkAll($event)"
+                                                                    [color]="'primary'">Check All
+                                                        </mat-checkbox>
+                                                    </span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="w-100" *ngFor="let component of component_collection ; index as i;">
+                                            <tr>
+                                                <td class="text-capitalize bg-info">
+                                                    <i class="{{component.icon}} mr-2"> </i> {{component.component_name}}
+
+                                                    <ng-container *ngFor="let permission of component.permissions; index as j">
+                                                        <span class="float-right" style="height: 23px;">
+                                                             <mat-checkbox *ngIf="permission.permission_type=='1'" class="pr-3"
+                                                                           style="height: 23px;"
+                                                                           [(ngModel)]="permission.is_permitted"
+                                                                           [color]="'primary'" (change)="permissionArray($event, permission.id)">
+                                                                Create
+                                                            </mat-checkbox>
+                                                            <mat-checkbox *ngIf="permission.permission_type=='2'" class="pr-3"
+                                                                      style="height: 23px;"
+                                                                      [(ngModel)]="permission.is_permitted" name="edit_{{j}}"
+                                                                      [color]="'primary'" (change)="permissionArray($event, permission.id)">
+                                                                Edit
+                                                            </mat-checkbox>
+                                                            <mat-checkbox *ngIf="permission.permission_type=='3'" class="pr-3"
+                                                                      style="height: 23px;"
+                                                                      [(ngModel)]="permission.is_permitted" name="update_{{j}}"
+                                                                      [color]="'primary'" (change)="permissionArray($event, permission.id)">
+                                                                Update
+                                                            </mat-checkbox>
+                                                            <mat-checkbox *ngIf="permission.permission_type=='4'" class="pr-3"
+                                                                      style="height: 23px;"
+                                                                      [(ngModel)]="permission.is_permitted" name="delete_{{j}}"
+                                                                      [color]="'primary'" (change)="permissionArray($event, permission.id)">
+                                                                Delete
+                                                            </mat-checkbox>
+                                                        </span>
+                                                    </ng-container>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <nz-table nzBordered nzSize="small">
+                                                        <ng-container *ngIf="component.is_component=='0'">
+                                                            <tbody *ngFor="let childes of component.childs; index as k">
+                                                                <tr>
+                                                                    <td colspan="3" class="text-capitalize bg-info">
+                                                                        <i class="{{childes.icon}} mr-2"> </i> {{childes.component_name}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <ng-container *ngFor="let childes_permission of childes.permissions; index as l">
+                                                                            <mat-checkbox (change)="permissionArray($event, childes_permission.id)" *ngIf="childes_permission.permission_type=='1'" class="pr-3" style="height: 23px;" [(ngModel)]="childes_permission.is_permitted" name="create_{{l}}" [color]="'primary'">
+                                                                                Create
+                                                                            </mat-checkbox>
+                                                                            <mat-checkbox (change)="permissionArray($event, childes_permission.id)" *ngIf="childes_permission.permission_type=='2'" class="pr-3" style="height: 23px;" [(ngModel)]="childes_permission.is_permitted" name="edit_{{l}}" [color]="'primary'">
+                                                                                Edit
+                                                                            </mat-checkbox>
+                                                                            <mat-checkbox (change)="permissionArray($event, childes_permission.id)" *ngIf="childes_permission.permission_type=='3'" class="pr-3" style="height: 23px;" [(ngModel)]="childes_permission.is_permitted" name="update_{{l}}" [color]="'primary'">
+                                                                                Update
+                                                                            </mat-checkbox>
+                                                                            <mat-checkbox (change)="permissionArray($event, childes_permission.id)" *ngIf="childes_permission.permission_type=='4'" class="pr-3" style="height: 23px;" [(ngModel)]="childes_permission.is_permitted" name="delete_{{l}}" [color]="'primary'">
+                                                                                Delete
+                                                                            </mat-checkbox>
+                                                                        </ng-container>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3">
+                                                                        <nz-table nzBordered nzSize="small">
+                                                                            <ng-container *ngIf="childes.is_component=='0'">
+                                                                                <tbody *ngFor="let child of childes.childs; index as m">
+                                                                                    <tr>
+                                                                                        <td colspan="3" class="text-capitalize bg-info">
+                                                                                            <i class="{{child.icon}} mr-2"> </i> {{child.component_name}}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <ng-container *ngFor="let child_permission of child.permissions; index as n">
+                                                                                                <mat-checkbox (change)="permissionArray($event, child_permission.id)" *ngIf="child_permission.permission_type=='1'" class="pr-3" style="height: 23px;" [(ngModel)]="child_permission.is_permitted" name="create_{{n}}" [color]="'primary'">
+                                                                                                    Create
+                                                                                                </mat-checkbox>
+                                                                                                <mat-checkbox (change)="permissionArray($event, child_permission.id)" *ngIf="child_permission.permission_type=='2'" class="pr-3" style="height: 23px;" [(ngModel)]="child_permission.is_permitted" name="edit_{{n}}" [color]="'primary'">
+                                                                                                    Edit
+                                                                                                </mat-checkbox>
+                                                                                                <mat-checkbox (change)="permissionArray($event, child_permission.id)" *ngIf="child_permission.permission_type=='3'" class="pr-3" style="height: 23px;" [(ngModel)]="child_permission.is_permitted" name="update_{{n}}" [color]="'primary'">
+                                                                                                    Update
+                                                                                                </mat-checkbox>
+                                                                                                <mat-checkbox (change)="permissionArray($event, child_permission.id)" *ngIf="child_permission.permission_type=='4'" class="pr-3" style="height: 23px;" [(ngModel)]="child_permission.is_permitted" name="delete_{{n}}" [color]="'primary'">
+                                                                                                    Delete
+                                                                                                </mat-checkbox>
+                                                                                            </ng-container>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="3">
+                                                                                            <nz-table nzBordered nzSize="small">
+                                                                                                <ng-container *ngIf="child.is_component=='0'">
+                                                                                                    <tbody *ngFor="let last_child of child.childs; index as o">
+                                                                                                        <tr>
+                                                                                                            <td colspan="3" class="text-capitalize bg-info">
+                                                                                                                <i class="{{last_child.icon}} mr-2"> </i> {{last_child.component_name}}
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <ng-container *ngFor="let last_child_permission of last_child.permissions; index as p">
+                                                                                                                    <mat-checkbox (change)="permissionArray($event, last_child_permission.id)" *ngIf="last_child_permission.permission_type=='1'" class="pr-3" style="height: 23px;" [(ngModel)]="last_child_permission.is_permitted" name="create_{{p}}" [color]="'primary'">
+                                                                                                                        Create
+                                                                                                                    </mat-checkbox>
+                                                                                                                    <mat-checkbox (change)="permissionArray($event, last_child_permission.id)" *ngIf="last_child_permission.permission_type=='2'" class="pr-3" style="height: 23px;" [(ngModel)]="last_child_permission.is_permitted" name="edit_{{p}}" [color]="'primary'">
+                                                                                                                        Edit
+                                                                                                                    </mat-checkbox>
+                                                                                                                    <mat-checkbox (change)="permissionArray($event, last_child_permission.id)" *ngIf="last_child_permission.permission_type=='3'" class="pr-3" style="height: 23px;" [(ngModel)]="last_child_permission.is_permitted" name="update_{{p}}" [color]="'primary'">
+                                                                                                                        Update
+                                                                                                                    </mat-checkbox>
+                                                                                                                    <mat-checkbox (change)="permissionArray($event, last_child_permission.id)" *ngIf="last_child_permission.permission_type=='4'" class="pr-3" style="height: 23px;" [(ngModel)]="last_child_permission.is_permitted" name="delete_{{p}}" [color]="'primary'">
+                                                                                                                        Delete
+                                                                                                                    </mat-checkbox>
+                                                                                                                </ng-container>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </ng-container>
+                                                                                            </nz-table>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </ng-container>
+                                                                        </nz-table>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </ng-container>
+                                                    </nz-table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </nz-table> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="pull-right">
+                                    <div *ngIf="component_collection.length > 0">
+                                        <button type="submit" *ngIf="onsubmit == 0" mat-raised-button color="primary" (click)="create_role()"> Create Role
+                                        </button>
+                                    </div>
+                                    <button *ngIf="onsubmit == 1" mat-raised-button color="primary"> Submiting...
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

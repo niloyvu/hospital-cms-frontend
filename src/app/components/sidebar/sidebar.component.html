@@ -1,0 +1,33 @@
+<div class="logo">
+    <a routerLink="/dashboard" class="simple-text">
+        <img class="main-logo" src="./assets/img/logo.png" />
+        <img class="side-logo" src="./assets/img/febicon.png" />
+    </a>
+</div>
+<div class="sidebar-wrapper">
+    <div *ngIf="isMobileMenu()">
+        <ul class="nav navbar-nav nav-mobile-menu">
+        </ul>
+    </div>
+    <ul nz-menu nzMode="inline" [nzTheme]="'dark'">
+        <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
+        <ng-template #menuTpl let-menus>
+            <ng-container *ngFor="let menu of menus; index as i; ">
+                <li *ngIf="!menu.children" nz-menu-item [nzPaddingLeft]="menu.level * 12" [nzDisabled]="menu.disabled"
+                    [nzSelected]="menu.selected">
+                    <i nz-icon [nzType]="menu.icon" class="mr-2" *ngIf="menu.icon"></i>
+                    <a [routerLink]="[menu.path]"><span>{{ menu.title }}</span></a>
+                </li>
+                <li *ngIf="menu.children" nz-submenu [nzPaddingLeft]="menu.level * 4" [nzTitle]="menu.title"
+                    [nzIcon]="menu.icon" [nzDisabled]="menu.disabled"
+                    (nzOpenChange)="openHandler(menu.subvalue, i, menu.level)">
+                    <ul>
+                        <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }">
+
+                        </ng-container>
+                    </ul>
+                </li>
+            </ng-container>
+        </ng-template>
+    </ul>
+</div>

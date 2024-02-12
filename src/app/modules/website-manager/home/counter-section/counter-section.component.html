@@ -1,0 +1,74 @@
+<div class="card-header card-header-infinity d-flex justify-content-between">
+    <h4 class="card-title">Counter Section Manage</h4>
+</div>
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <nz-alert nzType="info" class="mb-2" nzDescription="4 counters will be good fit for your website."
+                nzShowIcon>
+            </nz-alert>
+        </div>
+        <div class="col-md-12">
+            <form nz-form [formGroup]="counterForm" (ngSubmit)="onSubmitForm()">
+                <ng-container formArrayName="counters">
+                    <div class="row mt-2 pt-2 pb-2" *ngFor="let counterGroup of counterForm.get('counters')?.value; 
+                                                    let i = index; 
+                                                    let isLast = last; 
+                                                    let isFirst = first" [formGroupName]="i">
+                        <input formControlName="id" type="hidden" />
+                        <div class="col-md-12 text-right">
+                            <nz-tag nzColor="#f50">Counter- {{i+1}}</nz-tag>
+                        </div>
+
+                        <div class="col-md-12">
+                            <nz-form-label nzFor="icon_name" nzRequired>
+                                Icon (Class Name)
+                            </nz-form-label>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Icon is required!">
+                                    <input nz-input type="text" formControlName="icon_name" id="icon_name"
+                                        placeholder="Icon class name" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-md-12">
+                            <nz-form-label nzRequired nzFor="value">Value</nz-form-label>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Value is required!">
+                                    <input nz-input type="number" formControlName="value" id="value"
+                                        placeholder="Enter value" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-md-12">
+                            <nz-form-label nzRequired nzFor="text">Text</nz-form-label>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Text is required!">
+                                    <input nz-input type="text" formControlName="text" id="text"
+                                        placeholder="Enter text" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+
+                        <div class="col-md-12">
+                            <button nz-button type="button" *ngIf="isLast" class="mr-2" nzType="primary"
+                                (click)="addCounter()">
+                                Add Counter
+                            </button>
+                            <button nz-button type="button" *ngIf="!isFirst" nzDanger (click)="removeCounter(i)">Remove
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <div class="text-right mb-2">
+                    <button nz-button type="submit" [disabled]="counterForm.invalid || isDisabled" nzType="primary">
+                        Update
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>

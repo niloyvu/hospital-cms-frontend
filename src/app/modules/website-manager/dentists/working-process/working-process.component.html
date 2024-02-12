@@ -1,0 +1,127 @@
+<div class="row">
+    <div class="col-md-12">
+        <form nz-form [formGroup]="workingProcessForm" (ngSubmit)="onSubmitWorkingProcessForm()">
+            <div class="row">
+                <input formControlName="id" type="hidden" />
+                <div class="col-md-12">
+                    <nz-form-label nzRequired nzFor="title">Title
+                    </nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Title is required!">
+                            <input nz-input type="text" formControlName="title" id="title" placeholder="Enter title" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-md-12">
+                    <nz-form-label nzRequired nzFor="subtitle">Subtitle</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Subtitle is required!">
+                            <input nz-input type="text" formControlName="subtitle" id="subtitle"
+                                placeholder="Enter subtitle" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-md-6">
+                    <nz-form-label nzRequired nzFor="trusted_by_text">Trusted By Text</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Trusted by text is required!">
+                            <input nz-input type="text" placeholder="Write the trusted by text"
+                                formControlName="trusted_by_text" id="trusted_by_text" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-md-6">
+                    <nz-form-label nzRequired nzFor="trusted_by_count">Trusted By Count</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Count is required!">
+                            <input nz-input type="number" placeholder="Write the count value"
+                                formControlName="trusted_by_count" id="trusted_by_count" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-md-6">
+                    <nz-form-label nzRequired nzFor="established_text">Established Title</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Established title is required!">
+                            <input nz-input type="text" placeholder="Write the established title"
+                                formControlName="established_text" id="established_text" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-md-6">
+                    <nz-form-label nzRequired nzFor="established_count">Established Years</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Count is required!">
+                            <input nz-input type="number" placeholder="Write the count value"
+                                formControlName="established_count" id="established_count" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <ng-container formArrayName="processes">
+                    <div class="col-md-12">
+                        <nz-alert nzType="info" class="mb-2"
+                            nzDescription="3 processes will be good fit for your website." nzShowIcon>
+                        </nz-alert>
+                    </div>
+                    <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let ProcessGroup of workingProcessForm.get('processes')?.value; 
+                                                        let i = index; 
+                                                        let isLast = last; 
+                                                        let isFirst = first" [formGroupName]="i">
+                        <input formControlName="id" type="hidden" />
+                        <div class="col-md-12 text-right">
+                            <nz-tag nzColor="#f50">Process- {{i+1}}</nz-tag>
+                        </div>
+
+                        <div class="col-md-12">
+                            <nz-form-label nzRequired nzFor="icon_class">Icon (Class Name)
+                            </nz-form-label>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Icon name is required!">
+                                    <input nz-input type="text" formControlName="icon_class" id="icon_class"
+                                        placeholder="Enter icon name" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-md-12">
+                            <nz-form-label nzRequired nzFor="title">Process
+                                Title</nz-form-label>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Title is required!">
+                                    <input nz-input type="text" formControlName="title" id="title"
+                                        placeholder="Enter title" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-md-12">
+                            <nz-form-label nzRequired nzFor="description">Description
+                            </nz-form-label>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Description is required!">
+                                    <textarea nz-input type="text" placeholder="Write the description information..."
+                                        formControlName="description" id="description">
+                                                                    </textarea>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-md-12">
+                            <button nz-button type="button" *ngIf="isLast" class="mr-2" nzType="primary"
+                                (click)="addProcess()">Add
+                                Process
+                            </button>
+                            <button nz-button type="button" *ngIf="!isFirst" nzDanger (click)="removeProcess(i)">Remove
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+
+            <div class="text-right mb-2">
+                <button nz-button type="submit" [disabled]="workingProcessForm.invalid || isDisabled" nzType="primary">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

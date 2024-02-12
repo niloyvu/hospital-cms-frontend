@@ -1,0 +1,73 @@
+<h2 mat-dialog-title style="margin: 0;">
+    {{data? 'Update': 'Create'}} Navigation Link
+    <button type="button" (click)="closeModal()" class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+
+<form [formGroup]="navigationMenuForm" (ngSubmit)="onSubmitForm()">
+    <mat-dialog-content class="mat-typography">
+        <div class="row">
+            <input formControlName="id" type="hidden" />
+
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Name is required!">
+                        <input nz-input type="text" formControlName="name" id="title" placeholder="Enter name" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="path">Path</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Path is required!">
+                        <input nz-input type="text" formControlName="path" id="title" placeholder="Enter path" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="Order">Order</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Order is required!">
+                        <nz-input-number style="width:100%" formControlName="order" id="order"
+                            placeholder="Enter order">
+                        </nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Status</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                            formControlName="status" name="status" id="status">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="button">Is Button</nz-form-label>
+                        <nz-switch class="ml-2" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                            formControlName="is_button" name="button" id="button">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button type="button" (click)="closeModal()" class="mr-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            Close
+        </button>
+        <button type="submit" [disabled]="navigationMenuForm.invalid || isDisabled" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data? 'Update': 'Create'}}
+        </button>
+
+    </mat-dialog-actions>
+</form>

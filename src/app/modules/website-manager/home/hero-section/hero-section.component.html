@@ -1,0 +1,82 @@
+<div class="card-header card-header-infinity d-flex justify-content-between">
+    <h4 class="card-title">Hero Section Manage</h4>
+</div>
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form nz-form [formGroup]="heroSectionForm" (ngSubmit)="onSubmitForm()">
+                <div class="row">
+                    <input formControlName="id" type="hidden" />
+
+                    <div class="col-md-12">
+                        <nz-alert class="mb-2" *ngIf="imageError" nzType="error" nzMessage="{{imageError}}" nzShowIcon>
+                        </nz-alert>
+                        <nz-form-label nzFor="image" nzRequired>
+                            Image
+                        </nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzValidateStatus="warning"
+                                nzWarningTip="Suggested webp Transparent Background Image and Ratio: 630 * 778 px | Maximum Size: 1MB">
+                                <input #fileInput (change)="onFileSelected($event)" style="display: none;"
+                                    accept="image/*" type="file">
+                                <button (click)="fileInput.click()" nz-button nz-tooltip nzTooltipPlacement="rightTop"
+                                    nzTooltipTitle="Only Image File" nzType="primary" type="button">
+                                    <i class="fa fa-cloud-upload mr-2"></i>
+                                    Select Image
+                                </button>
+
+                                <div class="mt-2" *ngIf="imageFile">
+                                    <img [src]="imageFile" alt="hero section image" height="300" width="250" />
+                                    <button nz-button type="button" nzDanger (click)="removeImage()" class="ml-2">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Title is required!">
+                                <input nz-input type="text" formControlName="title" id="title"
+                                    placeholder="Enter title" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzRequired nzFor="subtitle">Subtitle
+                        </nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Subtitle is required!">
+                                <input nz-input type="text" formControlName="subtitle" id="subtitle"
+                                    placeholder="Enter subtitle" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzRequired nzFor="rating">Rating Text
+                        </nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Rating is required!">
+                                <input nz-input type="text" formControlName="rating_text" id="rating"
+                                    placeholder="Enter rating text" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                </div>
+
+                <div class="text-right mb-2">
+                    <button type="submit" [disabled]="heroSectionForm.invalid || isDisabled" type="submit" nz-button
+                        nzType="primary">
+                        <i class="icofont icofont-arrow-right"></i>
+                        Update
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>

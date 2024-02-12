@@ -1,0 +1,61 @@
+<div class="card-header card-header-infinity d-flex justify-content-between">
+    <h4 class="card-title">Service Section Text Manage</h4>
+</div>
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form nz-form [formGroup]="homeServiceForm" (ngSubmit)="onSubmitForm()">
+                <div class="row">
+                    <input formControlName="id" type="hidden" />
+
+                    <div class="col-md-12">
+                        <nz-form-label nzFor="title" nzRequired>Title</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Title is required!">
+                                <input nz-input type="text" formControlName="title" id="title"
+                                    placeholder="Enter title" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzFor="subtitle" nzRequired>Subtitle</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Subtitle is required!">
+                                <input nz-input type="text" formControlName="subtitle" id="subtitle"
+                                    placeholder="Enter subtitle" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label nzFor="front_link_text" nzRequired>Front Link
+                            Text</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Front link text is required!">
+                                <input nz-input type="text" formControlName="front_link_text" id="front_link_text"
+                                    placeholder="Enter front link text" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-label id="link_text" nzRequired>Link Text</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Link text is required!">
+                                <input nz-input type="text" formControlName="link_text" id="link_text"
+                                    placeholder="Enter link text" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                </div>
+
+                <div class="text-right mb-2">
+                    <button nz-button type="submit" [disabled]="homeServiceForm.invalid || isDisabled" nzType="primary">
+                        Update
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
