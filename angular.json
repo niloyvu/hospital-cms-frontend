@@ -32,9 +32,12 @@
             "styles": [
               "src/styles.scss",
               "src/assets/css/demo.css",
+              "src/assets/scss/material-dashboard.scss",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "@angular/material/prebuilt-themes/indigo-pink.css"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {

@@ -151,15 +151,14 @@ button#menu-toggle-2 {
   background-color: #fd7e14;
 }
 
-.mat-dialog-title {
+.mat-mdc-dialog-title {
   margin: 0 0 20px;
   display: block;
   background: url('../img/pen-top-bg.png');
   background-size: cover;
-  color: #fff;
+  color: #fff !important;
   padding: 10px 15px;
   position: relative;
-  top: -25px;
   border-radius: 0px 0px 6px 6px;
 }
 
@@ -422,10 +421,6 @@ button#menu-toggle-2 {
 
   .sidebar.toggled .ant-menu-submenu li {
     padding-left: 12px !important;
-  }
-
-  .sidebar.toggled li span {
-    display: none;
   }
 
   .sidebar.toggled li .ant-menu-submenu-arrow {

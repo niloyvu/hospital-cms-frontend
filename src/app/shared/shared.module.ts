@@ -5,6 +5,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { NgZorroAntdModule } from './ng-zorro-antd.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RemoveHyphensPipe } from './pipes/remove-hyphens.pipe';
 import { OrderStatusColorPipe } from './pipes/order-status-color.pipe';
 import { AppointmentStatusPipe } from './pipes/appointment-status.pipe';
 import { AppointmentStatusColorPipe } from './pipes/appointment-status-color.pipe';
@@ -12,6 +13,7 @@ import { PageHeaderComponent } from './components/service-page-header/page-heade
 
 @NgModule({
   declarations: [
+    RemoveHyphensPipe,
     PageHeaderComponent,
     OrderStatusColorPipe,
     AppointmentStatusPipe,
@@ -20,28 +22,23 @@ import { PageHeaderComponent } from './components/service-page-header/page-heade
   imports: [
     CommonModule,
     FormsModule,
-    FormsModule,
     EditorModule,
     MaterialModule,
     NgZorroAntdModule,
-    NgZorroAntdModule, 
     ReactiveFormsModule,
     NgxPaginationModule,
-    ReactiveFormsModule,
   ], 
 
   exports: [
     FormsModule,
-    FormsModule,
     CommonModule,
     EditorModule,
     MaterialModule,
+    RemoveHyphensPipe,
     NgZorroAntdModule,
-    NgZorroAntdModule, 
     PageHeaderComponent,
     ReactiveFormsModule,
     NgxPaginationModule,
-    ReactiveFormsModule,
     OrderStatusColorPipe,
     AppointmentStatusPipe,
     AppointmentStatusColorPipe

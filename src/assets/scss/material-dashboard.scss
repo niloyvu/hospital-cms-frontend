@@ -20,8 +20,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "core/variables";
 @import "core/mixins";
-@import "~bootstrap/scss/bootstrap";
-// Core Components
+
 @import "core/buttons";
 @import "core/checkboxes";
 @import "core/radios";
@@ -37,10 +36,8 @@
 @import "core/dropdown";
 @import "core/togglebutton";
 @import "core/ripples";
-@import "core/footers";
 @import "core/sidebar-and-main-panel";
 @import "core/fixed-plugin";
-@import "core/tables";
 @import "core/misc";
 @import "core/cards";
 @import "core/cards/card-stats";
@@ -52,10 +49,6 @@
 @import "core/plugins/perfect-scrollbar";
 @import "core/responsive";
 @import "core/angular-modal.scss";
-
-
-
-// IGEN
 
 .igen-product-model {
     .clearfix {

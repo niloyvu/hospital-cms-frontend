@@ -1,11 +1,11 @@
 // import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-// import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../shared/auth/auth.service';
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { CommonService } from '../../services/common.service';
-// import { LanguageService } from 'src/app/services/language.service';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'app-navbar',
@@ -25,12 +25,16 @@ export class NavbarComponent implements OnInit {
   userImageFile!: any;
   erroeMsg!: any;
 
+  @Output() handleSidenav = new EventEmitter<boolean>();
+
   constructor(
     location: Location,
     private router: Router,
     public auth: AuthService,
     private element: ElementRef,
     public common: CommonService,
+    public translate: TranslateService,
+    public _languageService: LanguageService
   ) {
 
     this.location = location;
@@ -53,11 +57,7 @@ export class NavbarComponent implements OnInit {
         this.mobile_menu_visible = 0;
       }
     });
-    // $('#menu-toggle-2').click(function (e) {
-    //   e.preventDefault();
-    //   $('.sidebar').toggleClass('toggled');
-    //   $('.main-panel').toggleClass('toggled-main');
-    // });
+
 
     // const new_color = localStorage.getItem('data-color');
     // if (new_color) {
@@ -65,6 +65,10 @@ export class NavbarComponent implements OnInit {
     // } else {
     //   document.querySelector('.navbare-color').setAttribute('data-color', 'azure');
     // }
+  }
+
+  handleSideBar() {
+    this.handleSidenav.emit(true);
   }
 
   sidebarOpen() {

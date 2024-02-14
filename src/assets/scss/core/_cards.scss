@@ -73,12 +73,12 @@
     // Card raised elevation: 8dp
     @include box-shadow($bmd-shadow-8dp);
   }
-  @include media-breakpoint-up(lg) {
-    // On desktop, cards can have a resting elevation of 0dp and gain an elevation of 8dp on hover.
-    &.bmd-card-flat {
-      box-shadow: none;
-    }
-  }
+  // @include media-breakpoint-up(lg) {
+  //   // On desktop, cards can have a resting elevation of 0dp and gain an elevation of 8dp on hover.
+  //   &.bmd-card-flat {
+  //     box-shadow: none;
+  //   }
+  // }
   .card-header {
     border-bottom: none;
     background: transparent;
@@ -136,14 +136,7 @@
       }
     }
   }
-  .card-header-infinity .card-icon,
-  .card-header-infinity .card-text,
-  .card-header-infinity:not(.card-header-icon):not(.card-header-text),
-  &.bg-infinity,
-  &.card-rotate.bg-infinity .front,
-  &.card-rotate.bg-infinity .back {
-    background: #563d7c;
-  }
+
   .card-header-primary .card-icon,
   .card-header-primary .card-text,
   .card-header-primary:not(.card-header-icon):not(.card-header-text),
