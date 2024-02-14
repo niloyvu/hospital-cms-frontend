@@ -21,13 +21,13 @@
                                     accept="image/*" type="file">
                                 <button nz-button (click)="fileInput.click()" nz-tooltip nzTooltipPlacement="rightTop"
                                     nzTooltipTitle="Only Image File" nzType="primary" type="button">
-                                    <i class="fa fa-cloud-upload mr-2"></i>
+                                    <i class="fa fa-cloud-upload me-2"></i>
                                     Select Image
                                 </button>
 
                                 <div class="mt-2" *ngIf="imageFile">
                                     <img [src]="imageFile" alt="hero section image" height="300" width="250" />
-                                    <button nz-button type="button" nzDanger (click)="removeImage()" class="ml-2">
+                                    <button nz-button type="button" nzDanger (click)="removeImage()" class="ms-2">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>
@@ -105,7 +105,7 @@
                                                         let isLast = last; 
                                                         let isFirst = first" [formGroupName]="i">
                             <input formControlName="id" type="hidden" />
-                            <div class="col-md-12 text-right">
+                            <div class="col-md-12 text-end">
                                 <nz-tag nzColor="#f50">Feature- {{i+1}}</nz-tag>
                             </div>
 
@@ -132,7 +132,7 @@
                                 </nz-form-item>
                             </div>
                             <div class="col-md-12">
-                                <button nz-button type="button" *ngIf="isLast" class="mr-2" nzType="primary"
+                                <button nz-button type="button" *ngIf="isLast" class="me-2" nzType="primary"
                                     (click)="addFeature()">Add
                                     Feature
                                 </button>
@@ -145,7 +145,7 @@
 
                 </div>
 
-                <div class="text-right mb-2">
+                <div class="text-end mb-2">
                     <button nz-button type="submit" [disabled]="whoWeAreForm.invalid || isDisabled" nzType="primary">
                         Update
                     </button>

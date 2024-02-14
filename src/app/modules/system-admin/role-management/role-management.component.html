@@ -6,7 +6,7 @@
                     <div class="card-header card-header-infinity d-flex justify-content-between">
                         <h4 class="card-title">All Role List</h4>
                         <button nz-button [routerLink]="['/system/user-role-manager/role-create/']" nzType="default">
-                            <i class="fa fa-plus mr-2"></i>
+                            <i class="fa fa-plus me-2"></i>
                             Create Role
                         </button>
                     </div>
@@ -136,7 +136,7 @@
                                     <td class="text-center">
                                         <button nz-button nzType="default"
                                                 [routerLink]="['/system/user-role-manager/role-edit/', data.id]"><i
-                                                class="fa fa-pencil mr-2"></i> Edit
+                                                class="fa fa-pencil me-2"></i> Edit
                                         </button>
                                     </td>
                                 </tr>
@@ -153,7 +153,7 @@
                             <div class="col-md-6">
                                 <p class="table-total-count">Total Records {{totalItem}}</p>
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="col-md-6 text-end">
                                 <pagination-controls (pageChange)="pageChange($event)" id="first"
                                                      class="my-pagination"></pagination-controls>
                             </div>
@@ -186,7 +186,7 @@
                                     entries
                                 </label>
                             </div>
-                            <div class="col-md-6  text-right mb-2">
+                            <div class="col-md-6  text-end mb-2">
                                 <label class="search">Search:
                                     <input type="search" id="searchUpdate" [(ngModel)]="itemSearchUpdate"
                                            (ngModelChange)="itemSearchChangeUpdate($event)"
@@ -291,7 +291,7 @@
                             <div class="col-md-6">
                                 <p class="table-total-count">Total Records {{totalItemUpdate}}</p>
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="col-md-6 text-end">
                                 <pagination-controls (pageChange)="pageChangeUpdate($event)" class="my-pagination"
                                                      id="second"></pagination-controls>
                             </div>

@@ -14,7 +14,7 @@
                         <nz-form-item>
                             <nz-form-control nzErrorTip="Contact us is required!">
                                 <editor placeholder="Write the contact information..." formControlName="contact_us"
-                                    [init]="editorConfig">
+                                [apiKey]="editorApiKey" [init]="editorConfig">
                                 </editor>
                             </nz-form-control>
                         </nz-form-item>
@@ -35,7 +35,7 @@
                         <nz-form-item>
                             <nz-form-control nzErrorTip="Opening hours is required!">
                                 <editor placeholder="Write the contact information..." formControlName="opening_hours"
-                                    [init]="editorConfig">
+                                [apiKey]="editorApiKey" [init]="editorConfig">
                                 </editor>
                             </nz-form-control>
                         </nz-form-item>
@@ -43,7 +43,7 @@
 
                 </div>
 
-                <div class="text-right mb-2">
+                <div class="text-end mb-2">
                     <button nz-button type="submit" [disabled]="heroForm.invalid || isDisabled" nzType="primary">
                         Update
                     </button>

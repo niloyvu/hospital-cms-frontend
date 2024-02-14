@@ -1,11 +1,11 @@
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 import { CommonService } from 'src/app/services/common.service';
 import { DetailsEditorConfig } from 'src/app/shared/config/editor';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DataService } from 'src/app/services/data.service';
-
+import { environment } from 'src/environments/environment.development';
 @Component({
   selector: 'app-dentist-details',
   templateUrl: './dentist-details.component.html',
@@ -15,6 +15,9 @@ export class DentistDetailsComponent implements OnInit, OnDestroy {
   dentistId!: number;
   isDisabled: boolean = false;
   editorConfig = DetailsEditorConfig;
+  
+  editorApiKey = environment.editorApiKey;
+
   dentistDetailsForm!: FormGroup;
   imageFile: string | null = null;
   doctorName: string = '';

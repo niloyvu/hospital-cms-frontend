@@ -1,10 +1,8 @@
 import { Subscription } from 'rxjs';
-
-import { EditorConfig } from 'src/app/shared/config/editor';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 import { CommonService } from 'src/app/services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-about-us',
@@ -13,12 +11,9 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class AboutUsComponent implements OnInit, OnDestroy {
 
-
   fileUpload: any;
   imageError!: string;
   fileExtension!: string;
-  editorConfig = EditorConfig;
-
   isDisabled: boolean = false;
   aboutUsPageForm!: FormGroup;
 

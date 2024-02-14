@@ -61,7 +61,7 @@
                                                         let isLast = last; 
                                                         let isFirst = first" [formGroupName]="i">
                             <input formControlName="id" type="hidden" />
-                            <div class="col-md-12 text-right">
+                            <div class="col-md-12 text-end">
                                 <nz-tag nzColor="#f50">Progress Bar - {{i+1}}</nz-tag>
                             </div>
 
@@ -86,7 +86,7 @@
                                 </nz-form-item>
                             </div>
                             <div class="col-md-12">
-                                <button *ngIf="isLast" class="mr-2" type="button" nz-button nzType="primary"
+                                <button *ngIf="isLast" class="me-2" type="button" nz-button nzType="primary"
                                     (click)="addProgressBar()">Add
                                     Progress Bar
                                 </button>
@@ -99,7 +99,7 @@
 
                 </div>
 
-                <div class="text-right mb-2">
+                <div class="text-end mb-2">
                     <button type="submit" [disabled]="whyChooseUsForm.invalid || isDisabled" type="submit" nz-button
                         nzType="primary">
                         <i class="icofont icofont-arrow-right"></i>

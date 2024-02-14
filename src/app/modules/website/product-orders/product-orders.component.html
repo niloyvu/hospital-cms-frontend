@@ -6,7 +6,7 @@
                     <div class="card-header card-header-infinity d-flex justify-content-between">
                         <h4 class="card-title">Website Orders</h4>
                         <button nz-button (click)="addOrder()" nzType="default">
-                            <i class="fa fa-plus mr-2"></i>
+                            <i class="fa fa-plus me-2"></i>
                             Add Order
                         </button>
                     </div>
@@ -70,7 +70,7 @@
                                 <thead>
                                     <tr>
                                         <th (click)="sortBy('id')" style="width: 50px;"
-                                            class="text-left align-middle sort-icon">
+                                            class="text-start align-middle sort-icon">
                                             SL
                                             <i *ngIf="columnsSortBy==='id' && dataOrderBy" class="material-icons">
                                                 south
@@ -79,7 +79,7 @@
                                                 north
                                             </i>
                                         </th>
-                                        <th (click)="sortBy('product_id')" class="text-left align-middle sort-icon">
+                                        <th (click)="sortBy('product_id')" class="text-start align-middle sort-icon">
                                             Product
                                             <i *ngIf="columnsSortBy==='product_id' && dataOrderBy"
                                                 class="material-icons">
@@ -91,7 +91,7 @@
                                             </i>
                                         </th>
 
-                                        <th (click)="sortBy('name')" class="text-left align-middle sort-icon">
+                                        <th (click)="sortBy('name')" class="text-start align-middle sort-icon">
                                             Name
                                             <i *ngIf="columnsSortBy==='name' && dataOrderBy" class="material-icons">
                                                 south
@@ -101,7 +101,7 @@
                                             </i>
                                         </th>
 
-                                        <th (click)="sortBy('phone')" class="text-left align-middle sort-icon">
+                                        <th (click)="sortBy('phone')" class="text-start align-middle sort-icon">
                                             Phone
                                             <i *ngIf="columnsSortBy==='phone' && dataOrderBy" class="material-icons">
                                                 south
@@ -110,7 +110,7 @@
                                                 north
                                             </i>
                                         </th>
-                                        <th (click)="sortBy('district')" class="text-left align-middle sort-icon">
+                                        <th (click)="sortBy('district')" class="text-start align-middle sort-icon">
                                             District
                                             <i *ngIf="columnsSortBy==='district' && dataOrderBy" class="material-icons">
                                                 south
@@ -120,7 +120,7 @@
                                                 north
                                             </i>
                                         </th>
-                                        <th (click)="sortBy('thana')" class="text-left align-middle sort-icon">
+                                        <th (click)="sortBy('thana')" class="text-start align-middle sort-icon">
                                             Thana
                                             <i *ngIf="columnsSortBy==='thana' && dataOrderBy" class="material-icons">
                                                 south
@@ -139,7 +139,7 @@
                                                 north
                                             </i>
                                         </th>
-                                        <th (click)="sortBy('product_price')" class="text-right align-middle sort-icon">
+                                        <th (click)="sortBy('product_price')" class="text-end align-middle sort-icon">
                                             Product Price
                                             <i *ngIf="columnsSortBy==='product_price' && dataOrderBy"
                                                 class="material-icons">
@@ -151,7 +151,7 @@
                                             </i>
                                         </th>
                                         <th (click)="sortBy('delivery_charge')"
-                                            class="text-right align-middle sort-icon">
+                                            class="text-end align-middle sort-icon">
                                             Delivery Charge
                                             <i *ngIf="columnsSortBy==='delivery_charge' && dataOrderBy"
                                                 class="material-icons">
@@ -162,7 +162,7 @@
                                                 north
                                             </i>
                                         </th>
-                                        <th (click)="sortBy('total_amount')" class="text-left align-middle sort-icon">
+                                        <th (click)="sortBy('total_amount')" class="text-start align-middle sort-icon">
                                             Total Price
                                             <i *ngIf="columnsSortBy==='total_amount' && dataOrderBy"
                                                 class="material-icons">
@@ -207,6 +207,7 @@
                                     <tr *ngFor="let order of orders | paginate: {
                                                                         currentPage: this.pageNumber,
                                                                         itemsPerPage: this.resultPerPage,
+                                                                        totalItems: totalItems,
                                                                         id: 'table'
                                                                         }; let i=index;">
                                         <td class="text-center">{{getSl(i + 1)}}</td>
@@ -229,13 +230,13 @@
                                         <td class="text-center">
                                             {{order?.quantity}}
                                         </td>
-                                        <td class="text-right">
+                                        <td class="text-end">
                                             ৳ {{order?.product_price | number}}
                                         </td>
-                                        <td class="text-right">
+                                        <td class="text-end">
                                             ৳ {{order?.delivery_charge}}
                                         </td>
-                                        <td class="text-right">
+                                        <td class="text-end">
                                             ৳ {{order?.total_amount | number}}
                                         </td>
 
@@ -255,7 +256,7 @@
                                         <td class="text-center">
                                             <button nz-button nzType="default" nzSize="small"
                                                 (click)="updateOrder(order)">
-                                                <i class="fa fa-pencil mr-2"></i>
+                                                <i class="fa fa-pencil me-2"></i>
                                                 Edit
                                             </button>
                                         </td>
@@ -272,7 +273,7 @@
                             <div class="col-md-6">
                                 <p class="table-total-count"> Total Appointments: {{totalItems}}</p>
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="col-md-6 text-end">
                                 <pagination-controls (pageChange)="pageChange($event)" id="table" class="my-pagination">
                                 </pagination-controls>
                             </div>

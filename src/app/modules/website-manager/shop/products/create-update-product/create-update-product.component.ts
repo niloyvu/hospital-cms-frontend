@@ -1,11 +1,12 @@
 import { Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
-import { DetailsEditorConfig, EditorConfig } from 'src/app/shared/config/editor';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DataService } from 'src/app/services/data.service';
+import { environment } from 'src/environments/environment.development';
+import { DetailsEditorConfig, EditorConfig } from 'src/app/shared/config/editor';
 
 @Component({
   selector: 'app-create-update-product',
@@ -20,16 +21,18 @@ export class CreateUpdateProductComponent implements OnInit, OnDestroy {
   productForm!: FormGroup;
   imageFile: string | null = null;
   productName: string = '';
-  
+
   productCategories: any[] = [];
-  
+
   fileUpload: any;
   imageError!: string;
   fileExtension!: string;
-  
+
   editorConfig = DetailsEditorConfig;
+  editorApiKey = environment.editorApiKey;
   editorConfigForShortDescription = EditorConfig;
-  public rootUrl = `${this.commonService.rootUrl}/uploads/`;
+  rootUrl = `${this.commonService.rootUrl}/uploads/`;
+
   private submission$: Subscription = new Subscription();
   private subscriptions$: Subscription = new Subscription();
 
@@ -119,7 +122,7 @@ export class CreateUpdateProductComponent implements OnInit, OnDestroy {
             .onBufferEvent.emit(false);
           if (response.code === 200) {
             if (this.productId) {
-              this.router.navigate(['/website/shop/products']);
+              this.router.navigate(['/website-cms/shop/products']);
             }
             this.initializeFormGroup();
             this.imageFile = null;

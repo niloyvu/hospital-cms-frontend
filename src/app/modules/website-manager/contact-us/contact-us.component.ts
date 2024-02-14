@@ -1,9 +1,10 @@
 import { Subscription } from 'rxjs';
 import { EditorConfig } from 'src/app/shared/config/editor';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 import { CommonService } from 'src/app/services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DataService } from 'src/app/services/data.service';
+import { environment } from './../../../../environments/environment.development';
 
 @Component({
   selector: 'app-contact-us',
@@ -16,6 +17,7 @@ export class ContactUsComponent implements OnInit, OnDestroy {
   imageError!: string;
   fileExtension!: string;
   editorConfig = EditorConfig;
+  editorApiKey = environment.editorApiKey;
 
   isDisabled: boolean = false;
   contactUsPageForm!: FormGroup;

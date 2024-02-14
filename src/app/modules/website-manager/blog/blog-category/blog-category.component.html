@@ -1,7 +1,7 @@
 <div class="card-header card-header-infinity d-flex justify-content-between">
     <h4 class="card-title">Manage Blog Category</h4>
     <button nz-button (click)="createBlogCategory()" nzType="default">
-        <i class="fa fa-plus mr-2"></i>
+        <i class="fa fa-plus me-2"></i>
         Create Category
     </button>
 </div>
@@ -33,7 +33,7 @@
         <table class="table table-bordered medium ">
             <thead>
                 <tr>
-                    <th (click)="sortBy('id')" style="width: 50px;" class="text-left align-middle sort-icon">
+                    <th (click)="sortBy('id')" style="width: 50px;" class="text-start align-middle sort-icon">
                         SL
                         <i *ngIf="columnsSortBy==='id' && dataOrderBy" class="material-icons">
                             south
@@ -43,7 +43,7 @@
                         </i>
                     </th>
 
-                    <th (click)="sortBy('title')" class="text-left align-middle sort-icon">
+                    <th (click)="sortBy('title')" class="text-start align-middle sort-icon">
                         Title
                         <i *ngIf="columnsSortBy==='title' && dataOrderBy" class="material-icons">
                             south
@@ -53,7 +53,7 @@
                         </i>
                     </th>
 
-                    <th (click)="sortBy('date')" class="text-left align-middle sort-icon">
+                    <th (click)="sortBy('date')" class="text-start align-middle sort-icon">
                         Date
                         <i *ngIf="columnsSortBy==='date' && dataOrderBy" class="material-icons">
                             south
@@ -90,11 +90,12 @@
                 <tr *ngFor="let category of categories | paginate: {
                                         currentPage: this.pageNumber,
                                         itemsPerPage: this.resultPerPage,
+                                        totalItems: totalItems,
                                         id: 'table'
                                         }; let i=index;">
                     <td class="text-center">{{getSl(i + 1)}}</td>
 
-                    <td class="text-capitalize text-left w-auto">
+                    <td class="text-capitalize text-start w-auto">
                         {{category.title}}
                     </td>
 
@@ -114,7 +115,7 @@
                     </td>
                     <td class="text-center" style="width: 100px;">
                         <button nz-button (click)="updateBlogCategory(category)" nzType="default" nzSize="small">
-                            <i class="fa fa-pencil mr-2"></i>
+                            <i class="fa fa-pencil me-2"></i>
                             Edit
                         </button>
                     </td>
@@ -131,7 +132,7 @@
         <div class="col-md-6">
             <p class="table-total-count"> Total Services: {{totalItems}}</p>
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-6 text-end">
             <pagination-controls (pageChange)="pageChange($event)" id="table" class="my-pagination">
             </pagination-controls>
         </div>

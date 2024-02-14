@@ -15,7 +15,7 @@
             <ng-container *ngFor="let menu of menus; index as i; ">
                 <li *ngIf="!menu.children" nz-menu-item [nzPaddingLeft]="menu.level * 12" [nzDisabled]="menu.disabled"
                     [nzSelected]="menu.selected">
-                    <i nz-icon [nzType]="menu.icon" class="mr-2" *ngIf="menu.icon"></i>
+                    <i nz-icon [nzType]="menu.icon" class="me-2" *ngIf="menu.icon"></i>
                     <a [routerLink]="[menu.path]"><span>{{ menu.title }}</span></a>
                 </li>
                 <li *ngIf="menu.children" nz-submenu [nzPaddingLeft]="menu.level * 4" [nzTitle]="menu.title"

@@ -7,191 +7,160 @@
     <mat-dialog-content class="mat-typography">
         <div class="col-md-12 p-0">
             <div class="row">
-                <div class="col-md-12">
-                    <!-- <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="name">Name </mat-label>
-                        <input type="text" id="name" matInput [(ngModel)]="data.component_name" name="component_name" #component_name="ngModel" placeholder="Component Name" autocomplete="off" required>
-                        <mat-error *ngIf="component_name.valid || component_name.pristine || component_name.touched">
-                            Component Name
-                            <strong>is required</strong>
-                        </mat-error>
-                    </mat-form-field> -->
-                    <ng-container *ngFor="let language of languages; index as i">
-                        <mat-form-field class="full-width" appearance="outline">
-                            <mat-label for="name">Name ({{language.code|uppercase}})</mat-label>
-                            <input type="text" id="name" matInput [(ngModel)]="language.name" name="{{language.code + i+1}}" #ok="ngModel" placeholder="Name ({{language.code|uppercase}})" autocomplete="off" required>
-                            <mat-error *ngIf="ok.valid || ok.pristine || ok.touched">
-                                Name ({{language.code|uppercase}}) <strong>is required</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </ng-container>
+                <ng-container *ngFor="let language of languages; index as i">
+                    <div class="col-md-6">
+                        <nz-form-label nzFor="name" nzRequired>Name
+                            ({{language.code}})</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Name ({{language.code}})is required">
+                                <input type="text" id="name" nz-input [(ngModel)]="language.name"
+                                    name="{{language.code + i+1}}" placeholder="Name ({{language.code}})" required>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </ng-container>
+                <div class="col-md-6">
+                    <nz-form-label nzFor="sort_order">Sort</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Sort order is required">
+                            <input type="number" id="sort_order" nz-input [(ngModel)]="data.sort_order"
+                                name="sort_order" placeholder="Sort Order" required>
+                        </nz-form-control>
+                    </nz-form-item>
                 </div>
                 <div class="col-md-6">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="sort_order">Sort</mat-label>
-                        <input type="number" id="sort_order" matInput [(ngModel)]="data.sort_order" name="sort_order" placeholder="Sort Order" #sort_order="ngModel" required>
-                        <mat-error *ngIf="sort_order.valid || sort_order.pristine || sort_order.touched">
-                            Sort Order
-                            <strong>is required</strong>
-                        </mat-error>
-                    </mat-form-field>
+                    <nz-form-label nzFor="icon">Icon</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Icon is required">
+                            <input type="text" id="icon" nz-input [(ngModel)]="data.icon" name="icon"
+                                placeholder="Icon">
+                        </nz-form-control>
+                    </nz-form-item>
                 </div>
-                <div class="col-md-6">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="icon">Icon</mat-label>
-                        <input type="text" id="icon" matInput [(ngModel)]="data.icon" name="icon" placeholder="Icon" #icon="ngModel">
-                        <!-- <mat-error *ngIf="icon.valid || icon.pristine || icon.touched">
-                            Icon
-                            <strong>is required</strong>
-                        </mat-error> -->
-                    </mat-form-field>
-                </div>
-                <div class="col-md-12">
-                    <!-- <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="note">Instruction (Note)</mat-label>
-                        <textarea id="note" matInput [(ngModel)]="data.note" name="note" placeholder="Note" #note="ngModel" required></textarea>
-                        <mat-error *ngIf="note.valid || note.pristine || note.touched">
-                            Note
-                            <strong>is required</strong>
-                        </mat-error>
-                    </mat-form-field> -->
-                    <ng-container *ngFor="let language of languages; index as i">
-                        <mat-form-field class="full-width" appearance="outline">
-                            <mat-label for="note">Instruction (Note) ({{language.code|uppercase}})</mat-label>
-                            <textarea id="note" matInput [(ngModel)]="language.note" name="note_{{i}}" placeholder="Instruction (Note) ({{language.code|uppercase}})" #note="ngModel" required></textarea>
-                            <mat-error *ngIf="note.valid || note.pristine || note.touched">
-                                Instruction (Note) ({{language.code|uppercase}}) <strong>is required</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </ng-container>
-                </div>
-                <!-- <div class="col-md-12">
-                    <input style="padding: 3px;" class="form-control" type="file" id="file" value={this.basicFileUpload} (change)="fileUploads($event);">
-                </div>
-                <div class="col-md-12" *ngIf="data.file_path">
-                    <a target="_blank" style="padding: 5px 10px;" href="{{baseUrl + data.file_path}}" class="btn btn-success btn-sm"><i class="fa fa-download"></i> &emsp; Download</a>
-                </div> -->
+                <ng-container *ngFor="let language of languages; index as i">
+                    <div class="col-md-12">
+                        <nz-form-label nzFor="note" nzRequired>Instruction
+                            ({{language.code}})</nz-form-label>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Instruction ({{language.code}})">
+                                <textarea id="note" nz-input [(ngModel)]="language.note" name="note_{{i}}"
+                                    placeholder="Instruction ({{language.code}})" required>
+                            </textarea>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </ng-container>
             </div>
-
             <div class="row">
                 <div class="col-md-12">
-                    <nz-divider nzDashed nzText="Development Purpose" style="margin-bottom: 10px; margin-top: 10px;font-size: 12px;color: #eca4a4;">
+                    <nz-divider nzDashed nzText="Development Purpose"
+                        style="margin-bottom: 10px; margin-top: 10px;font-size: 12px;color: #eca4a4;">
                     </nz-divider>
                 </div>
+                <div class="col-md-6">
+                    <nz-form-label nzFor="class" nzRequired>Class</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input nz-input type="text" [(ngModel)]="data.component" name="class" id="class"
+                                placeholder="Component Class">
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
 
-                <!-- <div class="col-md-6" *ngIf="data.save_type == 'Create'">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="component">Class</mat-label>
-                        <input type="text" id="component" matInput [(ngModel)]="data.component" name="component" placeholder="Component Class" #component="ngModel" >
-                        <mat-error *ngIf="component.valid || component.pristine || component.touched">
-                            Component Class
-                            <strong>is required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div> -->
                 <div class="col-md-6">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="component-edit">Class</mat-label>
-                        <input type="text" id="component-edit" matInput [(ngModel)]="data.component" name="component" placeholder="Component Class">
-                    </mat-form-field>
+                    <nz-form-label nzFor="path" nzRequired>Path</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input type="text" id="path" nz-input [(ngModel)]="data.path" name="path"
+                                placeholder="Path">
+                        </nz-form-control>
+                    </nz-form-item>
                 </div>
-                <!-- <div class="col-md-6" *ngIf="data.save_type == 'Create'">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="path">Path</mat-label>
-                        <input type="text" id="path" matInput [(ngModel)]="data.path" name="path" placeholder="Path" #path="ngModel" >
-                        <mat-error *ngIf="path.valid || path.pristine || path.touched">
-                            Component Path
-                            <strong>is required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div> -->
+
+                <div class="col-md-12" *ngIf="data.save_type == 'Create'">
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Is component is required">
+                            <nz-form-label nzRequired nzFor="is_component">Is Component</nz-form-label>
+                            <nz-select nzPlaceHolder="Select is component or not" [(ngModel)]="data.is_component"
+                                nzAllowClear nzPlaceHolder="Select a product" name="is_component">
+                                <nz-option [nzValue]="1" nzLabel="Yes"></nz-option>
+                                <nz-option [nzValue]="0" nzLabel="No"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
                 <div class="col-md-6">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="path-edit">Path</mat-label>
-                        <input type="text" id="path-edit" matInput [(ngModel)]="data.path" name="path" placeholder="Path" #path="ngModel">
-                    </mat-form-field>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Is notify is required">
+                            <nz-form-label nzRequired nzFor="is_notify">Is Notify</nz-form-label>
+                            <nz-select nzPlaceHolder="Select is notify or not" [(ngModel)]="data.is_notify" nzAllowClear
+                                name="is_notify">
+                                <nz-option nzValue="yes" nzLabel="Yes"></nz-option>
+                                <nz-option nzValue="no" nzLabel="No"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
                 </div>
-                <div class="col-md-6" *ngIf="data.save_type == 'Create'">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="is_component">Is Component</mat-label>
-                        <mat-select [(ngModel)]="data.is_component" name="is_component" #is_component="ngModel" required>
-                            <mat-option [value]="0">No</mat-option>
-                            <mat-option [value]="1">Yes</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="is_component.valid || is_component.pristine || is_component.touched">
-                            Is Component is <strong>required !</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+
                 <div class="col-md-6">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="is_notify">Is Notify</mat-label>
-                        <mat-select [(ngModel)]="data.is_notify" name="is_notify" #is_notify="ngModel" required>
-                            <mat-option value="no">No</mat-option>
-                            <mat-option value="yes">Yes</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="is_notify.valid || is_notify.pristine || is_notify.touched">
-                            Is Notify is <strong>required !</strong>
-                        </mat-error>
-                    </mat-form-field>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Menu visibility is required">
+                            <nz-form-label nzRequired nzFor="menu_visibility">Menu Visibility</nz-form-label>
+                            <nz-select nzPlaceHolder="Select menu visibility" [(ngModel)]="data.menu_visibility"
+                                nzAllowClear name="menu_visibility">
+                                <nz-option [nzValue]="1" nzLabel="Website Only"></nz-option>
+                                <nz-option [nzValue]="2" nzLabel="CMS Only"></nz-option>
+                                <nz-option [nzValue]="3" nzLabel="Both"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
                 </div>
-                <div class="col-md-6" >
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="menu_visibility">Menu Visibility</mat-label>
-                        <mat-select [(ngModel)]="data.menu_visibility" name="menu_visibility" #menu_visibility="ngModel" required>
-                            <mat-option [value]="1">Website Only</mat-option>
-                            <mat-option [value]="2">CMS Only</mat-option>
-                            <mat-option [value]="3">Both</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="menu_visibility.valid || menu_visibility.pristine || menu_visibility.touched">
-                            Menu visibility <strong>required !</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+
                 <div class="col-md-6" *ngIf="data.save_type == 'Edit'">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="is_component">Is Component</mat-label>
-                        <mat-select disabled="true" [(ngModel)]="data.is_component" name="is_component" #is_component="ngModel" required>
-                            <mat-option [value]="0">No</mat-option>
-                            <mat-option [value]="1">Yes</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="is_component.valid || is_component.pristine || is_component.touched">
-                            Is Component is <strong>required !</strong>
-                        </mat-error>
-                    </mat-form-field>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Is component is required">
+                            <nz-form-label nzRequired nzFor="is_component">Is Component</nz-form-label>
+                            <nz-select nzPlaceHolder="Select is component or not" disabled
+                                [(ngModel)]="data.is_component" nzAllowClear name="is_component">
+                                <nz-option [nzValue]="1" nzLabel="Yes"></nz-option>
+                                <nz-option [nzValue]="0" nzLabel="No"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
                 </div>
                 <div class="col-md-12">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label for="comments">Developer Note (Documentation)</mat-label>
-                        <textarea id="comments" matInput [(ngModel)]="data.comments" name="comments" placeholder="Comments" #comments="ngModel" required></textarea>
-                        <mat-error *ngIf="comments.valid || comments.pristine || comments.touched">
-                            Developer Note is <strong>required !</strong>
-                        </mat-error>
-                    </mat-form-field>
+                    <nz-form-label nzFor="comments" nzRequired>Developer Note</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Developer Note">
+                            <textarea nz-input type="text" [(ngModel)]="data.comments" name="comments" id="comments"
+                                placeholder="Comments">
+                            </textarea>
+                        </nz-form-control>
+                    </nz-form-item>
                 </div>
 
                 <div class="col-md-6">
                     <nz-form-item>
                         <nz-form-label class="ant-label" nzFor="user_id" nzRequired>Status</nz-form-label>
                         <nz-form-control>
-                            <nz-switch [ngModel]="true" nzCheckedChildren="Active" nzUnCheckedChildren="In-active" [(ngModel)]="data.status" (ngModelChange)="changeStatus($event)" name="status"></nz-switch>
+                            <nz-switch [ngModel]="true" nzCheckedChildren="Active" nzUnCheckedChildren="In-active"
+                                [(ngModel)]="data.status" (ngModelChange)="changeStatus($event)"
+                                name="status"></nz-switch>
                         </nz-form-control>
                     </nz-form-item>
                 </div>
-
-
             </div>
-
         </div>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-        <button [mat-dialog-close]="true" class="mr-2" mat-raised-button>
+        <button [mat-dialog-close]="true" class="me-2" mat-raised-button>
             <i class="icofont icofont-close-line"></i>
             Close
         </button>
         <button [disabled]="!levelForm.form.valid||submitButtonEnable" color="primary" mat-raised-button>
             <i class="icofont icofont-save"></i>
-            {{data.save_type|titlecase}}
+            {{data.save_type == 'Create' ? 'Create' : 'Update' }}
         </button>
     </mat-dialog-actions>
 </form>

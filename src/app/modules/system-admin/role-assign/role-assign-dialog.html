@@ -88,13 +88,13 @@
                         </nz-form-item>
                         <nz-form-item>
                             <button type="button" *ngIf="i != 0" nz-button nzType="primary" nzSize="small" nzDanger
-                                    (click)="removeAddmoreRow(addMore)"><i class="fa fa-trash-o mr-2"></i>Remove
+                                    (click)="removeAddmoreRow(addMore)"><i class="fa fa-trash-o me-2"></i>Remove
                             </button>
                         </nz-form-item>
                         <nz-form-item>
                             <button *ngIf="i+1 < this.companyCollection.length" type="button" nz-button nzType="primary"
                                     nzSize="small" (click)="addMoreCompanyAssign()"><i
-                                    class="fa fa-plus mr-2"></i>Add more
+                                    class="fa fa-plus me-2"></i>Add more
                             </button>
                         </nz-form-item>
                     </ng-container>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="pull-right">
-                        <button mat-raised-button mat-dialog-close color="warn" class="mr-2">Cancel</button>
+                        <button mat-raised-button mat-dialog-close color="warn" class="me-2">Cancel</button>
                         <button type="submit" mat-raised-button color="primary"
                                 [disabled]="!userForm.form.valid"> {{type|titlecase}}</button>
                     </div>

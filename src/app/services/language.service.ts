@@ -46,7 +46,6 @@ export class LanguageService {
   ) {
     this.activeLanguages();
     this.common.aClickedEvent.subscribe((data: string) => {
-      console.log('ddddaaaa');
       this.activeLanguages();
     });
   }
@@ -105,8 +104,6 @@ export class LanguageService {
   changeLanguage(language: string) {
     localStorage.setItem("active_lang", language);
 
-    // 
-
     const queryString = "?active_language=" + language + "";
     this._dataService.getJson('dynamic-menu-by-role', queryString)
       .subscribe(data => {
@@ -132,7 +129,6 @@ export class LanguageService {
     // 
     this.translate.use(language);
     this.chooseLanguage = language;
-    //this.childMenuShow();
     this.loadMenu();
     this.load();
   }

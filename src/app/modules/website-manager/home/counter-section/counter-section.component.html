@@ -16,7 +16,7 @@
                                                     let isLast = last; 
                                                     let isFirst = first" [formGroupName]="i">
                         <input formControlName="id" type="hidden" />
-                        <div class="col-md-12 text-right">
+                        <div class="col-md-12 text-end">
                             <nz-tag nzColor="#f50">Counter- {{i+1}}</nz-tag>
                         </div>
 
@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            <button nz-button type="button" *ngIf="isLast" class="mr-2" nzType="primary"
+                            <button nz-button type="button" *ngIf="isLast" class="me-2" nzType="primary"
                                 (click)="addCounter()">
                                 Add Counter
                             </button>
@@ -61,7 +61,7 @@
                     </div>
                 </ng-container>
 
-                <div class="text-right mb-2">
+                <div class="text-end mb-2">
                     <button nz-button type="submit" [disabled]="counterForm.invalid || isDisabled" nzType="primary">
                         Update
                     </button>

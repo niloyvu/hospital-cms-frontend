@@ -1,6 +1,7 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
+            
             <div class="col-md-12">
                 <div class="card form-head-color " data-color="azure">
                     <div class="card-header card-header-infinity d-flex justify-content-between">
@@ -42,7 +43,7 @@
                                 <thead>
                                     <tr>
                                         <th (click)="sortBy('id')" style="width: 50px;"
-                                            class="text-left align-middle sort-icon">
+                                            class="text-start align-middle sort-icon">
                                             SL
                                             <i *ngIf="columnsSortBy==='id' && dataOrderBy" class="material-icons">
                                                 south
@@ -52,7 +53,7 @@
                                             </i>
                                         </th>
 
-                                        <th (click)="sortBy('email')" class="text-left align-middle sort-icon">
+                                        <th (click)="sortBy('email')" class="text-start align-middle sort-icon">
                                             Email
                                             <i *ngIf="columnsSortBy==='email' && dataOrderBy" class="material-icons">
                                                 south
@@ -62,7 +63,7 @@
                                             </i>
                                         </th>
 
-                                        <th (click)="sortBy('created_at')" class="text-left align-middle sort-icon">
+                                        <th (click)="sortBy('created_at')" class="text-start align-middle sort-icon">
                                             Date
                                             <i *ngIf="columnsSortBy==='created_at' && dataOrderBy"
                                                 class="material-icons">
@@ -80,6 +81,7 @@
                                     <tr *ngFor="let subscriber of subscriptions | paginate: {
                                                                         currentPage: this.pageNumber,
                                                                         itemsPerPage: this.resultPerPage,
+                                                                        totalItems: totalItems,
                                                                         id: 'table'
                                                                         }; let i=index;">
                                         <td class="text-center">{{getSl(i + 1)}}</td>
@@ -103,7 +105,7 @@
                             <div class="col-md-6">
                                 <p class="table-total-count"> Total Subscriptions: {{totalItems}}</p>
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="col-md-6 text-end">
                                 <pagination-controls (pageChange)="pageChange($event)" id="table" class="my-pagination">
                                 </pagination-controls>
                             </div>

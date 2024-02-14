@@ -1,11 +1,11 @@
 import { Subscription } from 'rxjs';
-
 import { ActivatedRoute } from '@angular/router';
-import { DetailsEditorConfig, EditorConfig } from 'src/app/shared/config/editor';
+import { DataService } from 'src/app/services/data.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DataService } from 'src/app/services/data.service';
+import { environment } from 'src/environments/environment.development';
+import { DetailsEditorConfig, EditorConfig } from 'src/app/shared/config/editor';
 
 @Component({
   selector: 'app-service-details',
@@ -23,6 +23,8 @@ export class ServiceDetailsComponent implements OnInit, OnDestroy {
   thumbnailFileUpload: any;
 
   editorConfig = DetailsEditorConfig;
+  editorApiKey = environment.editorApiKey;
+  
   serviceImageFileUpload: any;
   isDisabled: boolean = false;
   serviceDetailsForm!: FormGroup;
@@ -71,8 +73,8 @@ export class ServiceDetailsComponent implements OnInit, OnDestroy {
           this.commonService.onBufferEvent.emit(false);
           if (code == 200) {
             this.serviceDetailsForm.patchValue(data);
-            this.imageFile = data.image? `${this.rootUrl}${data?.image}` : null;
-            this.thumbnailFile = data.image?`${this.rootUrl}${data?.thumbnail}`: null;
+            this.imageFile = data?.image? `${this.rootUrl}${data?.image}` : null;
+            this.thumbnailFile = data?.image?`${this.rootUrl}${data?.thumbnail}`: null;
           }
         },
         error: (error) => {

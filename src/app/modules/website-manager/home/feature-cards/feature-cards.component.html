@@ -16,7 +16,7 @@
                                                     let isLast = last; 
                                                     let isFirst = first" [formGroupName]="i">
                         <input formControlName="id" type="hidden" />
-                        <div class="col-md-12 text-right">
+                        <div class="col-md-12 text-end">
                             <nz-tag nzColor="#f50">Feature- {{i+1}}</nz-tag>
                         </div>
 
@@ -50,7 +50,7 @@
                             </nz-form-item>
                         </div>
                         <div class="col-md-12">
-                            <button nz-button type="button" *ngIf="isLast" class="mr-2" nzType="primary"
+                            <button nz-button type="button" *ngIf="isLast" class="me-2" nzType="primary"
                                 (click)="addFeature()">
                                 Add Feature
                             </button>
@@ -60,7 +60,7 @@
                     </div>
                 </ng-container>
 
-                <div class="text-right mb-2">
+                <div class="text-end mb-2">
                     <button nz-button type="submit" [disabled]="featureForm.invalid || isDisabled" nzType="primary">
                         Update
                     </button>

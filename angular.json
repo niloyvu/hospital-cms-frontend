@@ -31,8 +31,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/assets/css/demo.css",
-              "src/assets/scss/material-dashboard.scss",
+              "src/assets/css/styles.css",
+              "src/assets/scss/main.scss",
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "@angular/material/prebuilt-themes/indigo-pink.css"
             ],
