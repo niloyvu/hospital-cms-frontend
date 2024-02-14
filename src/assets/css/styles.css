@@ -81,9 +81,6 @@ button#menu-toggle-2 {
   color: #00adee;
 }
 
-.footer__card {
-  border-radius: 0;
-}
 
 .footer .card .card-header {
   padding: 10px;
@@ -118,37 +115,8 @@ button#menu-toggle-2 {
 .ant-menu-submenu-title .ant-menu-item-icon,
 .ant-menu-submenu-title .anticon {
   min-width: 24px;
-  font-size: 20px;
+  font-size: 20px !important;
   transition: font-size .15s cubic-bezier(.215, .61, .355, 1), margin .3s cubic-bezier(.645, .045, .355, 1), color .3s;
-}
-
-.mat-snack-bar-container {
-  padding: 8px 16px !important;
-  min-height: 35px !important;
-}
-
-.snack-container .message {
-  font-size: 12px;
-}
-
-.submit-info {
-  color: #ffffff;
-  background-color: #00bcd4 !important;
-}
-
-.submit-success {
-  color: #ffffff;
-  background-color: #076404 !important;
-}
-
-.submit-error {
-  color: #fff;
-  background-color: #f44336;
-}
-
-.submit-warning {
-  color: #fff;
-  background-color: #fd7e14;
 }
 
 .mat-mdc-dialog-title {
@@ -205,6 +173,7 @@ button#menu-toggle-2 {
   color: #fff;
 }
 
+
 .ant-breadcrumb-separator {
   margin: 0 8px;
   color: rgb(250 245 245);
@@ -260,41 +229,6 @@ button#menu-toggle-2 {
   padding: 5px 5px 5px 20px;
   text-align: center;
   color: #979595;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
-  padding: 0em !important;
-}
-
-.is-invalid-field .mat-form-field-label {
-  color: red !important;
-}
-
-.is-invalid-field .mat-form-field-underline {
-  background-color: red !important;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-label {
-  top: 1.1em !important;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-outline-thick {
-  color: #74dae8 !important;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end,
-.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap,
-.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start {
-  border-width: 1px !important;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-outline-start,
-.mat-form-field-appearance-outline .mat-form-field-outline-end {
-  border-radius: 0 !important;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-infix {
-  padding: 0em 0 0.5em 0 !important;
 }
 
 .mat-input-element {
