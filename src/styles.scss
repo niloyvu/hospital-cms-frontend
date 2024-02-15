@@ -16,16 +16,6 @@ body {
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 
-/* You can add global styles to this file, and also import other style files */
-.ant-picker-calendar-header .ant-picker-calendar-mode-switch {
-  display: none !important;
-}
-
-.forBudgetClass nz-list-header.ant-list-header {
-  font-size: 20px !important;
-  font-weight: 600 !important;
-}
-
 .mat-mdc-dialog-title {
   margin: 0 0 0px !important;
   display: block;
@@ -64,26 +54,20 @@ a.close.disabled {
   pointer-events: none
 }
 
-.mdc-snackbar {
-  border-radius: 4px;
-
+.mat-mdc-snack-bar-container {
   &.submit-info {
-    color: #ffffff;
-    background-color: #00bcd4 !important;
+    --mdc-snackbar-container-color: #00bcd4;
   }
 
   &.submit-success {
-    color: #ffffff;
-    background-color: #076404 !important;
+    --mdc-snackbar-container-color: #076404;
   }
 
   &.submit-error {
-    color: #fff;
-    background-color: #f44336;
+    --mdc-snackbar-container-color: #f44336;
   }
 
   &.submit-warning {
-    color: #fff;
-    background-color: #fd7e14;
+    --mdc-snackbar-container-color: #fd7e14;
   }
 }

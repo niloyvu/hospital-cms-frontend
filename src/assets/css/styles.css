@@ -231,27 +231,6 @@ button#menu-toggle-2 {
   color: #979595;
 }
 
-.mat-input-element {
-  line-height: 25px !important;
-}
-
-.mat-select-value {
-  line-height: 25px !important;
-}
-
-.mat-form-field-label-wrapper {
-  overflow: initial !important;
-  pointer-events: none;
-  top: -3px;
-  line-height: 12px;
-}
-
-.mat-select-arrow-wrapper {
-  display: table-cell;
-  vertical-align: middle;
-  padding-top: 11px;
-}
-
 .mat-tree-node {
   border: 1px solid #ededed;
 }
