@@ -16,32 +16,74 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OpenServiceImgModal, SnackBarComponentExampleSnack } from './services/common.service';
 import {
   MenuOutline,
+  HomeOutline,
   UserOutline,
   TagsOutline,
+  ToolOutline,
+  DragOutline,
   TeamOutline,
+  BellOutline,
   BookOutline,
+  ShopOutline,
+  GlobalOutline,
+  SettingOutline,
+  ControlOutline,
+  MessageOutline,
+  FileDoneOutline,
   MenuFoldOutline,
+  ContactsOutline,
   DashboardOutline,
+  FileTextOutline,
+  FieldTimeOutline,
   MenuUnfoldOutline,
+  InfoCircleOutline,
+  ClockCircleOutline,
+  SecurityScanOutline,
+  UsergroupAddOutline,
+  ShoppingCartOutline,
+  UnorderedListOutline,
+  CustomerServiceOutline,
 } from '@ant-design/icons-angular/icons';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { environment } from 'src/environments/environment.development';
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { environment } from 'src/environments/environment.development';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, environment.API_URL + './i18n/', '.json');
 }
 
 const icons: IconDefinition[] = [
   UserOutline,
+  HomeOutline,
   TagsOutline,
   TeamOutline,
   BookOutline,
   MenuOutline,
+  DragOutline,
+  ToolOutline,
+  BellOutline,
+  ShopOutline,
+  GlobalOutline,
+  MessageOutline,
+  SettingOutline,
+  ControlOutline,
+  FileDoneOutline,
   MenuFoldOutline,
+  FileTextOutline,
+  ContactsOutline,
   DashboardOutline,
-  MenuUnfoldOutline
+  FieldTimeOutline,
+  InfoCircleOutline,
+  MenuUnfoldOutline,
+  ClockCircleOutline,
+  ShoppingCartOutline,
+  SecurityScanOutline,
+  UsergroupAddOutline,
+  UnorderedListOutline,
+  CustomerServiceOutline,
+
 ];
 
 @NgModule({

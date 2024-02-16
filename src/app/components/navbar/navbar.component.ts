@@ -2,10 +2,11 @@
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { DataService } from 'src/app/services/data.service';
 import { AuthService } from '../../shared/auth/auth.service';
-import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { CommonService } from '../../services/common.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -15,15 +16,11 @@ import { LanguageService } from 'src/app/services/language.service';
 export class NavbarComponent implements OnInit {
 
   location: Location;
-  mobile_menu_visible: any = 0;
+  authenticatedUser: any;
   private toggleButton: any;
+  mobile_menu_visible: any = 0;
   private sidebarVisible: boolean;
   showProgressBar: Boolean = false;
-  rootUrl = this.common.rootUrl + 'uploads/';
-  userdata!: any;
-  profiledata!: any;
-  userImageFile!: any;
-  erroeMsg!: any;
 
   @Output() handleSidenav = new EventEmitter<boolean>();
 
@@ -33,6 +30,7 @@ export class NavbarComponent implements OnInit {
     public auth: AuthService,
     private element: ElementRef,
     public common: CommonService,
+    private dataService: DataService,
     public translate: TranslateService,
     public _languageService: LanguageService
   ) {
@@ -47,6 +45,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAuthenticatedUser();
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
     this.router.events.subscribe((event) => {
@@ -57,14 +56,6 @@ export class NavbarComponent implements OnInit {
         this.mobile_menu_visible = 0;
       }
     });
-
-
-    // const new_color = localStorage.getItem('data-color');
-    // if (new_color) {
-    //   document.querySelector('.navbare-color').setAttribute('data-color', new_color);
-    // } else {
-    //   document.querySelector('.navbare-color').setAttribute('data-color', 'azure');
-    // }
   }
 
   handleSideBar() {
@@ -90,59 +81,28 @@ export class NavbarComponent implements OnInit {
   };
 
   sidebarToggle() {
-    const $toggle = document.getElementsByClassName('navbar-toggler')[0];
     if (this.sidebarVisible === false) {
       this.sidebarOpen();
     } else {
       this.sidebarClose();
     }
-    const body = document.getElementsByTagName('body')[0];
-
-    // if (this.mobile_menu_visible == 1) {
-    //   body.classList.remove('nav-open');
-    //   if ($layer) {
-    //     $layer.remove();
-    //   }
-    //   setTimeout(function () {
-    //     $toggle.classList.remove('toggled');
-    //   }, 400);
-
-    //   this.mobile_menu_visible = 0;
-    // } else {
-    //   setTimeout(function () {
-    //     $toggle.classList.add('toggled');
-    //   }, 430);
-
-    //   var $layer = document.createElement('div');
-    //   $layer.setAttribute('class', 'close-layer');
-
-
-    //   if (body.querySelectorAll('.main-panel')) {
-    //     document.getElementsByClassName('main-panel')[0].appendChild($layer);
-    //   } else if (body.classList.contains('off-canvas-sidebar')) {
-    //     document.getElementsByClassName('wrapper-full-page')[0].appendChild($layer);
-    //   }
-
-    //   setTimeout(function () {
-    //     $layer.classList.add('visible');
-    //   }, 100);
-
-    //   $layer.onclick = function () {
-    //     body.classList.remove('nav-open');
-    //     this.mobile_menu_visible = 0;
-    //     $layer.classList.remove('visible');
-    //     setTimeout(function () {
-    //       $layer.remove();
-    //       $toggle.classList.remove('toggled');
-    //     }, 400);
-    //   }.bind(this);
-
-    //   body.classList.add('nav-open');
-    //   this.mobile_menu_visible = 1;
-
-    // }
   };
 
+  getAuthenticatedUser() {
+    this.dataService.getJson('system/user/auth-user-profile', '')
+      .subscribe({
+        next: ({ data, code }) => {
+          if (code == 200) {
+            this.authenticatedUser = data;
+          } else {
+            this.authenticatedUser = [];
+          }
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+  }
 
   onClickLogout() {
     this.common.bearerToken = '';

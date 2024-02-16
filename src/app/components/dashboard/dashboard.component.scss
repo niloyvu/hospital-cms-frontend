@@ -5,10 +5,12 @@
   -ms-flex-align: center;
   align-items: center;
 }
+
 .card {
   border: 1px solid #f1f1f1bf;
   transition: all .3s;
 }
+
 .widget-content .widget-content-outer {
   display: -ms-flexbox;
   display: flex;
@@ -17,6 +19,7 @@
   -ms-flex-direction: column;
   flex-direction: column;
 }
+
 .widget-content .widget-content-wrapper {
   display: -ms-flexbox;
   display: flex;
@@ -26,31 +29,39 @@
   -ms-flex-align: center;
   align-items: center;
 }
+
 .widget-content .widget-content-left .widget-heading {
   opacity: .8;
   font-weight: bold;
 }
+
 .widget-content .widget-content-left .widget-subheading {
   opacity: .5;
 }
+
 .widget-content .widget-content-right {
   margin-left: auto;
 }
+
 .widget-content .widget-numbers {
   font-weight: bold;
   font-size: 1.8rem;
   display: block;
 }
+
 .widget-content .widget-progress-wrapper {
   margin-top: 1rem;
 }
+
 .progress.progress-bar-sm {
   height: 0.3rem;
 }
+
 .progress .progress-bar:last-child {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
+
 .widget-content .widget-progress-wrapper .progress-sub-label {
   margin-top: 0.33333333rem;
   opacity: .5;
@@ -61,20 +72,31 @@
   -ms-flex-align: center;
   align-items: center;
 }
+
 .widget-content .widget-progress-wrapper .progress-sub-label .sub-label-right {
   margin-left: auto;
 }
-.task-icon{
+
+.task-icon {
   font-size: 42px;
   position: absolute;
   top: 0;
   right: 60px;
   opacity: .1;
 }
-.task-icon3{
+
+.task-icon3 {
   font-size: 35px;
   position: absolute;
   top: 0;
   right: 50px;
   opacity: .1;
+}
+
+.main-content {
+  margin-top: 30px;
+}
+
+.main-content {
+  min-height: calc(95.5vh - 110px);
 }

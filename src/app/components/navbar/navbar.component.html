@@ -1,60 +1,69 @@
 <div class="navbar-card">
   <div class="card-body">
-    <nav style="background-color: #fff !important; border-bottom: 1px solid #ddd;" class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top navbare-color">
+    <nav style="background-color: #fff !important; border-bottom: 1px solid #ddd;"
+      class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top navbare-color">
       <div class="container-fluid ">
         <a class="icon-menu" (click)="handleSideBar()" id="menu-toggle-2">
           <i class="material-icons me-2">menu</i>
         </a>
-        <button mat-icon-button class="navbar-toggler" type="button" (click)="sidebarToggle()">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="navbar-toggler-icon icon-bar"></span>
-          <span class="navbar-toggler-icon icon-bar"></span>
-          <span class="navbar-toggler-icon icon-bar"></span>
-        </button>
+
+        <span class="text-nowrap">DR. REYAD DENTAL PERFECTION</span>
+
+        <a class="icon-menu navbar-toggler" (click)="sidebarToggle()">
+          <i class="material-icons">menu</i>
+        </a>
+
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav">
-              <a nz-dropdown [nzDropdownMenu]="lang" style="width: 60px;font-size: 12px;">
-                <img src="assets/img/country-flag/{{this._languageService.chooseLanguage}}.png"
-                  style="width: 20px;margin-right: 5px;"> {{ this._languageService.chooseLanguage | uppercase }}
-                <i nz-icon nzType="down"></i>
-              </a>
-              <nz-dropdown-menu #lang="nzDropdownMenu">
-                <ul nz-menu nzSelectable>
-                  <ng-container *ngFor="let language of translate.getLangs()">
-                    <li nz-menu-item (click)="this._languageService.changeLanguage(language)">
-                      <img src="assets/img/country-flag/{{language}}.png" style="width: 20px;margin-right: 5px;"> {{
-                      language | uppercase }}
-                    </li>
-                  </ng-container>
-                </ul>
-              </nz-dropdown-menu>
-              <li class="nav-item dropdown">
-                <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons">notifications</i>
-                  <span class="notification">5</span>
-                  <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="javascript:void(0)">Mike John responded to your email</a>
-                  <a class="dropdown-item" href="javascript:void(0)">You have 5 new tasks</a>
-                  <a class="dropdown-item" href="javascript:void(0)">You're now friend with Andrew</a>
-                  <a class="dropdown-item" href="javascript:void(0)">Another Notification</a>
-                  <a class="dropdown-item" href="javascript:void(0)">Another One</a>
-                </div>
-              </li>
-              <a nz-dropdown [nzDropdownMenu]="menu">
-                <i class="material-icons">person</i>
-              </a>
-              <nz-dropdown-menu #menu="nzDropdownMenu">
-                <ul nz-menu nzSelectable>
-                  <li nz-menu-item (click)="onClickLogout()">
-                    <mat-icon class="me-2">power_settings_new</mat-icon> Logout
+            <p class="mb-0 me-3">
+              Welcome&nbsp;{{authenticatedUser?.profile?.full_name}}
+              ({{ authenticatedUser?.role?.role_type == 1 ? "Admin" :'Super Admin' }})
+            </p>
+            <a nz-dropdown [nzDropdownMenu]="lang" style="width: 60px;font-size: 12px;">
+              <img src="assets/img/country-flag/{{this._languageService.chooseLanguage}}.png"
+                style="width: 20px;margin-right: 5px;"> {{ this._languageService.chooseLanguage | uppercase }}
+              <i nz-icon nzType="down"></i>
+            </a>
+            <nz-dropdown-menu #lang="nzDropdownMenu">
+              <ul nz-menu nzSelectable>
+                <ng-container *ngFor="let language of translate.getLangs()">
+                  <li nz-menu-item (click)="this._languageService.changeLanguage(language)">
+                    <img src="assets/img/country-flag/{{language}}.png" style="width: 20px;margin-right: 5px;"> {{
+                    language | uppercase }}
                   </li>
-                </ul>
-              </nz-dropdown-menu>
+                </ng-container>
+              </ul>
+            </nz-dropdown-menu>
+
+            <li class="nav-item dropdown" nz-dropdown [nzDropdownMenu]="notification">
+              <a class="nav-link" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">notifications</i>
+                <span class="notification">5</span>
+                <p>
+                  <span class="d-lg-none d-md-block">Some Actions</span>
+                </p>
+              </a>
+            </li>
+            
+            <nz-dropdown-menu #notification="nzDropdownMenu">
+              <ul nz-menu nzSelectable>
+                <li nz-menu-item>Mike John responded to your email</li>
+                <li nz-menu-item>You have 5 new tasks</li>
+                <li nz-menu-item>Another Notification</li>
+                <li nz-menu-item>Another One</li>
+              </ul>
+            </nz-dropdown-menu>
+
+            <a nz-dropdown [nzDropdownMenu]="menu">
+              <i class="material-icons">person</i>
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu nzSelectable>
+                <li nz-menu-item (click)="onClickLogout()">
+                  <mat-icon class="me-2">power_settings_new</mat-icon> Logout
+                </li>
+              </ul>
+            </nz-dropdown-menu>
           </ul>
         </div>
       </div>

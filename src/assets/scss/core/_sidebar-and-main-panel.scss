@@ -363,15 +363,6 @@
   position: relative;
   float: right;
   width: $sidebar-width;
-  // @include transition (0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1));
-
-  .main-content {
-    /*margin-top: 70px;*/
-    margin-top: 120px;
-    padding: 30px 15px;
-    padding-top: 0px;
-    min-height: calc(100vh - 123px);
-  }
 
   .footer {
     border-top: 1px solid #e7e7e7;
@@ -390,14 +381,6 @@
     }
   }
 }
-
-// .perfect-scrollbar-on {
-//   .sidebar,
-//   .main-panel {
-//     height: 100%;
-//     max-height: 100%;
-//   }
-// }
 
 .sidebar,
 .main-panel,

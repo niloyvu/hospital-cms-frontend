@@ -49,6 +49,14 @@ const routes: Routes = [
         (m) => m.WebsiteModule
       ),
   },
+  {
+    path: 'invoice-management',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./modules/invoice-management/invoice-management.module').then(
+        (m) => m.InvoiceManagementModule
+      ),
+  },
 
   {
     path: '**', component: NotFoundComponent
