@@ -120,7 +120,6 @@ button#menu-toggle-2 {
 }
 
 .mat-mdc-dialog-title {
-  margin: 0 0 20px;
   display: block;
   background: url('../img/pen-top-bg.png');
   background-size: cover;

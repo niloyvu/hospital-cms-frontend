@@ -4,24 +4,17 @@ import { pageType } from 'src/app/shared/enum/page-type';
 import { DataService } from 'src/app/services/data.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
-import { InvoiceFormModalComponent } from './invoice-form-modal/invoice-form-modal.component';
+import { InvoiceItemFormModalComponent } from './invoice-item-form-modal/invoice-item-form-modal.component';
 
 @Component({
-  selector: 'app-invoice-lists',
-  templateUrl: './invoice-lists.component.html',
-  styleUrls: ['./invoice-lists.component.scss']
+  selector: 'app-invoice-items',
+  templateUrl: './invoice-items.component.html',
+  styleUrls: ['./invoice-items.component.scss']
 })
-export class InvoiceListsComponent implements OnInit, OnDestroy {
+export class InvoiceItemsComponent implements OnInit, OnDestroy {
 
-  date!: Date;
-  status!: string;
-  timeSlot!: string;
-  departmentId!: string;
   dialogOpen: boolean = false;
-
-  tabIndex: number = 0;
-
-  appointments: any[] = [];
+  invoiceItems: any[] = [];
   pageType = pageType;
   totalItems: number = 0;
   pageNumber: number = 1;
@@ -35,13 +28,12 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
-
     private dataService: DataService,
     private commonService: CommonService,
   ) { }
 
   ngOnInit(): void {
-    this.getWebInvoices();
+    this.getWebInvoiceItems();
 
   }
 
@@ -50,27 +42,27 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
   }
 
   onChangeDepartment() {
-    this.getWebInvoices();
+    this.getWebInvoiceItems();
   }
   onChangeStatus() {
-    this.getWebInvoices();
+    this.getWebInvoiceItems();
   }
   onChangeTimeSlot() {
-    this.getWebInvoices();
+    this.getWebInvoiceItems();
   }
   onChangeDate() {
-    this.getWebInvoices();
+    this.getWebInvoiceItems();
   }
 
   changeResultPerPage(event: number) {
     this.pageNumber = 1;
     this.resultPerPage = event;
-    this.getWebInvoices();
+    this.getWebInvoiceItems();
   }
 
   pageChange(newPage: number) {
     this.pageNumber = newPage;
-    this.getWebInvoices();
+    this.getWebInvoiceItems();
   }
 
   searchByData(value: string) {
@@ -78,7 +70,7 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
     this.pageNumber = 1;
     this.resultPerPage = 10;
     this.dataOrderBy = true;
-    this.getWebInvoices();
+    this.getWebInvoiceItems();
   }
 
   sortBy(column: string) {
@@ -87,25 +79,20 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
     } else {
       this.columnsSortBy = column;
     }
-    this.getWebInvoices();
+    this.getWebInvoiceItems();
   }
 
-  getWebInvoices() {
-    const date = this.date ? this.date.toLocaleDateString() : '';
+  getWebInvoiceItems() {
     const queryParams = {
       search: this.searchValues,
       sort_column: `${this.columnsSortBy}`,
       sort_by: this.dataOrderBy ? 'DESC' : 'ASC',
       per_page: `${this.resultPerPage}`,
-      page: `${this.pageNumber}`,
-      date: `${date}`,
-      status: `${this.status}`,
-      time: `${this.timeSlot}`,
-      department_id: `${this.departmentId}`
+      page: `${this.pageNumber}`
     };
     this.commonService.onBufferEvent.emit(true);
 
-    this.dataService.getJson('website-cms/invoices',
+    this.dataService.getJson('website-cms/invoice-items',
       `?${new URLSearchParams(queryParams)}`
     )
       .subscribe({
@@ -113,10 +100,10 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
           this.commonService
             .onBufferEvent.emit(false);
           if (code == 200) {
-            this.appointments = data.data;
+            this.invoiceItems = data.data;
             this.totalItems = data.total;
           } else {
-            this.appointments = [];
+            this.invoiceItems = [];
             this.totalItems = 0;
           }
         },
@@ -126,9 +113,9 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
       });
   }
 
-  createInvoice() {
+  createInvoiceItem() {
     if (!this.dialogOpen) {
-      const dialogRef = this.dialog.open(InvoiceFormModalComponent, {
+      const dialogRef = this.dialog.open(InvoiceItemFormModalComponent, {
         width: "800px",
         data: null,
         disableClose: true
@@ -137,16 +124,16 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
         .subscribe((response) => {
           this.dialogOpen = false;
           if (response) {
-            this.getWebInvoices()
+            this.getWebInvoiceItems()
           };
         });
     }
   }
 
-  updateInvoice(invoice: any) {
+  updateInvoiceItem(invoice: any) {
     if (!this.dialogOpen) {
       this.dialogOpen = true;
-      const dialogRef = this.dialog.open(InvoiceFormModalComponent, {
+      const dialogRef = this.dialog.open(InvoiceItemFormModalComponent, {
         width: "800px",
         data: invoice,
         disableClose: true
@@ -155,7 +142,7 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
         .subscribe((response) => {
           this.dialogOpen = false;
           if (response) {
-            this.getWebInvoices()
+            this.getWebInvoiceItems()
           };
         });
     }

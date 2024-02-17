@@ -1,6 +1,6 @@
 <h2 mat-dialog-title style="margin: 0;">
     {{data? 'Update': 'Add'}} Appointment
-    <button [mat-dialog-close]="true" class="close mt-1 text-white" data-dismiss="modal" type="button">
+    <button mat-dialog-close class="close mt-1 text-white" data-dismiss="modal" type="button">
         <span aria-hidden="true">×</span>
     </button>
 </h2>
@@ -62,7 +62,8 @@
                         <nz-form-label nzRequired nzFor="dentist_id">Doctor</nz-form-label>
                         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a doctor" name="dentist_id"
                             formControlName="dentist_id">
-                            <nz-option *ngFor="let dentist of dentists" [nzValue]="dentist.id" [nzLabel]="dentist.name"></nz-option>
+                            <nz-option *ngFor="let dentist of dentists" [nzValue]="dentist.id"
+                                [nzLabel]="dentist.name"></nz-option>
                         </nz-select>
                     </nz-form-control>
                 </nz-form-item>
@@ -74,7 +75,7 @@
                         <nz-form-label nzFor="department_id" nzRequired>Department</nz-form-label>
                         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a department" id="department_id"
                             formControlName="department_id">
-                         
+
                             <nz-option [nzValue]="1" nzLabel="Dental Department"></nz-option>
                             <nz-option [nzValue]="2" nzLabel="Surgery Department"></nz-option>
                         </nz-select>
@@ -167,7 +168,7 @@
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
-        <button [mat-dialog-close]="true" class="me-2" mat-raised-button>
+        <button mat-dialog-close class="me-2" mat-raised-button>
             <i class="icofont icofont-close-line"></i>
             Close
         </button>
