@@ -113,7 +113,7 @@
                                 nzDescription="2 Opening time will be good fit for your website." nzShowIcon>
                             </nz-alert>
                         </div>
-                        <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let hourGroup of footerForm.get('hours')?.value; 
+                        <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let hourGroup of hoursArray.controls; 
                                                         let i = index; 
                                                         let isLast = last; 
                                                         let isFirst = first" [formGroupName]="i">

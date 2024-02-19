@@ -101,15 +101,6 @@ button#menu-toggle-2 {
   display: inline-flex;
 }
 
-.mat-progress-bar {
-  height: 2px !important;
-  background-color: #00adee;
-}
-
-.mat-progress-bar-fill::after {
-  background-color: #000c13 !important;
-}
-
 .ant-menu-item .ant-menu-item-icon,
 .ant-menu-item .anticon,
 .ant-menu-submenu-title .ant-menu-item-icon,

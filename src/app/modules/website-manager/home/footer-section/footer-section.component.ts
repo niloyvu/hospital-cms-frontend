@@ -87,6 +87,10 @@ export class FooterSectionComponent implements OnInit, OnDestroy {
     hoursArray.push(this.createOpeningHoursFormGroup());
   }
 
+  get hoursArray() {
+    return this.footerForm.get('hours') as FormArray;
+  }
+
   removeHour(index: number) {
     const hoursArray = this.footerForm.get('hours') as FormArray;
     hoursArray.removeAt(index);

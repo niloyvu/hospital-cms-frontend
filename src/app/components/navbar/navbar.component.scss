@@ -138,6 +138,5 @@ button.mat-menu-item {
 }
 
 .mat-mdc-progress-bar {
-  top: 71px;
-  position: absolute;
+  z-index: 9999 !important;
 }
