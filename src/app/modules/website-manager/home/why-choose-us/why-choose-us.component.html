@@ -56,7 +56,7 @@
                                 nzDescription="3 progress bar will be good fit for your website." nzShowIcon>
                             </nz-alert>
                         </div>
-                        <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let featureGroup of whyChooseUsForm.get('progress_bars')?.value; 
+                        <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let featureGroup of progressBarFormArray.controls; 
                                                         let i = index; 
                                                         let isLast = last; 
                                                         let isFirst = first" [formGroupName]="i">

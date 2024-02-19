@@ -54,6 +54,11 @@ export class WhyChooseUsComponent implements OnInit, OnDestroy {
     progressBarsArray.push(this.createProgressBarFormGroup());
   }
 
+  get progressBarFormArray() {
+    return this.whyChooseUsForm.get('progress_bars') as FormArray;
+
+  }
+
   removeProgressBar(index: number) {
     const progressBarsArray = this.whyChooseUsForm.get('progress_bars') as FormArray;
     progressBarsArray.removeAt(index);

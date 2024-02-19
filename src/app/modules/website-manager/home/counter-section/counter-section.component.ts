@@ -25,7 +25,7 @@ export class CounterSectionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeFormGroup();
-    this.getCounters();
+    this.FormArray();
   }
 
   initializeFormGroup() {
@@ -44,6 +44,10 @@ export class CounterSectionComponent implements OnInit, OnDestroy {
       text: ['', Validators.required],
     });
   }
+
+  get getCountersFormArray() {
+    return this.counterForm.get('counters') as FormArray;
+  } 
 
   addCounter() {
     const countersArray = this.counterForm.get('counters') as FormArray;
@@ -64,7 +68,7 @@ export class CounterSectionComponent implements OnInit, OnDestroy {
           this.isDisabled = false;
           this._commonService.onBufferEvent.emit(false);
           if (response.code === 200) {
-            this.getCounters();
+            this.FormArray();
             this._commonService.openSnackBar(response.message, 'Close', 'submit-success')
           } else {
             this._commonService.openSnackBar(response.message, 'Close', 'submit-error')
@@ -76,7 +80,7 @@ export class CounterSectionComponent implements OnInit, OnDestroy {
       });
   }
 
-  getCounters() {
+  FormArray() {
     this._commonService.onBufferEvent.emit(true);
     this.subscriptions$ = this._dataService.getJson('website/home/counter-section', '')
       .subscribe({

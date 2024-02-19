@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <form nz-form [formGroup]="featureForm" (ngSubmit)="onSubmitForm()">
                 <ng-container formArrayName="features">
-                    <div class="row mt-2 pt-2 pb-2" *ngFor="let featureGroup of featureForm.get('features')?.value; 
+                    <div class="row mt-2 pt-2 pb-2" *ngFor="let featureGroup of featureCardsFormArray.controls; 
                                                     let i = index; 
                                                     let isLast = last; 
                                                     let isFirst = first" [formGroupName]="i">

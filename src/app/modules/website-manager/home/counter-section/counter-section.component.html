@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <form nz-form [formGroup]="counterForm" (ngSubmit)="onSubmitForm()">
                 <ng-container formArrayName="counters">
-                    <div class="row mt-2 pt-2 pb-2" *ngFor="let counterGroup of counterForm.get('counters')?.value; 
+                    <div class="row mt-2 pt-2 pb-2" *ngFor="let counterGroup of getCountersFormArray.controls; 
                                                     let i = index; 
                                                     let isLast = last; 
                                                     let isFirst = first" [formGroupName]="i">

@@ -61,6 +61,10 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
     specialtiesArray.push(this.createOurSpecialtyFormGroup());
   }
 
+ get specialtyFormArray() {
+   return this.bookAppointmentPageForm.get('specialties') as FormArray;
+  }
+
   removeSpecialty(index: number) {
     const specialtiesArray = this.bookAppointmentPageForm.get('specialties') as FormArray;
     specialtiesArray.removeAt(index);

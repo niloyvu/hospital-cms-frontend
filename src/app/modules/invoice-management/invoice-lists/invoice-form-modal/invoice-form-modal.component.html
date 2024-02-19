@@ -321,9 +321,9 @@
                         </tbody>
                     </table>
                 </div>
-
-                <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
-                    nzPlaceHolder="Please select">
+                <nz-form-label nzFor="selected_items">Diagnosis</nz-form-label>
+                <nz-select formControlName="selected_items" id="selected_items" [nzMaxTagCount]="3"
+                    [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple" nzPlaceHolder="Please select diagnosis">
                     <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title" [nzValue]="item.id"></nz-option>
                 </nz-select>
                 <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
@@ -331,73 +331,80 @@
                     <table class="table table-condensed table-bordered table-striped items-table">
                         <thead>
                             <tr>
-                                <th style="width:50%">Item</th>
-                                <th style="width:10%">Quantity</th>
-                                <th style="width:15%">Unit Price</th>
-                                <th style="width:15%">Amount</th>
-                                <th style="width:10%" align="center">Action</th>
+                                <th style="width:75%">Item</th>
+                                <th style="width:5%" class="text-center">Quantity</th>
+                                <th style="width:15%" class="text-center">Unit Price</th>
+                                <th style="width:10%" class="text-end">Amount</th>
                             </tr>
                         </thead>
                         <tfoot id="TotalsSection">
 
                             <tr class="totals-row shaped">
-                                <td class="wide-cell" colspan="2">
-                                    <button nz-button type="button" nzSize="small" nzType="primary">
-                                        <i class="fa fa-plus me-2"></i>
-                                        Add item
-                                    </button>
-                                </td>
+                                <td class="wide-cell" colspan="2"></td>
                                 <td>
                                     <small><strong>Sub Total</strong></small>
                                 </td>
-                                <td colspan="2"><span id="total">৳125</span>
+                                <td class="text-end">
+                                    <b *ngIf="subTotal">৳ {{subTotal}}</b>
                                 </td>
                             </tr>
                             <tr class="totals-row shaped">
                                 <td class="wide-cell" colspan="2"></td>
                                 <td><small><strong>Discount %</strong></small></td>
-                                <td colspan="2">
-                                    <input formControlName="discount" type="text" id="discount"
-                                        class="invoice-input editable">
+                                <td class="text-end">
+                                    <input style="width: 100px;" formControlName="discount" type="text"
+                                        class="invoice-input editable text-end">
                                 </td>
                             </tr>
                             <tr class="totals-row shaped">
                                 <td class="wide-cell" colspan="2"></td>
                                 <td><small><strong>Total</strong></small></td>
-                                <td colspan="2">
-                                    <input formControlName="total_amount" type="text" id="sub-total"
-                                        class="invoice-input editable">
+                                <td class="text-end">
+                                    <b *ngIf="totalAmount">৳ {{totalAmount}}</b>
                                 </td>
                             </tr>
 
                             <tr class="totals-row shaped">
                                 <td class="wide-cell" colspan="2"></td>
                                 <td><small><strong>Paid Amount</strong></small></td>
-                                <td colspan="2">
-                                    <input formControlName="paid_amount" type="text" id="paid-amount"
-                                        class="invoice-input editable">
+                                <td class="text-end">
+                                    <input style="width: 100px;" formControlName="paid_amount" type="text"
+                                        class="invoice-input editable text-end">
                                 </td>
                             </tr>
 
                             <tr class="totals-row shaped">
                                 <td class="wide-cell" colspan="2"></td>
                                 <td><small><strong>Due Amount</strong></small></td>
-                                <td colspan="2"><span id="unpaid">৳125</span></td>
+                                <td class="text-end text-danger">
+                                    <span id="unpaid">
+                                        <b *ngIf="dueAmount">৳ - {{dueAmount}}</b>
+                                    </span>
+                                </td>
                             </tr>
                         </tfoot>
-                        <tbody id="ItemsTable">
-                            <tr description="Routine Dental Checkup" qty="5" unit_price="25" discount="0" subtotal="125"
-                                total="125" class="item-row">
+                        <tbody id="ItemsTable" formArrayName="invoice_items">
+                            <tr class="item-row" [formGroupName]="i"
+                                *ngFor="let item of selectedInvoiceItems.controls; let i = index;">
+                                <input formControlName="id" type="hidden" />
                                 <td>
-                                    <input type="text" class="editable input-mini" value="Routine Dental Checkup" />
+                                    <nz-select class="editable input-mini" formControlName="item" name="item" id="item"
+                                        type="text">
+                                        <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title"
+                                            [nzValue]="item.id"></nz-option>
+                                    </nz-select>
                                 </td>
-                                <td><input type="text" class="editable input-mini" value="5" /></td>
-                                <td><input type="text" class="editable input-mini" value="25" /></td>
-                                <td>৳125</td>
-                                <td class="text-center">
-                                    <button nz-button nzDanger nzSize="small" class="remove-item">
-                                        <i class="fa fa-trash icon-white"></i>
-                                    </button>
+                                <td>
+                                    <input formControlName="quantity" name="quantity" id="quantity" type="text"
+                                        class="editable input-mini text-center" />
+                                </td>
+                                <td>
+                                    <input formControlName="price" name="price" id="price" type="text"
+                                        class="editable input-mini text-end" readonly />
+                                </td>
+                                <td class="text-end">
+                                    <input formControlName="amount" name="amount" id="amount" type="text"
+                                        class="editable input-mini text-end" readonly />
                                 </td>
                             </tr>
                         </tbody>
@@ -409,8 +416,9 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <textarea formControlName="description" name="notes" nz-input rows="2"
-                                        placeholder="Notes and Terms:"></textarea>
+                                    <textarea formControlName="remarks" name="remarks" nz-input rows="2"
+                                        placeholder="Notes and Terms:">
+                                    </textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -421,19 +429,12 @@
 
     </mat-dialog-content>
 
-    <mat-dialog-actions class="d-flex justify-content-between">
-        <div>
-            <button mat-raised-button class="me-2" color="primary">
-                <span nz-icon nzType="file-pdf" class="me-2" nzTheme="outline"></span> Print
-            </button>
-        </div>
-        <div>
-            <button [mat-dialog-close]="true" class="me-2" mat-raised-button>
-                Close
-            </button>
-            <button [disabled]="invoiceForm.invalid || isDisabled" color="primary" mat-raised-button>
-                {{data? 'Update': 'Create'}}
-            </button>
-        </div>
+    <mat-dialog-actions align="end">
+        <button [mat-dialog-close]="true" class="me-2" mat-raised-button>
+            Close
+        </button>
+        <button [disabled]="invoiceForm.invalid || isDisabled" color="primary" mat-raised-button>
+            {{data? 'Update': 'Create'}}
+        </button>
     </mat-dialog-actions>
 </form>
