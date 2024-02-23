@@ -1,6 +1,6 @@
 <h2 mat-dialog-title style="margin: 0;">
     {{data? 'Update': 'Create'}} Invoice
-    <button [mat-dialog-close]="true" class="close mt-1 text-white" data-dismiss="modal" type="button">
+    <button mat-dialog-close class="close mt-1 text-white" data-dismiss="modal" type="button">
         <span aria-hidden="true">×</span>
     </button>
 </h2>
@@ -245,21 +245,34 @@
                                     <table border="0" cellpadding="0" cellspacing="0">
                                         <tbody>
                                             <tr>
-                                                <td valign="top"><strong>Bill To</strong></td>
+                                                <td valign="top">
+                                                    <nz-form-label nzRequired>Bill To</nz-form-label>
+                                                </td>
                                                 <td valign="top">
                                                     <div class="client_info">
                                                         <table border="0" cellpadding="0" cellspacing="0">
                                                             <tbody>
                                                                 <tr>
                                                                     <td style="padding-left:25px;">
-                                                                        <input nz-input id="name" formControlName="name"
-                                                                            placeholder="[Patient Name]"><br>
-                                                                        <input nz-input id="phone"
-                                                                            formControlName="phone"
-                                                                            placeholder="[Phone]"><br>
-                                                                        <input nz-input id="address"
-                                                                            formControlName="address"
-                                                                            placeholder="[Address]"><br>
+
+                                                                        <nz-form-control nzHasFeedback>
+                                                                            <input nz-input type="name"
+                                                                                formControlName="name" id="name"
+                                                                                placeholder="[Name]" />
+                                                                        </nz-form-control>
+
+                                                                        <nz-form-control nzHasFeedback>
+                                                                            <input nz-input type="phone" id="phone"
+                                                                                formControlName="phone"
+                                                                                placeholder="[Phone]" />
+                                                                        </nz-form-control>
+
+                                                                        <nz-form-control nzHasFeedback>
+                                                                            <input nz-input type="address"
+                                                                                formControlName="address" id="address"
+                                                                                placeholder="[Address]" />
+                                                                        </nz-form-control>
+
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -275,43 +288,34 @@
                                         <tbody>
                                             <tr>
                                                 <td align="right">
-                                                    <strong>
-                                                        <p id="label_invoice_no" class="invoice-input"
-                                                            style="text-align: right; font-weight: bold;">
-                                                            Invoice Number:
-                                                        </p>
-                                                    </strong>
+                                                    <nz-form-label nzFor="invoice_number" nzRequired>
+                                                        Invoice Number
+                                                    </nz-form-label>
                                                 </td>
                                                 <td align="left" style="padding-left:20px">
-                                                    <input formControlName="invoice_number" type="text" id="no"
-                                                        class="invoice-input" style="text-align: right;">
+                                                    <input nz-input formControlName="invoice_number" type="number"
+                                                        id="no" class="invoice-input" style="text-align: right;">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td align="right">
-                                                    <strong>
-                                                        <p class="invoice-input"
-                                                            style="text-align: right; font-weight: bold;">
-                                                            Date:
-                                                        </p>
-                                                    </strong>
+                                                    <nz-form-label nzFor="date" nzRequired>Date</nz-form-label>
                                                 </td>
                                                 <td align="left" style="padding-left:20px">
-                                                    <input formControlName="date" style="width: 100%" type="date"
-                                                        id="date" class="invoice-input" />
+                                                    <nz-date-picker formControlName="date" style="width: 100%"
+                                                        type="date" id="date" class="invoice-input">
+                                                    </nz-date-picker>
                                                 </td>
                                             </tr>
 
                                             <tr class="field1_row">
                                                 <td align="right">
-                                                    <p type="text" class="invoice-input"
-                                                        style="text-align: right; font-weight: bold;">
-                                                        <b> Due Date: </b>
-                                                    </p>
+                                                    <nz-form-label nzFor="due_date" nzRequired>Due Date </nz-form-label>
                                                 </td>
                                                 <td align="left" style="padding-left:20px;">
-                                                    <input formControlName="due_date" style="width: 100%" type="date"
-                                                        id="due-date" class="invoice-input" />
+                                                    <nz-date-picker formControlName="due_date" style="width: 100%"
+                                                        type="date" id="due-date" class="invoice-input">
+                                                    </nz-date-picker>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -321,7 +325,7 @@
                         </tbody>
                     </table>
                 </div>
-                <nz-form-label nzFor="selected_items">Diagnosis</nz-form-label>
+                <nz-form-label nzFor="selected_items" nzRequired>Diagnosis</nz-form-label>
                 <nz-select formControlName="selected_items" id="selected_items" [nzMaxTagCount]="3"
                     [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple" nzPlaceHolder="Please select diagnosis">
                     <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title" [nzValue]="item.id"></nz-option>
@@ -349,10 +353,23 @@
                                 </td>
                             </tr>
                             <tr class="totals-row shaped">
-                                <td class="wide-cell" colspan="2"></td>
+                                <td class="wide-cell" colspan="2">
+                                    <p class="text-danger text-end"
+                                        *ngIf="discount?.invalid && discount?.touched">
+                                        <ng-container *ngIf="discount?.errors?.['min']">
+                                            Minimum discount should be 5%!
+                                        </ng-container>
+                                        <ng-container *ngIf=" discount?.errors?.['max']">
+                                            Max discount exceeds!
+                                        </ng-container>
+                                        <ng-container *ngIf="discount?.errors?.['pattern']">
+                                            Invalid discount!
+                                        </ng-container>
+                                    </p>
+                                </td>
                                 <td><small><strong>Discount %</strong></small></td>
                                 <td class="text-end">
-                                    <input style="width: 100px;" formControlName="discount" type="text"
+                                    <input style="width: 100px;" type="text" formControlName="discount"
                                         class="invoice-input editable text-end">
                                 </td>
                             </tr>
@@ -365,16 +382,37 @@
                             </tr>
 
                             <tr class="totals-row shaped">
-                                <td class="wide-cell" colspan="2"></td>
+                                <td class="wide-cell" colspan="2">
+                                    <p class="text-danger text-end"
+                                    *ngIf="paidAmount?.invalid && paidAmount?.touched">
+                                    <ng-container *ngIf="paidAmount?.errors?.['min']">
+                                        Minimum amount should be 1000!
+                                    </ng-container>
+                                    <ng-container *ngIf="paidAmount?.errors?.['max']">
+                                        Total amount exceeds!
+                                    </ng-container>
+                                    <ng-container *ngIf="paidAmount?.errors?.['pattern']">
+                                        Invalid Amount!
+                                    </ng-container>
+                                </p>
+                                </td>
                                 <td><small><strong>Paid Amount</strong></small></td>
                                 <td class="text-end">
-                                    <input style="width: 100px;" formControlName="paid_amount" type="text"
+                                    <input style="width: 100px;" type="text" formControlName="paid_amount"
                                         class="invoice-input editable text-end">
                                 </td>
                             </tr>
 
                             <tr class="totals-row shaped">
-                                <td class="wide-cell" colspan="2"></td>
+
+                                <td class="wide-cell" colspan="2">
+                                    <nz-form-control>
+                                        <nz-form-label nzFor="status">Status</nz-form-label>
+                                        <nz-switch class="ms-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                                            formControlName="status" name="status" id="status">
+                                        </nz-switch>
+                                    </nz-form-control>
+                                </td>
                                 <td><small><strong>Due Amount</strong></small></td>
                                 <td class="text-end text-danger">
                                     <span id="unpaid">
@@ -391,12 +429,14 @@
                                     <nz-select class="editable input-mini" formControlName="item" name="item" id="item"
                                         type="text">
                                         <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title"
-                                            [nzValue]="item.id"></nz-option>
+                                            [nzValue]="item.id">
+                                        </nz-option>
                                     </nz-select>
                                 </td>
                                 <td>
-                                    <input formControlName="quantity" name="quantity" id="quantity" type="text"
-                                        class="editable input-mini text-center" />
+                                    <nz-input-number [nzMin]="1" [nzMax]="100" [nzStep]="1" formControlName="quantity"
+                                        class="editable input-mini text-center">
+                                    </nz-input-number>
                                 </td>
                                 <td>
                                     <input formControlName="price" name="price" id="price" type="text"
@@ -424,13 +464,14 @@
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
 
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
-        <button [mat-dialog-close]="true" class="me-2" mat-raised-button>
+        <button mat-dialog-close class="me-2" mat-raised-button>
             Close
         </button>
         <button [disabled]="invoiceForm.invalid || isDisabled" color="primary" mat-raised-button>
