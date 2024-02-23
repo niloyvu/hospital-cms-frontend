@@ -15,6 +15,7 @@ export class AppointmentModalComponent implements OnInit {
 
   appointmentForm!: FormGroup;
   dentists: any[] = [];
+  appointmentUsers: any[] = [];
 
   isDisabled: boolean = false;
   dialogRef = inject(MatDialogRef);
@@ -33,7 +34,6 @@ export class AppointmentModalComponent implements OnInit {
     }
   }
 
-
   initializeForm() {
     this.appointmentForm = new FormGroup({
       name: new FormControl('', [
@@ -43,9 +43,14 @@ export class AppointmentModalComponent implements OnInit {
       ]),
       email: new FormControl('',
         [
-          Validators.email,
-          Validators.required
+          Validators.email
         ]),
+
+      address: new FormControl('', [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(50)
+      ]),
       phone: new FormControl('', [
         Validators.required,
         Validators.minLength(11),

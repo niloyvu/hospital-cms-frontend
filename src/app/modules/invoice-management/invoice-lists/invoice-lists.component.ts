@@ -14,14 +14,14 @@ import { InvoiceFormModalComponent } from './invoice-form-modal/invoice-form-mod
 export class InvoiceListsComponent implements OnInit, OnDestroy {
 
   date!: Date;
+  dueDate!: Date;
   status!: string;
-  timeSlot!: string;
-  departmentId!: string;
+
   dialogOpen: boolean = false;
 
   tabIndex: number = 0;
 
-  appointments: any[] = [];
+  invoices: any[] = [];
   pageType = pageType;
   totalItems: number = 0;
   pageNumber: number = 1;
@@ -95,13 +95,12 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
     const queryParams = {
       search: this.searchValues,
       sort_column: `${this.columnsSortBy}`,
-      sort_by: this.dataOrderBy ? 'DESC' : 'ASC',
+      sort_by: this.dataOrderBy ? 'desc' : 'asc',
       per_page: `${this.resultPerPage}`,
       page: `${this.pageNumber}`,
       date: `${date}`,
-      status: `${this.status}`,
-      time: `${this.timeSlot}`,
-      department_id: `${this.departmentId}`
+      due_date: `${date}`,
+      status: `${this.status}`
     };
     this.commonService.onBufferEvent.emit(true);
 
@@ -113,10 +112,10 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
           this.commonService
             .onBufferEvent.emit(false);
           if (code == 200) {
-            this.appointments = data.data;
+            this.invoices = data.data;
             this.totalItems = data.total;
           } else {
-            this.appointments = [];
+            this.invoices = [];
             this.totalItems = 0;
           }
         },

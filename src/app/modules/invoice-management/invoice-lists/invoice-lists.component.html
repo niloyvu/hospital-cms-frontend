@@ -12,51 +12,21 @@
                     </div>
                     <div class="card-body">
                         <div class="row mb-3">
+
                             <div class="col-md-3">
-                                <nz-select style="width: 100%" [(ngModel)]="departmentId" (ngModelChange)="onChangeDepartment()" nzShowSearch nzAllowClear
-                                    nzPlaceHolder="Search by department" id="department_id">
-                                    <nz-option [nzValue]="1" nzLabel="Dental Department"></nz-option>
-                                    <nz-option [nzValue]="2" nzLabel="Surgery Department"></nz-option>
+                                <nz-select style="width: 100%" [(ngModel)]="status" (ngModelChange)="onChangeStatus()"
+                                    nzShowSearch nzAllowClear nzPlaceHolder="Search by status" name="status">
+                                    <nz-option [nzLabel]="'Active'" [nzValue]="1"></nz-option>
+                                    <nz-option [nzLabel]="'Inactive'" [nzValue]="0"></nz-option>
                                 </nz-select>
                             </div>
                             <div class="col-md-3">
-                                <nz-select style="width: 100%" [(ngModel)]="timeSlot" (ngModelChange)="onChangeTimeSlot()" nzShowSearch nzAllowClear nzPlaceHolder="Search by time slot"
-                                    name="time">
-                                    <nz-option [nzValue]="1" nzLabel="9:00 AM - 10:00 AM"></nz-option>
-                                    <nz-option [nzValue]="2" nzLabel="10:00 AM - 11:00 AM"></nz-option>
-                                    <nz-option [nzValue]="3" nzLabel="11:00 AM - 12:00 PM"></nz-option>
-                                    <nz-option [nzValue]="4" nzLabel="12:00 PM - 01:00 PM"></nz-option>
-                                    <nz-option [nzValue]="5" nzLabel="01:00 PM - 02:00 PM"></nz-option>
-                                    <nz-option [nzValue]="6" nzLabel="03:00 PM - 04:00 PM"></nz-option>
-                                    <nz-option [nzValue]="7" nzLabel="04:00 PM - 05:00 PM"></nz-option>
-                                    <nz-option [nzValue]="8" nzLabel="05:00 PM - 06:00 PM"></nz-option>
-                                    <nz-option [nzValue]="9" nzLabel="07:00 PM - 08:00 PM"></nz-option>
-                                    <nz-option [nzValue]="10" nzLabel="08:00 PM - 09:00 PM"></nz-option>
-                                </nz-select>
+                                <nz-date-picker id="date" [(ngModel)]="date" (ngModelChange)="onChangeDate()"
+                                    nzPlaceHolder="Search by date" style="width: 100%"></nz-date-picker>
                             </div>
                             <div class="col-md-3">
-                                <nz-select style="width: 100%" [(ngModel)]="status" (ngModelChange)="onChangeStatus()" nzShowSearch nzAllowClear nzPlaceHolder="Search by status"
-                                    name="status">
-                                    <nz-option [nzLabel]="'Scheduled'" [nzValue]="0">Scheduled</nz-option>
-                                    <nz-option [nzLabel]="'Confirmed'" [nzValue]="1">Confirmed</nz-option>
-                                    <nz-option [nzLabel]="'Pending Confirmation'" [nzValue]="2">Pending
-                                        Confirmation</nz-option>
-                                    <nz-option [nzLabel]="'Cancelled by Patient'" [nzValue]="3">Cancelled by
-                                        Patient</nz-option>
-                                    <nz-option [nzLabel]="'Cancelled by Doctor'" [nzValue]="4">Cancelled by
-                                        Doctor</nz-option>
-                                    <nz-option [nzLabel]="'Rescheduled'" [nzValue]="5">Rescheduled</nz-option>
-                                    <nz-option [nzLabel]="'Completed'" [nzValue]="6">Completed</nz-option>
-                                    <nz-option [nzLabel]="'In Progress'" [nzValue]="7">In Progress</nz-option>
-                                    <nz-option [nzLabel]="'Emergency'" [nzValue]="8">Emergency</nz-option>
-                                    <nz-option [nzLabel]="'Awaiting Treatment'" [nzValue]="9">Awaiting
-                                        Treatment</nz-option>
-                                    <nz-option [nzLabel]="'Follow-Up Required'" [nzValue]="10">Follow-Up
-                                        Required</nz-option>
-                                </nz-select>
-                            </div>
-                            <div class="col-md-3">
-                                <nz-date-picker id="date"  [(ngModel)]="date" (ngModelChange)="onChangeDate()" nzPlaceHolder="Search by date" style="width: 100%"></nz-date-picker>
+                                <nz-date-picker id="due-date" [(ngModel)]="dueDate" (ngModelChange)="onChangeDate()"
+                                    nzPlaceHolder="Search by due date" style="width: 100%"></nz-date-picker>
                             </div>
                         </div>
                         <nz-divider></nz-divider>
@@ -98,61 +68,96 @@
                                             </i>
                                         </th>
 
-                                        <th (click)="sortBy('name')" class="text-start align-middle sort-icon">
-                                            Name
-                                            <i *ngIf="columnsSortBy==='name' && dataOrderBy" class="material-icons">
-                                                south
-                                            </i>
-                                            <i *ngIf="columnsSortBy==='name' && !dataOrderBy" class="material-icons">
-                                                north
-                                            </i>
-                                        </th>
-                                        <th (click)="sortBy('email')" class="text-start align-middle sort-icon">
-                                            Email
-                                            <i *ngIf="columnsSortBy==='email' && dataOrderBy" class="material-icons">
-                                                south
-                                            </i>
-                                            <i *ngIf="columnsSortBy==='email' && !dataOrderBy" class="material-icons">
-                                                north
-                                            </i>
-                                        </th>
-                                        <th (click)="sortBy('phone')" class="text-start align-middle sort-icon">
-                                            Phone
-                                            <i *ngIf="columnsSortBy==='phone' && dataOrderBy" class="material-icons">
-                                                south
-                                            </i>
-                                            <i *ngIf="columnsSortBy==='phone' && !dataOrderBy" class="material-icons">
-                                                north
-                                            </i>
-                                        </th>
-                                        <th (click)="sortBy('department_id')" class="text-start align-middle sort-icon">
-                                            Department
-                                            <i *ngIf="columnsSortBy==='department_id' && dataOrderBy"
+                                        <th (click)="sortBy('invoice_id')" class="text-start align-middle sort-icon">
+                                            Invoice #
+                                            <i *ngIf="columnsSortBy==='invoice_id' && dataOrderBy"
                                                 class="material-icons">
                                                 south
                                             </i>
-                                            <i *ngIf="columnsSortBy==='department_id' && !dataOrderBy"
+                                            <i *ngIf="columnsSortBy==='invoice_id' && !dataOrderBy"
                                                 class="material-icons">
                                                 north
                                             </i>
                                         </th>
-                                        <th (click)="sortBy('time')" class="text-start align-middle sort-icon">
-                                            Time
-                                            <i *ngIf="columnsSortBy==='time' && dataOrderBy" class="material-icons">
+                                        <th (click)="sortBy('sub_total')" class="text-start align-middle sort-icon">
+                                            Sub Total
+                                            <i *ngIf="columnsSortBy==='sub_total' && dataOrderBy"
+                                                class="material-icons">
                                                 south
                                             </i>
-                                            <i *ngIf="columnsSortBy==='time' && !dataOrderBy" class="material-icons">
+                                            <i *ngIf="columnsSortBy==='sub_total' && !dataOrderBy"
+                                                class="material-icons">
                                                 north
                                             </i>
                                         </th>
-                                        <th (click)="sortBy('dentist_id')" class="text-start align-middle sort-icon">
-                                            Dentist
-                                            <i *ngIf="columnsSortBy==='dentist_id' && dataOrderBy"
+                                        <th (click)="sortBy('discount')" class="text-start align-middle sort-icon">
+                                            Discount
+                                            <i *ngIf="columnsSortBy==='discount' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='discount' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('total_amount')" class="text-start align-middle sort-icon">
+                                            Total Amount
+                                            <i *ngIf="columnsSortBy==='total_amount' && dataOrderBy"
                                                 class="material-icons">
                                                 south
                                             </i>
-                                            <i *ngIf="columnsSortBy==='dentist_id' && !dataOrderBy"
+                                            <i *ngIf="columnsSortBy==='total_amount' && !dataOrderBy"
                                                 class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('paid_amount')" class="text-start align-middle sort-icon">
+                                            Paid Amount
+                                            <i *ngIf="columnsSortBy==='paid_amount' && dataOrderBy"
+                                                class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='paid_amount' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('due_amount')" class="text-start align-middle sort-icon">
+                                            Due Amount
+                                            <i *ngIf="columnsSortBy==='due_amount' && dataOrderBy"
+                                                class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='due_amount' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('date')" class="text-start align-middle sort-icon">
+                                            Date
+                                            <i *ngIf="columnsSortBy==='date' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='date' && !dataOrderBy" class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('due_date')" class="text-start align-middle sort-icon">
+                                            Due Date
+                                            <i *ngIf="columnsSortBy==='due_date' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='due_date' && !dataOrderBy"
+                                                class="material-icons">
+                                                north
+                                            </i>
+                                        </th>
+                                        <th (click)="sortBy('remarks')" class="text-start align-middle sort-icon">
+                                            Remarks
+                                            <i *ngIf="columnsSortBy==='remarks' && dataOrderBy" class="material-icons">
+                                                south
+                                            </i>
+                                            <i *ngIf="columnsSortBy==='remarks' && !dataOrderBy" class="material-icons">
                                                 north
                                             </i>
                                         </th>
@@ -166,25 +171,14 @@
                                                 north
                                             </i>
                                         </th>
-                                        <th (click)="sortBy('feature')" class="text-center align-middle sort-icon">
-                                            Feature
-                                            <i *ngIf="columnsSortBy==='feature' && dataOrderBy" class="material-icons">
-                                                south
-                                            </i>
-                                            <i *ngIf="columnsSortBy==='feature' && !dataOrderBy" class="material-icons">
-                                                north
-                                            </i>
-                                        </th>
-                                        <th class="text-center align-middle sort-icon">
-                                            Date
-                                        </th>
+
                                         <th class="text-center align-middle sort-icon">
                                             Action
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let appointment of appointments | paginate: {
+                                    <tr *ngFor="let invoice of invoices | paginate: {
                                                                         currentPage: this.pageNumber,
                                                                         itemsPerPage: this.resultPerPage,
                                                                         totalItems: totalItems,
@@ -193,40 +187,50 @@
                                         <td class="text-center">{{getSl(i + 1)}}</td>
 
                                         <td>
-                                            {{appointment.name | titlecase}}
+                                            {{invoice.invoice_id}}
                                         </td>
                                         <td>
-                                            {{appointment.email}}
+                                            {{invoice.sub_total}}
                                         </td>
                                         <td>
-                                            {{appointment.phone}}
+                                            {{invoice.discount}}
                                         </td>
                                         <td class="text-center">
-                                            {{appointment.department}}
+                                            {{invoice.total_amount}}
                                         </td>
                                         <td>
-                                            {{appointment.time_slot}}
+                                            {{invoice.paid_amount}}
                                         </td>
                                         <td>
-                                            {{appointment.dentist?.name}}
+                                            {{invoice.due_amount}}
                                         </td>
 
                                         <td class="text-center">
-                                            <nz-tag [nzColor]="appointment.status | appointmentStatusColor">
-                                                <b>{{appointment?.status | appointmentStatus}}</b>
-                                            </nz-tag>
+                                            {{invoice?.date}}
                                         </td>
                                         <td class="text-center">
-                                            <nz-tag [nzColor]="appointment?.feature?'processing':'error'">
-                                                {{appointment?.feature?'Yes':'No'}}
-                                            </nz-tag>
+                                            {{invoice?.due_date}}
                                         </td>
                                         <td class="text-center">
-                                            {{appointment?.date}}
+                                            <i class="fa fa-commenting" style="font-size: 24px; text-align: center;"
+                                                aria-hidden="true" nz-popover [nzPopoverTitle]="title"
+                                                [nzPopoverContent]="template" nzPopoverPlacement="top"></i>
+                                            <ng-template #title>
+                                                <i class="fa fa-info-circle text-info"></i>
+                                                <strong> Message </strong>
+                                            </ng-template>
+                                            <ng-template #template>
+                                                <p class="m-0">{{invoice.remarks}}</p>
+                                            </ng-template>
+                                        </td>
+                                        <td class="text-center">
+                                            <nz-tag [nzColor]="invoice.status? 'success':'processing'">
+                                                <b>{{invoice?.status? 'Active':'Inactive'}}</b>
+                                            </nz-tag>
                                         </td>
                                         <td class="text-center">
                                             <button nz-button nzType="default" nzSize="small"
-                                                (click)="updateInvoice(appointment)">
+                                                (click)="updateInvoice(invoice)">
                                                 <i class="fa fa-pencil me-2"></i>
                                                 Edit
                                             </button>
@@ -242,7 +246,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <p class="table-total-count"> Total Appointments: {{totalItems}}</p>
+                                <p class="table-total-count"> Total Invoices: {{totalItems}}</p>
                             </div>
                             <div class="col-md-6 text-end">
                                 <pagination-controls (pageChange)="pageChange($event)" id="table" class="my-pagination">

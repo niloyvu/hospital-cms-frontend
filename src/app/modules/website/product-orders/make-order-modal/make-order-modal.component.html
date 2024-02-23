@@ -134,7 +134,7 @@
                 <nz-form-item>
                     <nz-form-control [nzErrorTip]="addressErrorTemplate">
                         <nz-form-label nzFor="address" nzRequired>Address</nz-form-label>
-                        <textarea nz-input type="text" formControlName="address" id="address" placeholder="address">
+                        <textarea nz-input type="text" formControlName="address" id="address" placeholder="Address">
                     </textarea>
                         <ng-template #addressErrorTemplate let-control>
                             <ng-container *ngIf="control.hasError('required')">Address is required.</ng-container>
@@ -146,8 +146,6 @@
 
                     </nz-form-control>
                 </nz-form-item>
-
-
             </div>
 
             <div class="col-md-12" *ngIf="data">

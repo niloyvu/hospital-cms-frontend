@@ -25,20 +25,20 @@
                 </nz-form-item>
             </div>
             <div class="col-md-6">
-                <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
+                <nz-form-label nzFor="email">Email</nz-form-label>
                 <nz-form-item>
                     <nz-form-control nzHasFeedback [nzErrorTip]="emailErrorTemplate">
                         <input nz-input type="email" formControlName="email" id="email" placeholder="Enter email" />
                         <ng-template #emailErrorTemplate let-control>
                             <ng-container *ngIf="control.hasError('email')">The input is not valid
-                                E-mail!</ng-container>
-                            <ng-container *ngIf="control.hasError('required')">Please input your E-mail!</ng-container>
+                                E-mail!
+                            </ng-container>
                         </ng-template>
                     </nz-form-control>
                 </nz-form-item>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <nz-form-label nzRequired nzFor="phone">Phone</nz-form-label>
                 <nz-form-item>
                     <nz-form-control nzHasFeedback [nzErrorTip]="phoneErrorTemplate">
@@ -56,7 +56,26 @@
                 </nz-form-item>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-12">
+                <nz-form-item>
+                    <nz-form-control [nzErrorTip]="addressErrorTemplate">
+                        <nz-form-label nzFor="address" nzRequired>Address</nz-form-label>
+                        <input nz-input type="text" formControlName="address" id="address" placeholder="Address">
+                        <ng-template #addressErrorTemplate let-control>
+                            <ng-container *ngIf="control.hasError('required')">Address is required.</ng-container>
+                            <ng-container *ngIf="control.hasError('minlength')">
+                                Address must be at least 10 characters.
+                            </ng-container>
+                            <ng-container *ngIf="control.hasError('maxlength')">
+                                Address must be at most 50 characters.
+                            </ng-container>
+                        </ng-template>
+
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
                 <nz-form-item>
                     <nz-form-control nzErrorTip="Doctor is required!">
                         <nz-form-label nzRequired nzFor="dentist_id">Doctor</nz-form-label>

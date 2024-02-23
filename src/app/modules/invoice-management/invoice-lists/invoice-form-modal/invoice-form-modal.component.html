@@ -246,7 +246,8 @@
                                         <tbody>
                                             <tr>
                                                 <td valign="top">
-                                                    <nz-form-label nzRequired>Bill To</nz-form-label>
+                                                    <nz-form-label nzFor="appointment_id" nzRequired>Bill
+                                                        To</nz-form-label>
                                                 </td>
                                                 <td valign="top">
                                                     <div class="client_info">
@@ -254,22 +255,30 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td style="padding-left:25px;">
-
-                                                                        <nz-form-control nzHasFeedback>
-                                                                            <input nz-input type="name"
-                                                                                formControlName="name" id="name"
-                                                                                placeholder="[Name]" />
+                                                                        <nz-form-control>
+                                                                            <nz-select nzShowSearch nzAllowClear
+                                                                                id="appointment_id"
+                                                                                nzPlaceHolder="Select a person"
+                                                                                formControlName="appointment_id"
+                                                                                nzPlaceHolder="Select patient">
+                                                                                <nz-option
+                                                                                    *ngFor="let user of appointmentUsers"
+                                                                                    [nzLabel]="user.name | titlecase"
+                                                                                    [nzValue]="user.id">
+                                                                                </nz-option>
+                                                                            </nz-select>
                                                                         </nz-form-control>
 
-                                                                        <nz-form-control nzHasFeedback>
-                                                                            <input nz-input type="phone" id="phone"
-                                                                                formControlName="phone"
+                                                                        <nz-form-control>
+                                                                            <input nz-input type="text" readonly
+                                                                                id="phone" [value]="selectedUser?.phone"
                                                                                 placeholder="[Phone]" />
                                                                         </nz-form-control>
 
-                                                                        <nz-form-control nzHasFeedback>
-                                                                            <input nz-input type="address"
-                                                                                formControlName="address" id="address"
+                                                                        <nz-form-control>
+                                                                            <input nz-input type="text" readonly
+                                                                                id="address"
+                                                                                [value]="selectedUser?.address"
                                                                                 placeholder="[Address]" />
                                                                         </nz-form-control>
 
@@ -288,13 +297,13 @@
                                         <tbody>
                                             <tr>
                                                 <td align="right">
-                                                    <nz-form-label nzFor="invoice_number" nzRequired>
-                                                        Invoice Number
+                                                    <nz-form-label nzFor="invoice_id" nzRequired>
+                                                        Invoice #
                                                     </nz-form-label>
                                                 </td>
                                                 <td align="left" style="padding-left:20px">
-                                                    <input nz-input formControlName="invoice_number" type="number"
-                                                        id="no" class="invoice-input" style="text-align: right;">
+                                                    <input nz-input formControlName="invoice_id" type="text" id="no"
+                                                        class="invoice-input" readonly>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -354,8 +363,7 @@
                             </tr>
                             <tr class="totals-row shaped">
                                 <td class="wide-cell" colspan="2">
-                                    <p class="text-danger text-end"
-                                        *ngIf="discount?.invalid && discount?.touched">
+                                    <p class="text-danger text-end" *ngIf="discount?.invalid && discount?.touched">
                                         <ng-container *ngIf="discount?.errors?.['min']">
                                             Minimum discount should be 5%!
                                         </ng-container>
@@ -383,18 +391,17 @@
 
                             <tr class="totals-row shaped">
                                 <td class="wide-cell" colspan="2">
-                                    <p class="text-danger text-end"
-                                    *ngIf="paidAmount?.invalid && paidAmount?.touched">
-                                    <ng-container *ngIf="paidAmount?.errors?.['min']">
-                                        Minimum amount should be 1000!
-                                    </ng-container>
-                                    <ng-container *ngIf="paidAmount?.errors?.['max']">
-                                        Total amount exceeds!
-                                    </ng-container>
-                                    <ng-container *ngIf="paidAmount?.errors?.['pattern']">
-                                        Invalid Amount!
-                                    </ng-container>
-                                </p>
+                                    <p class="text-danger text-end" *ngIf="paidAmount?.invalid && paidAmount?.touched">
+                                        <ng-container *ngIf="paidAmount?.errors?.['min']">
+                                            Minimum amount should be 500!
+                                        </ng-container>
+                                        <ng-container *ngIf="paidAmount?.errors?.['max']">
+                                            Total amount exceeds!
+                                        </ng-container>
+                                        <ng-container *ngIf="paidAmount?.errors?.['pattern']">
+                                            Invalid Amount!
+                                        </ng-container>
+                                    </p>
                                 </td>
                                 <td><small><strong>Paid Amount</strong></small></td>
                                 <td class="text-end">
@@ -426,8 +433,7 @@
                                 *ngFor="let item of selectedInvoiceItems.controls; let i = index;">
                                 <input formControlName="id" type="hidden" />
                                 <td>
-                                    <nz-select class="editable input-mini" formControlName="item" name="item" id="item"
-                                        type="text">
+                                    <nz-select nzDisabled formControlName="item_id" name="item_id" id="item_id" type="text">
                                         <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title"
                                             [nzValue]="item.id">
                                         </nz-option>
@@ -456,9 +462,13 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <textarea formControlName="remarks" name="remarks" nz-input rows="2"
-                                        placeholder="Notes and Terms:">
-                                    </textarea>
+                                    <nz-form-label nzFor="remarks" nzRequired>Notes</nz-form-label>
+                                    <nz-form-item>
+                                        <nz-form-control nzErrorTip="Note is required!">
+                                            <textarea formControlName="remarks" id="remarks" nz-input rows="2"
+                                                placeholder="Notes and Terms:"></textarea>
+                                        </nz-form-control>
+                                    </nz-form-item>
                                 </td>
                             </tr>
                         </tbody>

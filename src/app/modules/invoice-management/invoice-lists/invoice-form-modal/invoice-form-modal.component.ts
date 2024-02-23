@@ -12,10 +12,13 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class InvoiceFormModalComponent implements OnInit {
 
   invoiceItems: any[] = [];
+  appointmentUsers: any[] = [];
   invoiceForm!: FormGroup;
   isDisabled: boolean = false;
   currentDate: Date = new Date();
   dialogRef = inject(MatDialogRef);
+
+  selectedUser: any = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,39 +29,50 @@ export class InvoiceFormModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.getAppointmentUsers();
     this.getActiveInvoiceItems();
+
     if (this.data) {
       this.invoiceForm.patchValue(this.data);
+      this.populateInvoiceItems();
+      this.invoiceForm.get('sub_total')?.setValue(this.data.sub_total);
+      this.invoiceForm.get('due_amount')?.setValue(this.data.due_amount);
+      this.invoiceForm.get('total_amount')?.setValue(this.data.total_amount);
+    } else {
+      this.getNextInvoiceId();
     }
   }
 
   initializeForm() {
-
-    const numberOfDaysToAdd = 7;
-    const currentDate = new Date();
-    const dueDate = currentDate.setDate(currentDate.getDate() + numberOfDaysToAdd);
-
     this.invoiceForm = this.formBuilder.group({
       id: null,
-      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
-      phone: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
-      address: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(50),]],
-      invoice_number: [{ value: '4234', disabled: true }, Validators.required],
+      appointment_id: ['', Validators.required],
+      invoice_id: [null, Validators.required],
       date: [new Date(), Validators.required],
-      due_date: [dueDate, Validators.required],
+      due_date: [new Date(), Validators.required],
       selected_items: [[], Validators.required],
       invoice_items: this.formBuilder.array([this.invoiceItem()]),
       sub_total: [null, Validators.required],
       discount: [null, [Validators.min(5), Validators.max(50), Validators.pattern(/^\d+$/)]],
-      total_amount: [{ value: null, disabled: true }, Validators.required],
-      paid_amount: [null, [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)]],
+      total_amount: [null, Validators.required],
+      paid_amount: [null, [Validators.required]],
       due_amount: [null],
       status: [true, Validators.required],
       remarks: [null, Validators.required],
     });
-    this.onChangeSelectedItems();
-    this.onChangeDiscount();
-    this.onChangePaidAmount();
+
+    if(!this.data) {
+      this.onChangeSelectedItems();
+      this.onChangeDiscount();
+      this.onChangePaidAmount();
+      this.onChangeAppointmentUser();
+    }
+  }
+
+  onChangeAppointmentUser() {
+    this.invoiceForm.get('appointment_id')?.valueChanges.subscribe((appointment_user_id) => {
+      this.selectedUser = this.appointmentUsers?.find(user => user.id === appointment_user_id);
+    });
   }
 
   onChangeDiscount() {
@@ -119,10 +133,18 @@ export class InvoiceFormModalComponent implements OnInit {
     });
   }
 
+
+  populateInvoiceItems() {
+    this.selectedInvoiceItems.clear();
+    this.data.invoice_items.forEach((item: any) => {
+      this.selectedInvoiceItems.push(this.invoiceItem(item));
+    });
+  }
+
   invoiceItem(data?: any) {
     const formGroup = this.formBuilder.group({
       id: data?.id,
-      item: [{ value: data?.id, disabled: true }, Validators.required],
+      item_id: [data?.item_id, Validators.required],
       quantity: [data?.quantity ?? 1, Validators.required],
       price: [data?.price, Validators.required],
       amount: [data?.price, Validators.required],
@@ -135,7 +157,7 @@ export class InvoiceFormModalComponent implements OnInit {
     formGroup.get('quantity')?.valueChanges.subscribe((newQuantity) => {
       const price = formGroup.get('price')?.value;
       const newAmount = price * newQuantity;
-      
+
       formGroup.get('amount')?.setValue(newAmount);
       this.calculateTotalAmount();
     });
@@ -179,7 +201,7 @@ export class InvoiceFormModalComponent implements OnInit {
   }
 
   setPaidAmountValidators(paidAmount: number) {
-    this.paidAmount?.setValidators([Validators.min(1), Validators.max(paidAmount), Validators.pattern(/^\d+$/)]);
+    this.paidAmount?.setValidators([Validators.required, Validators.min(500), Validators.max(paidAmount), Validators.pattern(/^\d+$/)]);
   }
 
   getActiveInvoiceItems() {
@@ -194,21 +216,51 @@ export class InvoiceFormModalComponent implements OnInit {
       })
   }
 
+  getAppointmentUsers() {
+    this.dataService.getJson('website-cms/appointment-users', '')
+      .subscribe({
+        next: ({ data }) => {
+          this.appointmentUsers = data;
+          if (this.data) {
+            this.selectedUser = this.appointmentUsers?.find(user => user.id === this.data.appointment_id);
+          }
+        },
+        error: error => {
+          console.error(error);
+        }
+      })
+  }
+
+  getNextInvoiceId() {
+    this.dataService.getJson('website-cms/next-invoice', '')
+      .subscribe({
+        next: ({ data }) => {
+          this.invoiceForm.get('invoice_id')?.setValue(data.invoice_id);
+        },
+        error: error => {
+          console.error(error);
+        }
+      })
+  }
+
   onSubmitForm() {
     this.isDisabled = true;
     this.commonService.onBufferEvent.emit(true);
-    this.dataService.post(this.invoiceForm.value, 'website/invoice')
+
+    this.dataService.post(this.invoiceForm.value, 'website-cms/create-invoice')
       .subscribe({
         next: (response) => {
+          this.isDisabled = false;
           this.commonService.onBufferEvent.emit(false);
           if (response.code === 200) {
-            this.isDisabled = false;
             this.dialogRef.close(true);
             this.commonService.openSnackBar(response.message, 'Close', 'submit-success');
           }
         },
         error: (error) => {
           console.error(error);
+          this.isDisabled = false;
+          this.commonService.onBufferEvent.emit(false);
         }
       });
   }
