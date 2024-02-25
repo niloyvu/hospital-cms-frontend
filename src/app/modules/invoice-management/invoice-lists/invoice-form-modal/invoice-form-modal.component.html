@@ -6,164 +6,6 @@
 </h2>
 <form [formGroup]="invoiceForm" (ngSubmit)="onSubmitForm()">
     <mat-dialog-content class="mat-typography">
-        <!-- <div class="row">
-
-            <div class="col-md-6">
-                <nz-form-label nzFor="name" nzRequired>Name</nz-form-label>
-                <nz-form-item>
-                    <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTemplate">
-                        <input nz-input type="text" formControlName="name" id="name" placeholder="Name">
-                        <ng-template #nameErrorTemplate let-control>
-                            <ng-container *ngIf="control.hasError('required')">Name is required.</ng-container>
-                            <ng-container *ngIf="control.hasError('minlength')">Name must be at least 6
-                                characters.</ng-container>
-                            <ng-container *ngIf="control.hasError('maxlength')">Name must be at most 30
-                                characters.</ng-container>
-                        </ng-template>
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-            <div class="col-md-6">
-                <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
-                <nz-form-item>
-                    <nz-form-control nzHasFeedback [nzErrorTip]="emailErrorTemplate">
-                        <input nz-input type="email" formControlName="email" id="email" placeholder="Enter email" />
-                        <ng-template #emailErrorTemplate let-control>
-                            <ng-container *ngIf="control.hasError('email')">The input is not valid
-                                E-mail!</ng-container>
-                            <ng-container *ngIf="control.hasError('required')">Please input your E-mail!</ng-container>
-                        </ng-template>
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-
-            <div class="col-md-6">
-                <nz-form-label nzRequired nzFor="phone">Phone</nz-form-label>
-                <nz-form-item>
-                    <nz-form-control nzHasFeedback [nzErrorTip]="phoneErrorTemplate">
-                        <input nz-input type="text" formControlName="phone" id="phone" placeholder="Enter phone" />
-                        <ng-template #phoneErrorTemplate let-control>
-                            <ng-container *ngIf="control.hasError('minlength')">Phone must be 11 digits
-                                long!</ng-container>
-                            <ng-container *ngIf="control.hasError('maxlength')">Phone must be at most 11 digits
-                                long!</ng-container>
-                            <ng-container *ngIf="control.hasError('required')">Phone is required!</ng-container>
-                            <ng-container *ngIf="control.hasError('pattern')">Invalid phone numbers!</ng-container>
-                        </ng-template>
-                    </nz-form-control>
-
-                </nz-form-item>
-            </div>
-
-            <div class="col-md-6">
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="Doctor is required!">
-                        <nz-form-label nzRequired nzFor="dentist_id">Doctor</nz-form-label>
-                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a doctor" name="dentist_id"
-                            formControlName="dentist_id">
-                            <nz-option *ngFor="let dentist of dentists" [nzValue]="dentist.id" [nzLabel]="dentist.name"></nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-
-            <div class="col-md-12">
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="Department is required!">
-                        <nz-form-label nzFor="department_id" nzRequired>Department</nz-form-label>
-                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a department" id="department_id"
-                            formControlName="department_id">
-                         
-                            <nz-option [nzValue]="1" nzLabel="Dental Department"></nz-option>
-                            <nz-option [nzValue]="2" nzLabel="Surgery Department"></nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-
-            <div class="col-md-6">
-                <nz-form-item>
-                    <nz-form-control [nzErrorTip]="dateErrorTemplate">
-                        <nz-form-label nzFor="date" nzRequired>Date</nz-form-label>
-                        <nz-date-picker id="date" formControlName="date" style="width: 100%"></nz-date-picker>
-                        <ng-template #dateErrorTemplate let-control>
-                            <ng-container *ngIf="control.hasError('required')">Phone is required!</ng-container>
-                            <ng-container *ngIf="control.hasError('invalidBookingDate')">Booking date can't be
-                                past.</ng-container>
-                            <ng-container *ngIf="control.hasError('exceedBookingDate')">Booking can't exceed next 10
-                                days.</ng-container>
-                            <ng-container *ngIf="control.hasError('disabledDate')">Off day selected.</ng-container>
-                        </ng-template>
-
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-            <div class="col-md-6">
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="Time is required!">
-                        <nz-form-label nzFor="time" nzRequired>Time</nz-form-label>
-                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a time" name="time"
-                            formControlName="time">
-                            <nz-option [nzValue]="0" nzLabel="Select Time"></nz-option>
-                            <nz-option [nzValue]="1" nzLabel="9:00 AM - 10:00 AM"></nz-option>
-                            <nz-option [nzValue]="2" nzLabel="10:00 AM - 11:00 AM"></nz-option>
-                            <nz-option [nzValue]="3" nzLabel="11:00 AM - 12:00 PM"></nz-option>
-                            <nz-option [nzValue]="4" nzLabel="12:00 PM - 01:00 PM"></nz-option>
-                            <nz-option [nzValue]="5" nzLabel="01:00 PM - 02:00 PM"></nz-option>
-                            <nz-option [nzValue]="6" nzLabel="03:00 PM - 04:00 PM"></nz-option>
-                            <nz-option [nzValue]="7" nzLabel="04:00 PM - 05:00 PM"></nz-option>
-                            <nz-option [nzValue]="8" nzLabel="05:00 PM - 06:00 PM"></nz-option>
-                            <nz-option [nzValue]="9" nzLabel="07:00 PM - 08:00 PM"></nz-option>
-                            <nz-option [nzValue]="10" nzLabel="08:00 PM - 09:00 PM"></nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-            <div class="col-md-12" *ngIf="data">
-                <nz-form-item>
-                    <nz-form-control>
-                        <nz-form-label nzFor="status">Status</nz-form-label>
-                        <nz-select nzShowSearch nzAllowClear formControlName="status" nzPlaceHolder="Select a status"
-                            name="status">
-                            <nz-option [nzLabel]="'Scheduled'" [nzValue]="0">Scheduled</nz-option>
-                            <nz-option [nzLabel]="'Confirmed'" [nzValue]="1">Confirmed</nz-option>
-                            <nz-option [nzLabel]="'Pending Confirmation'" [nzValue]="2">Pending Confirmation</nz-option>
-                            <nz-option [nzLabel]="'Cancelled by Patient'" [nzValue]="3">Cancelled by Patient</nz-option>
-                            <nz-option [nzLabel]="'Cancelled by Doctor'" [nzValue]="4">Cancelled by Doctor</nz-option>
-                            <nz-option [nzLabel]="'Rescheduled'" [nzValue]="5">Rescheduled</nz-option>
-                            <nz-option [nzLabel]="'Completed'" [nzValue]="6">Completed</nz-option>
-                            <nz-option [nzLabel]="'In Progress'" [nzValue]="7">In Progress</nz-option>
-                            <nz-option [nzLabel]="'Emergency'" [nzValue]="8">Emergency</nz-option>
-                            <nz-option [nzLabel]="'Awaiting Treatment'" [nzValue]="9">Awaiting Treatment</nz-option>
-                            <nz-option [nzLabel]="'Follow-Up Required'" [nzValue]="10">Follow-Up Required</nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-
-            <div class="col-md-12">
-                <nz-form-item>
-                    <nz-form-control>
-                        <nz-form-label nzFor="remarks">Remarks</nz-form-label>
-                        <textarea nz-input type="text" name="remarks" placeholder="Write the remarks"
-                            formControlName="remarks" id="remarks">
-                        </textarea>
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-
-            <div class="col-md-6">
-                <nz-form-item>
-                    <nz-form-control>
-                        <nz-form-label nzFor="status">Feature</nz-form-label>
-                        <nz-switch class="ms-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
-                            formControlName="feature" name="feature" id="feature">
-                        </nz-switch>
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-        </div> -->
-
         <div class="invoice-wrap">
             <div class="invoice-inner">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -256,7 +98,7 @@
                                                                 <tr>
                                                                     <td style="padding-left:25px;">
                                                                         <nz-form-control>
-                                                                            <nz-select nzShowSearch nzAllowClear
+                                                                            <nz-select [nzDisabled]="isUpdate" nzShowSearch nzAllowClear
                                                                                 id="appointment_id"
                                                                                 nzPlaceHolder="Select a person"
                                                                                 formControlName="appointment_id"
@@ -311,7 +153,7 @@
                                                     <nz-form-label nzFor="date" nzRequired>Date</nz-form-label>
                                                 </td>
                                                 <td align="left" style="padding-left:20px">
-                                                    <nz-date-picker formControlName="date" style="width: 100%"
+                                                    <nz-date-picker formControlName="date" [nzDisabled]="isUpdate" style="width: 100%"
                                                         type="date" id="date" class="invoice-input">
                                                     </nz-date-picker>
                                                 </td>
@@ -322,7 +164,7 @@
                                                     <nz-form-label nzFor="due_date" nzRequired>Due Date </nz-form-label>
                                                 </td>
                                                 <td align="left" style="padding-left:20px;">
-                                                    <nz-date-picker formControlName="due_date" style="width: 100%"
+                                                    <nz-date-picker formControlName="due_date" [nzDisabled]="isUpdate" style="width: 100%"
                                                         type="date" id="due-date" class="invoice-input">
                                                     </nz-date-picker>
                                                 </td>
@@ -335,7 +177,7 @@
                     </table>
                 </div>
                 <nz-form-label nzFor="selected_items" nzRequired>Diagnosis</nz-form-label>
-                <nz-select formControlName="selected_items" id="selected_items" [nzMaxTagCount]="3"
+                <nz-select formControlName="selected_items" [nzDisabled]="isUpdate" id="selected_items" [nzMaxTagCount]="3"
                     [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple" nzPlaceHolder="Please select diagnosis">
                     <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title" [nzValue]="item.id"></nz-option>
                 </nz-select>
@@ -377,7 +219,7 @@
                                 </td>
                                 <td><small><strong>Discount %</strong></small></td>
                                 <td class="text-end">
-                                    <input style="width: 100px;" type="text" formControlName="discount"
+                                    <input style="width: 100px;" [readOnly]="isUpdate" type="text" formControlName="discount"
                                         class="invoice-input editable text-end">
                                 </td>
                             </tr>
@@ -405,7 +247,7 @@
                                 </td>
                                 <td><small><strong>Paid Amount</strong></small></td>
                                 <td class="text-end">
-                                    <input style="width: 100px;" type="text" formControlName="paid_amount"
+                                    <input style="width: 100px;" type="text" [readOnly]="isUpdate" formControlName="paid_amount"
                                         class="invoice-input editable text-end">
                                 </td>
                             </tr>
@@ -440,7 +282,7 @@
                                     </nz-select>
                                 </td>
                                 <td>
-                                    <nz-input-number [nzMin]="1" [nzMax]="100" [nzStep]="1" formControlName="quantity"
+                                    <nz-input-number [nzMin]="1" [nzDisabled]="isUpdate" [nzMax]="100" [nzStep]="1" formControlName="quantity"
                                         class="editable input-mini text-center">
                                     </nz-input-number>
                                 </td>

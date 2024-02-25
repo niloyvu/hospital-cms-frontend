@@ -190,18 +190,19 @@
                                             {{invoice.invoice_id}}
                                         </td>
                                         <td>
-                                            {{invoice.sub_total}}
+                                            ৳ {{invoice.sub_total}}
                                         </td>
                                         <td>
-                                            {{invoice.discount}}
-                                        </td>
+                                            {{invoice.discount}} 
+                                            <ng-container *ngIf="invoice.discount">%</ng-container>
                                         <td class="text-center">
-                                            {{invoice.total_amount}}
+                                            ৳ {{invoice.total_amount}}
                                         </td>
                                         <td>
-                                            {{invoice.paid_amount}}
+                                            ৳ {{invoice.paid_amount}}
                                         </td>
                                         <td>
+                                            <ng-container *ngIf="invoice.due_amount">৳</ng-container> 
                                             {{invoice.due_amount}}
                                         </td>
 

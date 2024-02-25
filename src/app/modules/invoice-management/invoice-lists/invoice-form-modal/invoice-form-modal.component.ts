@@ -20,6 +20,8 @@ export class InvoiceFormModalComponent implements OnInit {
 
   selectedUser: any = null;
 
+  isUpdate: boolean = !!this.data;
+
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataService,
@@ -32,12 +34,13 @@ export class InvoiceFormModalComponent implements OnInit {
     this.getAppointmentUsers();
     this.getActiveInvoiceItems();
 
-    if (this.data) {
+    if (this.isUpdate) {
       this.invoiceForm.patchValue(this.data);
       this.populateInvoiceItems();
       this.invoiceForm.get('sub_total')?.setValue(this.data.sub_total);
       this.invoiceForm.get('due_amount')?.setValue(this.data.due_amount);
       this.invoiceForm.get('total_amount')?.setValue(this.data.total_amount);
+      this.discount?.clearValidators();
     } else {
       this.getNextInvoiceId();
     }
@@ -61,7 +64,7 @@ export class InvoiceFormModalComponent implements OnInit {
       remarks: [null, Validators.required],
     });
 
-    if(!this.data) {
+    if (!this.isUpdate) {
       this.onChangeSelectedItems();
       this.onChangeDiscount();
       this.onChangePaidAmount();
@@ -142,14 +145,19 @@ export class InvoiceFormModalComponent implements OnInit {
   }
 
   invoiceItem(data?: any) {
+
+    const itemId = this.isUpdate ? data?.item_id : data?.id;
+
     const formGroup = this.formBuilder.group({
       id: data?.id,
-      item_id: [data?.item_id, Validators.required],
+      item_id: [itemId, Validators.required],
       quantity: [data?.quantity ?? 1, Validators.required],
       price: [data?.price, Validators.required],
       amount: [data?.price, Validators.required],
     });
-    this.onChangeCalculateItemPrice(formGroup);
+    if (!this.isUpdate) {
+      this.onChangeCalculateItemPrice(formGroup);
+    }
     return formGroup;
   }
 
