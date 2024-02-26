@@ -1,10 +1,10 @@
-<div class="limiter" style="background-image: url('./assets/img/bg.jpg'); background-size: cover;
+<div class="limiter" style="background-image: url('./assets/img/hero-img-2.webp'); background-size: cover;
 height: 100vh;">
     <div class="container">
         <div class="login-panel">
             <form [formGroup]="userLoginForm" (ngSubmit)="submitLoginForm()">
                 <div class="login-form-logo">
-                    <img src="./assets/img/reyad-dental-image.jpg" alt="logo">
+                    <img src="./assets/img/login-image.png" alt="logo">
                 </div>
                 <div class="login-text">
                     Login
@@ -38,7 +38,7 @@ height: 100vh;">
                         </div>
                     </div>
                 </mat-card-content>
-                <mat-card-actions class="submit-login">
+                <mat-card-actions class="submit-button">
                     <button mat-raised-button [disabled]="!userLoginForm.valid" class="w-100" color="primary">
                         <mat-icon class="me-2">login</mat-icon>
                         Login
