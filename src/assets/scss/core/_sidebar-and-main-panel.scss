@@ -1,4 +1,5 @@
 @import '../core/mixins/animations';
+
 .wrapper {
   position: relative;
   top: 0;
@@ -262,7 +263,8 @@
     display: block;
     position: relative;
     z-index: 4;
-    background: #ffffff52;
+    background: rgb(255, 255, 255);
+    border-right: 1px solid #ddd;
 
     &:after {
       content: '';
@@ -291,7 +293,6 @@
       font-weight: $font-weight-default;
       line-height: 30px;
       overflow: hidden;
-      margin-left: 15px;
       display: block;
     }
   }
@@ -320,6 +321,7 @@
   }
 
   &[data-background-color="red"] {
+
     .user,
     .logo,
     .nav li.separator {
