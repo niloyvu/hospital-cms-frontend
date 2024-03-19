@@ -45,8 +45,8 @@ const routes: Routes = [
     path: 'website',
     canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./modules/website/website.module').then(
-        (m) => m.WebsiteModule
+      import('./modules/website-frontend/website-frontend.module').then(
+        (m) => m.WebsiteFrontendModule
       ),
   },
   {
@@ -55,6 +55,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/invoice-management/invoice-management.module').then(
         (m) => m.InvoiceManagementModule
+      ),
+  },
+  {
+    path: 'accounts-management',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./modules/accounts-management/accounts-management.module').then(
+        (m) => m.AccountsManagementModule
       ),
   },
 

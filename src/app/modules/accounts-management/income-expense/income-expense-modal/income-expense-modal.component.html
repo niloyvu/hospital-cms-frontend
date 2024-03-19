@@ -1,0 +1,89 @@
+<h2 mat-dialog-title style="margin: 0;">
+    {{data? 'Update': 'Add'}} Cash Flow
+    <button mat-dialog-close class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+
+<form [formGroup]="incomeExpenseForm" (ngSubmit)="onSubmitForm()">
+    <mat-dialog-content class="mat-typography">
+        <div class="row">
+            <input formControlName="id" type="hidden" />
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="paymentType">Payment Type</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Payment type is required!">
+                        <nz-select style="width: 100%" formControlName="payment_type" nzPlaceHolder="Select payment type" name="paymentType">
+                            <nz-option [nzLabel]="'Income'" [nzValue]="1"></nz-option>
+                            <nz-option [nzLabel]="'Expense'" [nzValue]="0"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="income-source">Income Source</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Income source is required!">
+                        <input nz-input type="text" style="width: 100%" formControlName="income_source" id="income-source"
+                            placeholder="Enter income source">
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-form-label nzRequired nzFor="date">Date</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="date is required!">
+                        <nz-date-picker style="width: 100%" formControlName="date" id="date"
+                            placeholder="Enter date">
+                        </nz-date-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-form-label nzRequired nzFor="amount">Amount</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Amount is required!">
+                        <nz-input-number type="number" style="width: 100%" formControlName="amount" id="amount"
+                            placeholder="Enter amount"></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-label nzFor="remarks">Remarks</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please write remarks!">
+                        <nz-textarea-count [nzMaxCharacterCount]="200">
+                            <textarea formControlName="remarks" nz-input rows="2"
+                                placeholder="Write remarks"></textarea>
+                        </nz-textarea-count>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Status</nz-form-label>
+                        <nz-switch class="ms-2" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                            formControlName="status" name="status" id="status">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-dialog-close class="me-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            Close
+        </button>
+        <button [disabled]="incomeExpenseForm.invalid || isDisabled" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data? 'Update': 'Create'}}
+        </button>
+
+    </mat-dialog-actions>
+</form>
