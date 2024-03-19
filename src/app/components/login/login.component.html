@@ -38,8 +38,9 @@ height: 100vh;">
                         </div>
                     </div>
                 </mat-card-content>
+                <mat-progress-bar mode="indeterminate" class="mb-2" *ngIf="showLoader"></mat-progress-bar>
                 <mat-card-actions class="submit-button">
-                    <button mat-raised-button [disabled]="!userLoginForm.valid" class="w-100" color="primary">
+                    <button mat-raised-button [disabled]="userLoginForm.invalid || showLoader" class="w-100" color="primary">
                         <mat-icon class="me-2">login</mat-icon>
                         Login
                     </button>
