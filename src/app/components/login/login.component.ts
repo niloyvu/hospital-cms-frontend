@@ -12,8 +12,8 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loader = false;
-  showSpin = false;
+  
+  showLoader = false;
   loginError = false;
   failedMessage = '';
   ipAddress = '';
@@ -54,14 +54,13 @@ export class LoginComponent implements OnInit {
   }
 
   submitLoginForm() {
-    this.loader = true;
     const data = this.userLoginForm.value;
     this.auth.login(data);
-    this.showSpin = true;
+    this.showLoader = true;
     this.auth.login(data).subscribe({
       next: (res) => {
         if (res.code == 200) {
-          this.showSpin = false;
+          this.showLoader = false;
           let token = res.data.token;
           const cvalue = { 'bearertoken': token }
           const cvalue2 = res.data.permissions;
@@ -80,13 +79,13 @@ export class LoginComponent implements OnInit {
           }
         }
         else {
-
           this.common.openSnackBar(res.message, 'Close', 'submit-warning');
         }
 
       },
       error: (error) => {
-        this.showSpin = false;
+        console.error("login error:", error)
+        this.showLoader = false;
         this.loginError = true;
       }
     });

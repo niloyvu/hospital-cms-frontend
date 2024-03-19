@@ -1,5 +1,5 @@
 import { AuthService } from '../shared/auth/auth.service';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { ElementRef, EventEmitter, Injectable } from '@angular/core';
@@ -384,40 +384,28 @@ export class CommonService {
 
 
 @Component({
-  selector: 'snack-bar-component-example-snack',
-  templateUrl: '../shared/templates/snack-bar-component-example-snack.html',
-  styles: [`
-    .example-pizza-party {
-      color: hotpink;
+  selector: 'snack-bar-component',
+  templateUrl: '../shared/templates/snack-bar-component.html',
+  styles: [
+    `
+    :host {
+      display: flex;
     }
-  `],
+  `,
+  ],
 })
 
-export class SnackBarComponentExampleSnack implements OnInit {
-
-  constructor(public snackBar: MatSnackBarRef<SnackBarComponentExampleSnack>,
-    @Inject(MAT_SNACK_BAR_DATA) public data: any) {
-
-  }
-  ngOnInit(): void { }
-  closeSnackbar(): void {
-    this.snackBar.dismiss();
-  }
-
+export class SnackBarComponentExampleSnack {
+  snackBarRef = inject(MatSnackBarRef);
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
 }
-
 
 @Component({
   selector: 'open-service-img-modal',
   templateUrl: '../shared/templates/open-service-img-modal.html',
 })
 export class OpenServiceImgModal {
-  constructor(public dialogRef: MatDialogRef<OpenServiceImgModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {
-  }
-
-  onNoClick(): void {
-  }
-
+  dialogRef = inject(MatDialogRef);
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 }
 

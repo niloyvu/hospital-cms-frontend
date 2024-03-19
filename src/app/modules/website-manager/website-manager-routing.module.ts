@@ -10,7 +10,6 @@ import { ServiceDetailsComponent } from './services/service-details/service-deta
 import { DentistDetailsComponent } from './dentists/dentist-details/dentist-details.component';
 import { TestimonialComponent } from './testimonial/testimonial.component';
 
-
 const routes: Routes = [
   {
     path: '',

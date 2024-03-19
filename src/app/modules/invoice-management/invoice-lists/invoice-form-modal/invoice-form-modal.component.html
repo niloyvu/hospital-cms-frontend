@@ -1,0 +1,333 @@
+<h2 mat-dialog-title style="margin: 0;">
+    {{data? 'Update': 'Create'}} Invoice
+    <button mat-dialog-close class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+<form [formGroup]="invoiceForm" (ngSubmit)="onSubmitForm()">
+    <mat-dialog-content class="mat-typography">
+        <div class="invoice-wrap">
+            <div class="invoice-inner">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                        <tr>
+                            <td align="right" valign="top">
+                                <div class="company-info">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img id="logo" src="assets/img/logo.jpeg">
+                                                    <p class="d-flex mt-2 mb-0">
+                                                        <span nz-icon nzType="phone" nzTheme="outline"></span>
+                                                        <small class="ms-2">
+                                                            <a href="tel:09613445544"> 09613445544</a>
+                                                        </small>
+                                                    </p>
+                                                    <p class="d-flex mb-0">
+                                                        <span nz-icon nzType="mobile" nzTheme="outline"></span>
+                                                        <small class="ms-2">
+                                                            <a href="tel:+8802410327017"> +8802-41032-7017</a>
+                                                        </small>
+                                                    </p>
+                                                    <p class="d-flex mb-0">
+                                                        <span nz-icon nzType="global" nzTheme="outline"></span>
+                                                        <small class="ms-2">
+                                                            <a href="http://www.ibhospital.com/"> www.ibhospital.com</a>
+                                                        </small>
+                                                    </p>
+                                                    <p class="d-flex mb-0">
+                                                        <span nz-icon nzType="mail" nzTheme="outline"></span>
+                                                        <small class="ms-2">
+                                                            <a href="mailto:info@insafbarakahospital.com">
+                                                                info@insafbarakahospital.com</a>
+                                                        </small>
+                                                    </p>
+
+                                                    <p class="d-flex mb-0">
+                                                        <span nz-icon nzType="home" nzTheme="outline"></span>
+                                                        <small class="ms-2">11 Shahid Tazuddin Ahmed Shoroni,
+                                                            <br />
+                                                            Mogbazar, Dhaka-1217
+                                                        </small>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                            <td align="right" valign="top">
+                                <strong>Dental, Oral and Maxillofacial Surgeon</strong><br>
+                                <h2 class="m-0">Dr. Asraf Ali Bissash Reyad</h2>
+                                <small class="info mb-2">
+                                    BDS (Dhaka) MDS (China)<br>
+                                    Advanced Training in dental implant (Malaysia)<br>
+                                    Associate Fellow in Laser dentistry (India)<br>
+                                    <span class="text-success">Assistant Professor Oral and Maxillofacial Surgery<br>
+                                        Chief Consultant, Dental Unit
+                                    </span><br>
+                                    BMDC: 5483
+                                </small>
+                                <div class="contact">
+                                    Mobile: 01726-187603 <br>
+                                    Serial: 09613-445544 (8 am-8 pm)
+                                </div>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="invoice-address">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="left" valign="top" width="50%">
+                                    <table border="0" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td valign="top">
+                                                    <nz-form-label nzFor="appointment_id" nzRequired>Bill
+                                                        To</nz-form-label>
+                                                </td>
+                                                <td valign="top">
+                                                    <div class="client_info">
+                                                        <table border="0" cellpadding="0" cellspacing="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="padding-left:25px;">
+                                                                        <nz-form-control>
+                                                                            <nz-select [nzDisabled]="isUpdate" nzShowSearch nzAllowClear
+                                                                                id="appointment_id"
+                                                                                nzPlaceHolder="Select a person"
+                                                                                formControlName="appointment_id"
+                                                                                nzPlaceHolder="Select patient">
+                                                                                <nz-option
+                                                                                    *ngFor="let user of appointmentUsers"
+                                                                                    [nzLabel]="user.name | titlecase"
+                                                                                    [nzValue]="user.id">
+                                                                                </nz-option>
+                                                                            </nz-select>
+                                                                        </nz-form-control>
+
+                                                                        <nz-form-control>
+                                                                            <input nz-input type="text" readonly
+                                                                                id="phone" [value]="selectedUser?.phone"
+                                                                                placeholder="[Phone]" />
+                                                                        </nz-form-control>
+
+                                                                        <nz-form-control>
+                                                                            <input nz-input type="text" readonly
+                                                                                id="address"
+                                                                                [value]="selectedUser?.address"
+                                                                                placeholder="[Address]" />
+                                                                        </nz-form-control>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td align="right" valign="top" width="50%">
+                                    <table border="0" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td align="right">
+                                                    <nz-form-label nzFor="invoice_id" nzRequired>
+                                                        Invoice #
+                                                    </nz-form-label>
+                                                </td>
+                                                <td align="left" style="padding-left:20px">
+                                                    <input nz-input formControlName="invoice_id" type="text" id="no"
+                                                        class="invoice-input" readonly>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">
+                                                    <nz-form-label nzFor="date" nzRequired>Date</nz-form-label>
+                                                </td>
+                                                <td align="left" style="padding-left:20px">
+                                                    <nz-date-picker formControlName="date" [nzDisabled]="isUpdate" style="width: 100%"
+                                                        type="date" id="date" class="invoice-input">
+                                                    </nz-date-picker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="field1_row">
+                                                <td align="right">
+                                                    <nz-form-label nzFor="due_date" nzRequired>Due Date </nz-form-label>
+                                                </td>
+                                                <td align="left" style="padding-left:20px;">
+                                                    <nz-date-picker formControlName="due_date" [nzDisabled]="isUpdate" style="width: 100%"
+                                                        type="date" id="due-date" class="invoice-input">
+                                                    </nz-date-picker>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <nz-form-label nzFor="selected_items" nzRequired>Diagnosis</nz-form-label>
+                <nz-select formControlName="selected_items" [nzDisabled]="isUpdate" id="selected_items" [nzMaxTagCount]="3"
+                    [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple" nzPlaceHolder="Please select diagnosis">
+                    <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title" [nzValue]="item.id"></nz-option>
+                </nz-select>
+                <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+                <div id="items-list">
+                    <table class="table table-condensed table-bordered table-striped items-table">
+                        <thead>
+                            <tr>
+                                <th style="width:75%">Item</th>
+                                <th style="width:5%" class="text-center">Quantity</th>
+                                <th style="width:15%" class="text-center">Unit Price</th>
+                                <th style="width:10%" class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tfoot id="TotalsSection">
+
+                            <tr class="totals-row shaped">
+                                <td class="wide-cell" colspan="2"></td>
+                                <td>
+                                    <small><strong>Sub Total</strong></small>
+                                </td>
+                                <td class="text-end">
+                                    <b *ngIf="subTotal">৳ {{subTotal}}</b>
+                                </td>
+                            </tr>
+                            <tr class="totals-row shaped">
+                                <td class="wide-cell" colspan="2">
+                                    <p class="text-danger text-end" *ngIf="discount?.invalid && discount?.touched">
+                                        <ng-container *ngIf="discount?.errors?.['min']">
+                                            Minimum discount should be 5%!
+                                        </ng-container>
+                                        <ng-container *ngIf=" discount?.errors?.['max']">
+                                            Max discount exceeds!
+                                        </ng-container>
+                                        <ng-container *ngIf="discount?.errors?.['pattern']">
+                                            Invalid discount!
+                                        </ng-container>
+                                    </p>
+                                </td>
+                                <td><small><strong>Discount %</strong></small></td>
+                                <td class="text-end">
+                                    <input style="width: 100px;" [readOnly]="isUpdate" type="text" formControlName="discount"
+                                        class="invoice-input editable text-end">
+                                </td>
+                            </tr>
+                            <tr class="totals-row shaped">
+                                <td class="wide-cell" colspan="2"></td>
+                                <td><small><strong>Total</strong></small></td>
+                                <td class="text-end">
+                                    <b *ngIf="totalAmount">৳ {{totalAmount}}</b>
+                                </td>
+                            </tr>
+
+                            <tr class="totals-row shaped">
+                                <td class="wide-cell" colspan="2">
+                                    <p class="text-danger text-end" *ngIf="paidAmount?.invalid && paidAmount?.touched">
+                                        <ng-container *ngIf="paidAmount?.errors?.['min']">
+                                            Minimum amount should be 500!
+                                        </ng-container>
+                                        <ng-container *ngIf="paidAmount?.errors?.['max']">
+                                            Total amount exceeds!
+                                        </ng-container>
+                                        <ng-container *ngIf="paidAmount?.errors?.['pattern']">
+                                            Invalid Amount!
+                                        </ng-container>
+                                    </p>
+                                </td>
+                                <td><small><strong>Paid Amount</strong></small></td>
+                                <td class="text-end">
+                                    <input style="width: 100px;" type="text" [readOnly]="isUpdate" formControlName="paid_amount"
+                                        class="invoice-input editable text-end">
+                                </td>
+                            </tr>
+
+                            <tr class="totals-row shaped">
+
+                                <td class="wide-cell" colspan="2">
+                                    <nz-form-control>
+                                        <nz-form-label nzFor="status">Status</nz-form-label>
+                                        <nz-switch class="ms-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                                            formControlName="status" name="status" id="status">
+                                        </nz-switch>
+                                    </nz-form-control>
+                                </td>
+                                <td><small><strong>Due Amount</strong></small></td>
+                                <td class="text-end text-danger">
+                                    <span id="unpaid">
+                                        <b *ngIf="dueAmount">৳ - {{dueAmount}}</b>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                        <tbody id="ItemsTable" formArrayName="invoice_items">
+                            <tr class="item-row" [formGroupName]="i"
+                                *ngFor="let item of selectedInvoiceItems.controls; let i = index;">
+                                <input formControlName="id" type="hidden" />
+                                <td>
+                                    <nz-select nzDisabled formControlName="item_id" name="item_id" id="item_id" type="text">
+                                        <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title"
+                                            [nzValue]="item.id">
+                                        </nz-option>
+                                    </nz-select>
+                                </td>
+                                <td>
+                                    <nz-input-number [nzMin]="1" [nzDisabled]="isUpdate" [nzMax]="100" [nzStep]="1" formControlName="quantity"
+                                        class="editable input-mini text-center">
+                                    </nz-input-number>
+                                </td>
+                                <td>
+                                    <input formControlName="price" name="price" id="price" type="text"
+                                        class="editable input-mini text-end" readonly />
+                                </td>
+                                <td class="text-end">
+                                    <input formControlName="amount" name="amount" id="amount" type="text"
+                                        class="editable input-mini text-end" readonly />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="notes-block">
+                    <table border="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <nz-form-label nzFor="remarks" nzRequired>Notes</nz-form-label>
+                                    <nz-form-item>
+                                        <nz-form-control nzErrorTip="Note is required!">
+                                            <textarea formControlName="remarks" id="remarks" nz-input rows="2"
+                                                placeholder="Notes and Terms:"></textarea>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-dialog-close class="me-2" mat-raised-button>
+            Close
+        </button>
+        <button [disabled]="invoiceForm.invalid || isDisabled" color="primary" mat-raised-button>
+            {{data? 'Update': 'Create'}}
+        </button>
+    </mat-dialog-actions>
+</form>

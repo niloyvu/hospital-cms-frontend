@@ -7,7 +7,7 @@
                         <h4 class="card-title">Assign Users List</h4>
                     </div>
                     <div class="card-body">
-                        <div class="text-right">
+                        <div class="text-end">
                             <button (click)="openDialog()" class="btn-sm mb-2" color="primary" mat-raised-button
                                     nz-tooltip nzTooltipPlacement="topRight" nzTooltipTitle="Role Assign to User">
                                 <i class="fa fa-plus"></i> Assign New User
@@ -30,7 +30,7 @@
                                     entries
                                 </label>
                             </div>
-                            <div class="col-md-6  text-right mb-2">
+                            <div class="col-md-6  text-end mb-2">
                                 <label class="">Search: <input (ngModelChange)="itemSearchChange($event)"
                                                                [(ngModel)]="itemSearch"
                                                                aria-controls="DataTables_Table_0" type="search"></label>
@@ -89,7 +89,7 @@
                                     </td>
                                     <td>
                                         <button nz-button nzType="primary" class="edit-data" nzSize="small"
-                                                (click)="EditDialog(user)"><i class="fa fa-pencil mr-2"></i> Edit
+                                                (click)="EditDialog(user)"><i class="fa fa-pencil me-2"></i> Edit
                                         </button>
                                     </td>
                                 </tr>
@@ -101,7 +101,7 @@
                             <div class="col-md-6">
                                 <p class="table-total-count">Total Records {{totalitem}}</p>
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="col-md-6 text-end">
                                 <pagination-controls (pageChange)="pageChange($event)"
                                                      class="my-pagination"></pagination-controls>
                             </div>

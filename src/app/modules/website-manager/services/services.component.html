@@ -7,7 +7,7 @@
                         <div class="card-header card-header-infinity d-flex justify-content-between">
                             <h4 class="card-title">Manage Services</h4>
                             <button nz-button *ngIf="tabIndex == 0" (click)="createService()" nzType="default">
-                                <i class="fa fa-plus mr-2"></i>
+                                <i class="fa fa-plus me-2"></i>
                                 Create Service
                             </button>
                         </div>
@@ -43,7 +43,7 @@
                                             <thead>
                                                 <tr>
                                                     <th (click)="sortBy('id')" style="width: 50px;"
-                                                        class="text-left align-middle sort-icon">
+                                                        class="text-start align-middle sort-icon">
                                                         SL
                                                         <i *ngIf="columnsSortBy==='id' && dataOrderBy"
                                                             class="material-icons">
@@ -56,7 +56,7 @@
                                                     </th>
                                                     <th>Image</th>
                                                     <th (click)="sortBy('title')"
-                                                        class="text-left align-middle sort-icon">
+                                                        class="text-start align-middle sort-icon">
                                                         Name
                                                         <i *ngIf="columnsSortBy==='title' && dataOrderBy"
                                                             class="material-icons">
@@ -68,7 +68,7 @@
                                                         </i>
                                                     </th>
                                                     <th (click)="sortBy('description')"
-                                                        class="text-left align-middle sort-icon">
+                                                        class="text-start align-middle sort-icon">
                                                         Description
                                                         <i *ngIf="columnsSortBy==='description' && dataOrderBy"
                                                             class="material-icons">
@@ -113,6 +113,7 @@
                                                 <tr *ngFor="let service of services | paginate: {
                                                                     currentPage: this.pageNumber,
                                                                     itemsPerPage: this.resultPerPage,
+                                                                    totalItems: totalItems,
                                                                     id: 'table'
                                                                     }; let i=index;">
                                                     <td class="text-center">{{getSl(i + 1)}}</td>
@@ -120,7 +121,7 @@
                                                         <img [src]="rootUrl+service.image" width="100" height="60"
                                                             [alt]="service.image" />
                                                     </td>
-                                                    <td class="text-capitalize text-left w-auto">
+                                                    <td class="text-capitalize text-start w-auto">
                                                         <a class="nav-link link"
                                                             [routerLink]="['/website-cms/service/', convertToSlug(service.title), service.id]">
                                                             {{service.title}}
@@ -142,7 +143,7 @@
                                                     <td class="text-center" style="width: 100px;">
                                                         <button nz-button nzType="default" nzSize="small"
                                                             (click)="updateService(service)">
-                                                            <i class="fa fa-pencil mr-2"></i>
+                                                            <i class="fa fa-pencil me-2"></i>
                                                             Edit
                                                         </button>
                                                     </td>
@@ -159,7 +160,7 @@
                                         <div class="col-md-6">
                                             <p class="table-total-count"> Total Services: {{totalItems}}</p>
                                         </div>
-                                        <div class="col-md-6 text-right">
+                                        <div class="col-md-6 text-end">
                                             <pagination-controls (pageChange)="pageChange($event)" id="table"
                                                 class="my-pagination">
                                             </pagination-controls>
@@ -174,14 +175,14 @@
                                                     nzDescription="All Service Page Header Section" nzShowIcon>
                                                 </nz-alert>
                                                 <app-page-header
-                                                    [apiEndpoint]="'website-cms/service-header'"></app-page-header>
+                                                    [apiEndpoint]="'website/service-header'"></app-page-header>
                                             </div>
                                             <div class="col-md-6">
                                                 <nz-alert nzType="info" class="mb-2"
                                                     nzDescription="Service Details Page Header Section" nzShowIcon>
                                                 </nz-alert>
                                                 <app-page-header
-                                                    [apiEndpoint]="'website-cms/service-details-header'"></app-page-header>
+                                                    [apiEndpoint]="'website/service-details-header'"></app-page-header>
                                             </div>
                                         </div>
                                     </ng-template>

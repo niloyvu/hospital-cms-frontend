@@ -1,3 +1,4 @@
+
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
@@ -6,7 +7,7 @@
                     <div class="card-header card-header-infinity d-flex justify-content-between">
                         <h4 class="card-title">Manage Dentists</h4>
                         <button nz-button *ngIf="tabIndex == 0" (click)="createService()" nzType="primary">
-                            <i class="fa fa-plus mr-2"></i>
+                            <i class="fa fa-plus me-2"></i>
                             Add Dentist
                         </button>
                     </div>
@@ -44,7 +45,7 @@
                                         <thead>
                                             <tr>
                                                 <th (click)="sortBy('id')" style="width: 50px;"
-                                                    class="text-left align-middle sort-icon">
+                                                    class="text-start align-middle sort-icon">
                                                     SL
                                                     <i *ngIf="columnsSortBy==='id' && dataOrderBy"
                                                         class="material-icons">
@@ -56,7 +57,7 @@
                                                     </i>
                                                 </th>
                                                 <th>Image</th>
-                                                <th (click)="sortBy('name')" class="text-left align-middle sort-icon">
+                                                <th (click)="sortBy('name')" class="text-start align-middle sort-icon">
                                                     Name
                                                     <i *ngIf="columnsSortBy==='name' && dataOrderBy"
                                                         class="material-icons">
@@ -67,7 +68,7 @@
                                                         north
                                                     </i>
                                                 </th>
-                                                <th (click)="sortBy('email')" class="text-left align-middle sort-icon">
+                                                <th (click)="sortBy('email')" class="text-start align-middle sort-icon">
                                                     Email
                                                     <i *ngIf="columnsSortBy==='email' && dataOrderBy"
                                                         class="material-icons">
@@ -78,7 +79,7 @@
                                                         north
                                                     </i>
                                                 </th>
-                                                <th (click)="sortBy('phone')" class="text-left align-middle sort-icon">
+                                                <th (click)="sortBy('phone')" class="text-start align-middle sort-icon">
                                                     Phone
                                                     <i *ngIf="columnsSortBy==='phone' && dataOrderBy"
                                                         class="material-icons">
@@ -90,7 +91,7 @@
                                                     </i>
                                                 </th>
                                                 <th (click)="sortBy('designation')"
-                                                    class="text-left align-middle sort-icon">
+                                                    class="text-start align-middle sort-icon">
                                                     Designation
                                                     <i *ngIf="columnsSortBy==='designation' && dataOrderBy"
                                                         class="material-icons">
@@ -102,7 +103,7 @@
                                                     </i>
                                                 </th>
                                                 <th (click)="sortBy('address')"
-                                                    class="text-left align-middle sort-icon">
+                                                    class="text-start align-middle sort-icon">
                                                     Address
                                                     <i *ngIf="columnsSortBy==='address' && dataOrderBy"
                                                         class="material-icons">
@@ -113,7 +114,7 @@
                                                         north
                                                     </i>
                                                 </th>
-                                                <th class="text-left align-middle">
+                                                <th class="text-start align-middle">
                                                     Description
                                                 </th>
 
@@ -150,6 +151,7 @@
                                             <tr *ngFor="let dentist of dentists | paginate: {
                                                                         currentPage: this.pageNumber,
                                                                         itemsPerPage: this.resultPerPage,
+                                                                        totalItems: totalItems,
                                                                         id: 'table'
                                                                         }; let i=index;">
                                                 <td class="text-center">{{getSl(i + 1)}}</td>
@@ -157,7 +159,7 @@
                                                     <img [src]="rootUrl+dentist.image" width="100" height="60"
                                                         [alt]="dentist.image" />
                                                 </td>
-                                                <td class="text-capitalize text-left w-auto">
+                                                <td class="text-capitalize text-start w-auto">
                                                     <a class="nav-link link"
                                                         [routerLink]="['/website-cms/dentist/', convertToSlug(dentist.name), dentist.id]">
                                                         {{dentist.name}}
@@ -201,7 +203,7 @@
                                                 <td class="text-center" style="width: 100px;">
                                                     <button nz-button nzType="default" nzSize="small"
                                                         (click)="updateService(dentist)">
-                                                        <i class="fa fa-pencil mr-2"></i>
+                                                        <i class="fa fa-pencil me-2"></i>
                                                         Edit
                                                     </button>
                                                 </td>
@@ -218,7 +220,7 @@
                                     <div class="col-md-6">
                                         <p class="table-total-count"> Total Services: {{totalItems}}</p>
                                     </div>
-                                    <div class="col-md-6 text-right">
+                                    <div class="col-md-6 text-end">
                                         <pagination-controls (pageChange)="pageChange($event)" id="table"
                                             class="my-pagination">
                                         </pagination-controls>

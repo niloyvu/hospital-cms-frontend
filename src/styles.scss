@@ -1,7 +1,82 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: #3C4858;
+  font-weight: 300;
+  background-color: #eee !important;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+
+.close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: .5;
+}
+
+.close:hover {
+  color: #000;
+  text-decoration: none
+}
+
+.close:not(:disabled):not(.disabled):hover,
+.close:not(:disabled):not(.disabled):focus {
+  opacity: .75
+}
+
+button.close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  padding-top: 15px;
+}
+
+a.close.disabled {
+  pointer-events: none
+}
+
+.mat-mdc-snack-bar-container {
+  &.submit-info {
+    --mdc-snackbar-container-color: #00bcd4;
+  }
+
+  &.submit-success {
+    --mdc-snackbar-container-color: #076404;
+  }
+
+  &.submit-error {
+    --mdc-snackbar-container-color: #f44336;
+  }
+
+  &.submit-warning {
+    --mdc-snackbar-container-color: #fd7e14;
+  }
+}
+
+.search {
+  margin-bottom: 6px;
+}
+
+.mat-mdc-dialog-actions {
+  margin: 0 18px 18px !important;
+}
+
+.mdc-button__label {
+  display: flex;
+  align-items: center;
+}

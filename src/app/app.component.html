@@ -4,19 +4,25 @@
       <router-outlet></router-outlet>
     </ng-container>
     <ng-template #authenticated>
-      <div class="sidebar" data-color="azure" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+      <div class="sidebar" [ngClass]="{'toggled': sidebarToggled}" data-color="azure" data-background-color="white"
+        data-image="./assets/img/sidebar-1.jpg">
         <app-sidebar></app-sidebar>
         <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-3.jpg)"></div>
       </div>
-      <div class="main-panel">
-        <app-navbar></app-navbar>
+      <div class="main-panel" [ngClass]="{'toggled-main': sidebarToggled}">
+        <app-navbar (handleSidenav)="toggleSidebar()"></app-navbar>
         <ul class="breadcrumb">
-          <li *ngFor="let breadcrumb of breadcrumbs ; index as i" class="breadcrumb-item">
-            <ng-container *ngIf="i == 0"><i class="fa fa-home mr-2"></i></ng-container>
+          <li *ngFor="let breadcrumb of breadcrumbs; index as i" class="breadcrumb-item">
+            <ng-container *ngIf="i == 0"><i class="fa fa-home me-2"></i></ng-container>
             <a>
-              {{getBredCrumbsValue(breadcrumb) | titlecase}}
+              {{breadcrumb | removeHyphens | titlecase}}
             </a>
           </li>
+          <ng-container *ngIf="!breadcrumbs?.length">
+            <li class="breadcrumb-item">
+              <a>Dashboard</a>
+            </li>
+          </ng-container>
         </ul>
         <router-outlet></router-outlet>
         <app-footer></app-footer>

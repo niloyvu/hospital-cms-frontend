@@ -1,3 +1,5 @@
+@import '../core/mixins/animations';
+
 .wrapper {
   position: relative;
   top: 0;
@@ -80,7 +82,6 @@
       [data-toggle="collapse"]~div>ul>li>a {
         span {
           display: inline-block;
-          @extend .animation-transition-general;
         }
 
         .sidebar-normal {
@@ -262,7 +263,8 @@
     display: block;
     position: relative;
     z-index: 4;
-    background: #ffffff52;
+    background: rgb(255, 255, 255);
+    border-right: 1px solid #ddd;
 
     &:after {
       content: '';
@@ -284,7 +286,6 @@
 
     .simple-text {
       text-transform: uppercase;
-      padding: $padding-small-vertical $padding-zero;
       display: inline-block;
       font-size: 18px;
       color: $black-color;
@@ -292,8 +293,6 @@
       font-weight: $font-weight-default;
       line-height: 30px;
       overflow: hidden;
-      // text-align: center;
-      margin-left: 15px;
       display: block;
     }
   }
@@ -321,37 +320,7 @@
     }
   }
 
-  &[data-color="purple"] {
-    @include set-background-color-button($brand-primary);
-  }
-
-  &[data-color="azure"] {
-    @include set-background-color-button($brand-info);
-  }
-
-  &[data-color="green"] {
-    @include set-background-color-button($brand-success);
-  }
-
-  &[data-color="orange"] {
-    @include set-background-color-button($brand-warning);
-  }
-
-  &[data-color="danger"] {
-    @include set-background-color-button($brand-danger);
-  }
-
-  &[data-color="rose"] {
-    @include set-background-color-button($brand-rose);
-  }
-
-  &[data-color="white"] {
-    @include set-background-color-button($white-color);
-    @include sidebar-active-color($black-color);
-  }
-
   &[data-background-color="red"] {
-    @include sidebar-background-color($brand-danger, $white-color);
 
     .user,
     .logo,
@@ -396,15 +365,6 @@
   position: relative;
   float: right;
   width: $sidebar-width;
-  @include transition (0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1));
-
-  .main-content {
-    /*margin-top: 70px;*/
-    margin-top: 120px;
-    padding: 30px 15px;
-    padding-top: 0px;
-    min-height: calc(100vh - 123px);
-  }
 
   .footer {
     border-top: 1px solid #e7e7e7;
@@ -423,14 +383,6 @@
     }
   }
 }
-
-// .perfect-scrollbar-on {
-//   .sidebar,
-//   .main-panel {
-//     height: 100%;
-//     max-height: 100%;
-//   }
-// }
 
 .sidebar,
 .main-panel,

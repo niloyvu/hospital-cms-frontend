@@ -6,6 +6,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { DetailsEditorConfig } from 'src/app/shared/config/editor';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from 'src/app/services/data.service';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-create-update-blog',
@@ -16,21 +17,21 @@ export class CreateUpdateBlogComponent implements OnInit, OnDestroy {
 
   blogId!: number;
   isDisabled: boolean = false;
+
   editorConfig = DetailsEditorConfig;
+  editorApiKey = environment.editorApiKey;
+
   blogForm!: FormGroup;
   featureImageFile: string | null = null;
-
   detailsPageImageFile: string | null = null;
   doctorName: string = '';
 
   blogCategories: any[] = [];
-
   featureImageUploadFile: any;
   featureImageError!: string;
 
   detailsPageImageUploadFile: any;
   detailsPageImageError!: string;
-
 
   public rootUrl = `${this.commonService.rootUrl}/uploads/`;
   private submission$: Subscription = new Subscription();
@@ -121,7 +122,7 @@ export class CreateUpdateBlogComponent implements OnInit, OnDestroy {
             .onBufferEvent.emit(false);
           if (response.code === 200) {
             if (this.blogId) {
-              this.router.navigate(['/website/blogs/list']);
+              this.router.navigate(['/website-cms/blogs/list']);
             }
             this.initializeFormGroup();
             this.featureImageFile = null;
@@ -173,8 +174,8 @@ export class CreateUpdateBlogComponent implements OnInit, OnDestroy {
           base64: image,
           extension: fileExtension
         };
-        
-        if(type === 'detailsPage') {
+
+        if (type === 'detailsPage') {
           this.detailsPageImageFile = image;
           this.detailsPageImageUploadFile = imageFile;
         } else {

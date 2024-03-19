@@ -1,11 +1,10 @@
 import { Subscription } from 'rxjs';
-
 import { MatDialog } from '@angular/material/dialog';
 import { pageType } from 'src/app/shared/enum/page-type';
+import { DataService } from 'src/app/services/data.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
 import { AppointmentModalComponent } from './appointment-modal/appointment-modal.component';
-import { DataService } from 'src/app/services/data.service';
 
 
 @Component({
@@ -50,7 +49,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   getSl(i: number) {
     return (Number(this.resultPerPage) * (Number(this.pageNumber) - 1)) + i
   }
-  
+
   onChangeDepartment() {
     this.getWebAppointments();
   }
@@ -93,14 +92,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   }
 
   getWebAppointments() {
-    const date = this.date? this.date.toLocaleDateString() : '';
+    const date = this.date ? this.date.toLocaleDateString() : '';
     const queryParams = {
       search: this.searchValues,
       sort_column: `${this.columnsSortBy}`,
       sort_by: this.dataOrderBy ? 'DESC' : 'ASC',
       per_page: `${this.resultPerPage}`,
       page: `${this.pageNumber}`,
-      date:  `${date}`,
+      date: `${date}`,
       status: `${this.status}`,
       time: `${this.timeSlot}`,
       department_id: `${this.departmentId}`
@@ -136,9 +135,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
         disableClose: true
       });
       dialogRef.afterClosed()
-        .subscribe(result => {
+        .subscribe((response) => {
           this.dialogOpen = false;
-          this.getWebAppointments();
+          if (response) {
+            this.getWebAppointments();
+          }
         });
     }
   }
@@ -153,9 +154,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
         disableClose: true
       });
       dialogRef.afterClosed()
-        .subscribe(result => {
+        .subscribe((response) => {
           this.dialogOpen = false;
-          this.getWebAppointments();
+          if (response) {
+            this.getWebAppointments();
+          }
         });
     }
   }

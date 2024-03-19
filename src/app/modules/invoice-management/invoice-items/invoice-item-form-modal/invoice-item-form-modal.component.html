@@ -1,0 +1,66 @@
+<h2 mat-dialog-title style="margin: 0;">
+    {{data? 'Update': 'Create'}} Invoice Item
+    <button mat-dialog-close class="close mt-1 text-white" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</h2>
+
+<form [formGroup]="invoiceItemForm" (ngSubmit)="onSubmitForm()">
+    <mat-dialog-content class="mat-typography">
+        <div class="row">
+            <input formControlName="id" type="hidden" />
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Title is required!">
+                        <input nz-input type="text" formControlName="title" id="title" placeholder="Enter title" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="price">Price</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Price is required!">
+                        <nz-input-number type="number" style="width: 100%" formControlName="price" id="price" placeholder="Enter price" ></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-12">
+                <nz-form-label nzFor="description">Description</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please write descriptions!">
+                        <nz-textarea-count [nzMaxCharacterCount]="200">
+                            <textarea formControlName="description" nz-input rows="2"
+                                placeholder="Write any thing"></textarea>
+                        </nz-textarea-count>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-md-6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzFor="status">Status</nz-form-label>
+                        <nz-switch class="ms-2" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                            formControlName="status" name="status" id="status">
+                        </nz-switch>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-dialog-close class="me-2" mat-raised-button>
+            <i class="icofont icofont-close-line"></i>
+            Close
+        </button>
+        <button [disabled]="invoiceItemForm.invalid || isDisabled" color="primary" mat-raised-button>
+            <i class="icofont icofont-save"></i>
+            {{data? 'Update': 'Create'}}
+        </button>
+
+    </mat-dialog-actions>
+</form>

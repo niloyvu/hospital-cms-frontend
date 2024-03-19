@@ -73,6 +73,10 @@ export class FooterSectionComponent implements OnInit, OnDestroy {
     quickLinksArray.push(this.createQuickLinksFormGroup());
   }
 
+  get quickLinksArray() {
+    return this.footerForm.get('quick_links') as FormArray;
+  }
+
   removeLink(index: number) {
     const quickLinksArray = this.footerForm.get('quick_links') as FormArray;
     quickLinksArray.removeAt(index);
@@ -81,6 +85,10 @@ export class FooterSectionComponent implements OnInit, OnDestroy {
   addHour() {
     const hoursArray = this.footerForm.get('hours') as FormArray;
     hoursArray.push(this.createOpeningHoursFormGroup());
+  }
+
+  get hoursArray() {
+    return this.footerForm.get('hours') as FormArray;
   }
 
   removeHour(index: number) {

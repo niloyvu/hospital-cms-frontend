@@ -58,6 +58,11 @@ export class WorkingProcessComponent implements OnInit, OnDestroy {
     processesArray.push(this.createProcessItemFormGroup());
   }
 
+  get processFormArray() {
+    return this.workingProcessForm.get('processes') as FormArray;
+
+  }
+
   removeProcess(index: number) {
     const processesArray = this.workingProcessForm.get('processes') as FormArray;
     processesArray.removeAt(index);

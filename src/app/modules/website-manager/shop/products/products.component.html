@@ -1,7 +1,7 @@
 <div class="card-header card-header-infinity d-flex justify-content-between">
     <h4 class="card-title">Manage Products</h4>
     <button nz-button routerLink="/website-cms/shop/create-product" nzType="default">
-        <i class="fa fa-plus mr-2"></i>
+        <i class="fa fa-plus me-2"></i>
         Create Product
     </button>
 </div>
@@ -33,7 +33,7 @@
         <table class="table table-bordered medium ">
             <thead>
                 <tr>
-                    <th (click)="sortBy('id')" style="width: 50px;" class="text-left align-middle sort-icon">
+                    <th (click)="sortBy('id')" style="width: 50px;" class="text-start align-middle sort-icon">
                         SL
                         <i *ngIf="columnsSortBy==='id' && dataOrderBy" class="material-icons">
                             south
@@ -43,7 +43,7 @@
                         </i>
                     </th>
                     <th>Image</th>
-                    <th (click)="sortBy('title')" class="text-left align-middle sort-icon">
+                    <th (click)="sortBy('title')" class="text-start align-middle sort-icon">
                         Title
                         <i *ngIf="columnsSortBy==='title' && dataOrderBy" class="material-icons">
                             south
@@ -52,7 +52,7 @@
                             north
                         </i>
                     </th>
-                    <th (click)="sortBy('category')" class="text-left align-middle sort-icon">
+                    <th (click)="sortBy('category')" class="text-start align-middle sort-icon">
                         Category
                         <i *ngIf="columnsSortBy==='category' && dataOrderBy" class="material-icons">
                             south
@@ -61,7 +61,7 @@
                             north
                         </i>
                     </th>
-                    <th (click)="sortBy('price')" class="text-right align-middle sort-icon">
+                    <th (click)="sortBy('price')" class="text-end align-middle sort-icon">
                         Price
                         <i *ngIf="columnsSortBy==='price' && dataOrderBy" class="material-icons">
                             south
@@ -70,7 +70,7 @@
                             north
                         </i>
                     </th>
-                    <th (click)="sortBy('quantity')" class="text-right align-middle sort-icon">
+                    <th (click)="sortBy('quantity')" class="text-end align-middle sort-icon">
                         Quantity
                         <i *ngIf="columnsSortBy==='quantity' && dataOrderBy" class="material-icons">
                             south
@@ -80,7 +80,7 @@
                         </i>
                     </th>
 
-                    <th (click)="sortBy('date')" class="text-left align-middle sort-icon">
+                    <th (click)="sortBy('date')" class="text-start align-middle sort-icon">
                         Date
                         <i *ngIf="columnsSortBy==='date' && dataOrderBy" class="material-icons">
                             south
@@ -117,25 +117,26 @@
                 <tr *ngFor="let product of products | paginate: {
                                                             currentPage: this.pageNumber,
                                                             itemsPerPage: this.resultPerPage,
+                                                            totalItems: totalItems,
                                                             id: 'table'
                                                             }; let i=index;">
                     <td class="text-center">{{getSl(i + 1)}}</td>
                     <td class="text-center" style="width: 100px;">
                         <img [src]="rootUrl+product?.image" width="100" height="60" [alt]="product?.image" />
                     </td>
-                    <td class="text-capitalize text-left w-auto">
+                    <td class="text-capitalize text-start w-auto">
                         <a class="nav-link link"
-                            [routerLink]="['/website/shop/update-product/', convertToSlug(product?.title), product?.id]">
+                            [routerLink]="['/website-cms/shop/update-product/', convertToSlug(product?.title), product?.id]">
                             {{product?.title}}
                         </a>
                     </td>
                     <td>
                         {{product?.category}}
                     </td>
-                    <td class="text-right">
+                    <td class="text-end">
                         ৳ {{product?.price | number}}
                     </td>
-                    <td class="text-right">
+                    <td class="text-end">
                         {{product?.quantity | number}}
                     </td>
                     <td class="text-center">
@@ -153,9 +154,9 @@
                         </nz-tag>
                     </td>
                     <td class="text-center" style="width: 100px;">
-                        <button nz-button [routerLink]="['/website/shop/update-product/', convertToSlug(product?.title), product?.id]"
+                        <button nz-button [routerLink]="['/website-cms/shop/update-product/', convertToSlug(product?.title), product?.id]"
                             nzType="default" nzSize="small">
-                            <i class="fa fa-pencil mr-2"></i>
+                            <i class="fa fa-pencil me-2"></i>
                             Edit
                         </button>
                     </td>
@@ -172,7 +173,7 @@
         <div class="col-md-6">
             <p class="table-total-count"> Total Products: {{totalItems}}</p>
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-6 text-end">
             <pagination-controls (pageChange)="pageChange($event)" id="table" class="my-pagination">
             </pagination-controls>
         </div>

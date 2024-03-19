@@ -50,6 +50,11 @@ export class FeatureCardsComponent implements OnInit, OnDestroy {
     const featuresArray = this.featureForm.get('features') as FormArray;
     featuresArray.push(this.createFeatureFormGroup());
   }
+  
+  get featureCardsFormArray() {
+    return this.featureForm.get('features') as FormArray;
+
+  }
 
   removeFeature(index: number) {
     const featuresArray = this.featureForm.get('features') as FormArray;

@@ -1,9 +1,7 @@
-// Shadows (originally from mdl http://www.getmdl.io/)
 $bmd-shadow-umbra-opacity: 0.2 !default;
 $bmd-shadow-penumbra-opacity: 0.14 !default;
 $bmd-shadow-ambient-opacity: 0.12 !default;
 
-// Declare the following for reuse with both mixins and the bootstrap variables
 $bmd-shadow-focus: 0 0 8px rgba($black, .18), 0 8px 16px rgba($black, .36);
 
 $bmd-shadow-2dp: 0 2px 2px 0 rgba($black, $bmd-shadow-penumbra-opacity),

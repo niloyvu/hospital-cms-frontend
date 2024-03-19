@@ -58,6 +58,10 @@ export class WhoWeAreComponent implements OnInit, OnDestroy {
     });
   }
 
+  get featureCardsFormArray() {
+    return this.whoWeAreForm.get('features') as FormArray;
+  }
+
   addFeature() {
     const featuresArray = this.whoWeAreForm.get('features') as FormArray;
     featuresArray.push(this.createFeatureFormGroup());

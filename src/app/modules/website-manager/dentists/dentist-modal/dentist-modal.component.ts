@@ -1,10 +1,9 @@
 import { Subscription } from 'rxjs';
-
+import { DataService } from 'src/app/services/data.service';
 import { CommonService } from 'src/app/services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-dentist-modal',

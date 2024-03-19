@@ -6,7 +6,7 @@
                     <div class="card-header card-header-infinity d-flex justify-content-between">
                         <h4 class="card-title">All System User List</h4>
                         <button *ngIf="isAccess('create')" nz-button (click)="createUserDialog()" nzType="default">
-                            <i class="fa fa-plus mr-2"></i>
+                            <i class="fa fa-plus me-2"></i>
                             Create User
                         </button>
                     </div>
@@ -120,7 +120,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <button nz-button nzType="default" (click)="updateUserDialog(data)"><i
-                                                class="fa fa-pencil mr-2"></i> Edit
+                                                class="fa fa-pencil me-2"></i> Edit
                                         </button>
                                             </td>
                                     </tr>
@@ -137,7 +137,7 @@
                             <div class="col-md-6">
                                 <p class="table-total-count">Total Records {{totalItems}}</p>
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="col-md-6 text-end">
                                 <pagination-controls (pageChange)="pageChange($event)" id="first" class="my-pagination"></pagination-controls>
                             </div>
                         </div>
@@ -258,7 +258,7 @@
                                         </td>
                                         <td class="text-center">
                                             <button nz-button nzType="default" (click)="viewUserInfoDialog(data)"><i
-                                                class="fa fa-pencil mr-2"></i> View
+                                                class="fa fa-pencil me-2"></i> View
                                         </button>
                                         </td>
                                     </tr>
@@ -275,7 +275,7 @@
                             <div class="col-md-6">
                                 <p class="table-total-count">Total Records {{updated_totalItems}}</p>
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="col-md-6 text-end">
                                 <pagination-controls (pageChange)="updatedPageChange($event)" id="second" class="my-pagination"></pagination-controls>
                             </div>
                         </div>

@@ -58,12 +58,12 @@
                                 nzDescription="8 Quick Links will be good fit for your website." nzShowIcon>
                             </nz-alert>
                         </div>
-                        <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let linkGroup of footerForm.get('quick_links')?.value; 
+                        <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let linkGroup of quickLinksArray.controls; 
                                                         let i = index; 
                                                         let isLast = last; 
                                                         let isFirst = first" [formGroupName]="i">
                             <input formControlName="id" type="hidden" />
-                            <div class="col-md-12 text-right">
+                            <div class="col-md-12 text-end">
                                 <nz-tag nzColor="#f50">Link- {{i+1}}</nz-tag>
                             </div>
 
@@ -88,7 +88,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <button nz-button type="button" *ngIf="isLast" class="mr-2" nzType="primary"
+                                <button nz-button type="button" *ngIf="isLast" class="me-2" nzType="primary"
                                     (click)="addLink()">Add Link
                                 </button>
                                 <button nz-button type="button" *ngIf="!isFirst" nzDanger (click)="removeLink(i)">Remove
@@ -113,12 +113,12 @@
                                 nzDescription="2 Opening time will be good fit for your website." nzShowIcon>
                             </nz-alert>
                         </div>
-                        <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let hourGroup of footerForm.get('hours')?.value; 
+                        <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let hourGroup of hoursArray.controls; 
                                                         let i = index; 
                                                         let isLast = last; 
                                                         let isFirst = first" [formGroupName]="i">
                             <input formControlName="id" type="hidden" />
-                            <div class="col-md-12 text-right">
+                            <div class="col-md-12 text-end">
                                 <nz-tag nzColor="#f50">Hour- {{i+1}}</nz-tag>
                             </div>
 
@@ -142,7 +142,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <button nz-button type="button" *ngIf="isLast" class="mr-2" nzType="primary"
+                                <button nz-button type="button" *ngIf="isLast" class="me-2" nzType="primary"
                                     (click)="addHour()">Add Hour
                                 </button>
                                 <button nz-button type="button" *ngIf="!isFirst" nzDanger (click)="removeHour(i)">Remove
@@ -169,7 +169,7 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-                    <div class="col-md-12 text-right">
+                    <div class="col-md-12 text-end">
                         <nz-tag nzColor="#f50">Copyright Section: </nz-tag>
                     </div>
                     <div class="col-md-12">
@@ -204,7 +204,7 @@
 
                 </div>
 
-                <div class="text-right mb-2">
+                <div class="text-end mb-2">
                     <button nz-button type="submit" [disabled]="footerForm.invalid || isDisabled" nzType="primary">
                         Update
                     </button>

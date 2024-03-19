@@ -27,6 +27,7 @@ a[data-toggle=collapse][aria-expanded=true] .caret {
     display: block;
     cursor: pointer;
   }
+
   .hide_menu {
     display: block;
   }
@@ -40,4 +41,22 @@ button.mat-focus-indicator.mat-menu-item {
 mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
   position: absolute;
   left: 30%;
+}
+
+::ng-deep.ant-menu-title-content {
+  display: flex;
+  align-items: center;
+
+  .anticon {
+    margin-right: 10px;
+  }
+}
+
+.ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark, .ant-menu.ant-menu-dark .ant-menu-sub {
+  color: #ffffffa6;
+  background: #001529;
+}
+
+.main-logo {
+  margin-left: 15px;
 }

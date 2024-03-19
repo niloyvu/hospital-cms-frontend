@@ -1,9 +1,10 @@
 import { Subscription } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EditorConfig } from 'src/app/shared/config/editor';
+import { DataService } from 'src/app/services/data.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DataService } from 'src/app/services/data.service';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-hero-form-text',
@@ -15,6 +16,7 @@ export class HeroFormTextComponent implements OnInit, OnDestroy {
   heroForm!: FormGroup;
   isDisabled: boolean = false;
   editorConfig = EditorConfig;
+  editorApiKey = environment.editorApiKey;
 
   private submission$: Subscription = new Subscription();
   private heroForm$: Subscription = new Subscription();

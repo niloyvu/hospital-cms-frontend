@@ -23,13 +23,13 @@
                             type="file">
                         <button nz-button (click)="fileInput.click()" nz-tooltip nzTooltipPlacement="rightTop"
                             nzTooltipTitle="Only Image File" nzType="primary" type="button">
-                            <i class="fa fa-cloud-upload mr-2"></i>
+                            <i class="fa fa-cloud-upload me-2"></i>
                             Select Image
                         </button>
 
                         <div class="mt-2" *ngIf="imageFile">
                             <img [src]="imageFile" alt="hero section image" height="100" width="100" />
-                            <button nz-button type="button" nzDanger (click)="removeImage()" class="ml-2">
+                            <button nz-button type="button" nzDanger (click)="removeImage()" class="ms-2">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
@@ -75,7 +75,7 @@
                 <nz-form-item>
                     <nz-form-control>
                         <nz-form-label nzFor="status">Status</nz-form-label>
-                        <nz-switch class="ml-2" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                        <nz-switch class="ms-2" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
                             formControlName="status" name="status" id="status">
                         </nz-switch>
                     </nz-form-control>
@@ -86,7 +86,7 @@
                 <nz-form-item>
                     <nz-form-control>
                         <nz-form-label nzFor="status">Feature</nz-form-label>
-                        <nz-switch class="ml-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                        <nz-switch class="ms-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                             formControlName="feature" name="feature" id="feature">
                         </nz-switch>
                     </nz-form-control>
@@ -96,7 +96,7 @@
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
-        <button [mat-dialog-close]="true" class="mr-2" mat-raised-button>
+        <button [mat-dialog-close]="true" class="me-2" mat-raised-button>
             <i class="icofont icofont-close-line"></i>
             Close
         </button>

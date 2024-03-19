@@ -1,10 +1,10 @@
 
-import { Component, Inject, OnInit } from '@angular/core';
-import { CommonService } from 'src/app/services/common.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { bookingDateValidator } from 'src/app/shared/validators/booking-date';
 import { DataService } from 'src/app/services/data.service';
+import { CommonService } from 'src/app/services/common.service';
+import { Component, Inject, OnInit, inject } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { bookingDateValidator } from 'src/app/shared/validators/booking-date';
 
 @Component({
   selector: 'app-appointment-modal',
@@ -12,26 +12,28 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./appointment-modal.component.scss']
 })
 export class AppointmentModalComponent implements OnInit {
+
   appointmentForm!: FormGroup;
-  dentists:any[] = [];
+  dentists: any[] = [];
+  appointmentUsers: any[] = [];
 
   isDisabled: boolean = false;
+  dialogRef = inject(MatDialogRef);
+
   constructor(
     private dataService: DataService,
     private commonService: CommonService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AppointmentModalComponent>
   ) { }
 
   ngOnInit(): void {
     this.initializeForm();
     this.getActiveDentists();
-    if(this.data) {
+    if (this.data) {
       this.appointmentForm.patchValue(this.data);
     }
-   }
+  }
 
-  
   initializeForm() {
     this.appointmentForm = new FormGroup({
       name: new FormControl('', [
@@ -41,9 +43,14 @@ export class AppointmentModalComponent implements OnInit {
       ]),
       email: new FormControl('',
         [
-          Validators.email,
-          Validators.required
+          Validators.email
         ]),
+
+      address: new FormControl('', [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(50)
+      ]),
       phone: new FormControl('', [
         Validators.required,
         Validators.minLength(11),
@@ -102,7 +109,7 @@ export class AppointmentModalComponent implements OnInit {
   }
 
   getActiveDentists() {
-    this.dataService.getJson('dentists-list','')
+    this.dataService.getJson('dentists-list', '')
       .subscribe({
         next: ({ data }) => {
           this.dentists = data;
@@ -114,17 +121,16 @@ export class AppointmentModalComponent implements OnInit {
   }
 
   onSubmitForm() {
+    this.isDisabled = true;
     this.commonService.onBufferEvent.emit(true);
-
     this.dataService.post(this.appointmentForm.value, 'website/book-appointment')
       .subscribe({
         next: (response) => {
+          this.isDisabled = false;
           this.commonService.onBufferEvent.emit(false);
           if (response.code === 200) {
-
-            this.dialogRef.close();
+            this.dialogRef.close(true);
             this.commonService.openSnackBar(response.message, 'Close', 'submit-success');
-            this.commonService.AClicked('component clicked');
           }
         },
         error: (error) => {
@@ -132,4 +138,5 @@ export class AppointmentModalComponent implements OnInit {
         }
       });
   }
+
 }
