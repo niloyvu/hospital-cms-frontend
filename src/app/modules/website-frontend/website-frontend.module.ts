@@ -26,4 +26,4 @@ import { MakeOrderModalComponent } from './product-orders/make-order-modal/make-
     WebsiteRoutingModule
   ]
 })
-export class WebsiteModule { }
+export class WebsiteFrontendModule { }
