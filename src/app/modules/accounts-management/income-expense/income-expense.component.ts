@@ -23,7 +23,7 @@ export class IncomeExpenseComponent implements OnInit, OnDestroy {
   resultPerPage: number = 10;
   dataOrderBy: boolean = true;
   columnsSortBy: string = 'id';
-  dayType: number = 1;
+  dayType: number | null = 1;
 
   paymentType: number | null = null;
   date: Date[] = [];
@@ -59,6 +59,7 @@ export class IncomeExpenseComponent implements OnInit, OnDestroy {
   }
 
   onChangeDate() {
+    this.dayType = null;
     this.getCashFlows();
   }
 
