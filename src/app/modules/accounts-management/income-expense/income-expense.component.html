@@ -11,6 +11,30 @@
                         </button>
                     </div>
                     <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <nz-select style="width: 100%" [(ngModel)]="paymentType"
+                                    (ngModelChange)="onChangePaymentType()" nzShowSearch nzAllowClear
+                                    nzPlaceHolder="Payment type" name="type">
+                                    <nz-option [nzLabel]="'Income'" [nzValue]="1"></nz-option>
+                                    <nz-option [nzLabel]="'Expense'" [nzValue]="0"></nz-option>
+                                </nz-select>
+                            </div>
+                            <div class="col-md-3">
+                                <nz-select style="width: 100%" [(ngModel)]="dayType" (ngModelChange)="onChangeDayType()"
+                                    nzShowSearch nzAllowClear nzPlaceHolder="Search by day" name="day">
+                                    <nz-option [nzLabel]="'Today'" [nzValue]="1"></nz-option>
+                                    <nz-option [nzLabel]="'Yesterday'" [nzValue]="2"></nz-option>
+                                </nz-select>
+                            </div>
+                            <div class="col-md-3">
+                                <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChangeDate()">
+                                </nz-range-picker>
+                            </div>
+                        </div>
+
+                        <nz-divider></nz-divider>
+
                         <div class="row">
                             <div class="col-md-12 d-flex justify-content-between">
                                 <label>
@@ -27,14 +51,27 @@
                                     entries
                                 </label>
                                 <label>
-                                    <nz-tag [nzColor]="'cyan'" style="font-size: 20px; padding: 2px;">Current Balance: <strong>{{currentBalance}} ৳</strong>
+                                    <nz-tag [nzColor]="'cyan'" style="font-size: 20px; padding: 2px;">Total Income:
+                                        <strong>{{totalIncome}} ৳</strong>
                                     </nz-tag>
                                 </label>
+                                <label>
+                                    <nz-tag [nzColor]="'yellow'" style="font-size: 20px; padding: 2px;">Total Expense:
+                                        <strong>{{totalExpense}} ৳</strong>
+                                    </nz-tag>
+                                </label>
+                                <label>
+                                    <nz-tag [nzColor]="'green'" style="font-size: 20px; padding: 2px;">Current Balance:
+                                        <strong>{{currentBalance}} ৳</strong>
+                                    </nz-tag>
+                                </label>
+
                                 <label class="search">Search:
                                     <input type="search" id="search" [(ngModel)]="searchValues"
-                                        (ngModelChange)="searchByData($event)" placeholder="Enter text.."
+                                        (keyup)="handleSearch($event)" placeholder="Enter text.."
                                         aria-controls="DataTables_Table_0">
                                 </label>
+
                             </div>
                         </div>
 
@@ -53,8 +90,8 @@
                                             </i>
                                         </th>
 
-                                        <th (click)="sortBy('payment_type')" class="text-start align-middle sort-icon">
-                                            CashFlow
+                                        <th (click)="sortBy('payment_type')" class="text-center align-middle sort-icon">
+                                            Cash Flow
                                             <i *ngIf="columnsSortBy==='payment_type' && dataOrderBy"
                                                 class="material-icons">
                                                 south
@@ -67,18 +104,16 @@
 
                                         <th class="text-start">Date</th>
 
-                                        <th (click)="sortBy('income_source')" class="text-start align-middle sort-icon">
-                                            Income Source
-                                            <i *ngIf="columnsSortBy==='income_source' && dataOrderBy"
-                                                class="material-icons">
+                                        <th (click)="sortBy('source')" class="text-start align-middle sort-icon">
+                                            Income/ Expense Source
+                                            <i *ngIf="columnsSortBy==='source' && dataOrderBy" class="material-icons">
                                                 south
                                             </i>
-                                            <i *ngIf="columnsSortBy==='income_source' && !dataOrderBy"
-                                                class="material-icons">
+                                            <i *ngIf="columnsSortBy==='source' && !dataOrderBy" class="material-icons">
                                                 north
                                             </i>
                                         </th>
-                                        <th (click)="sortBy('amount')" class="text-start align-middle sort-icon">
+                                        <th (click)="sortBy('amount')" class="text-end align-middle sort-icon">
                                             Amount
                                             <i *ngIf="columnsSortBy==='amount' && dataOrderBy" class="material-icons">
                                                 south
@@ -118,16 +153,16 @@
                                                                         }; let i=index;">
                                         <td class="text-center">{{getSl(i + 1)}}</td>
 
-                                        <td>
+                                        <td class="text-center">
                                             {{flow.payment_type == 0 ? 'Debit' : 'Credit'}}
                                         </td>
                                         <td>
                                             {{flow.date | date}}
                                         </td>
                                         <td>
-                                            {{flow.income_source}}
+                                            {{flow.source}}
                                         </td>
-                                        <td>
+                                        <td class="text-end">
                                             {{flow.amount | number}} ৳
                                         </td>
 
