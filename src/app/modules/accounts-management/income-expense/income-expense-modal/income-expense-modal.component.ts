@@ -1,9 +1,11 @@
+import { pageType } from 'src/app/shared/enum/page-type';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { CommonService } from 'src/app/services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Inject, OnDestroy, OnInit, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { PaymentType } from 'src/app/shared/enum/payment-type';
 
 @Component({
   selector: 'app-income-expense-modal',
@@ -12,8 +14,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class IncomeExpenseModalComponent implements OnInit, OnDestroy {
 
-  incomeExpenseForm!: FormGroup;
+  payment = PaymentType;
   isDisabled: boolean = false;
+  incomeExpenseForm!: FormGroup;
   dialogRef = inject(MatDialogRef);
   private submission$: Subscription = new Subscription();
 
@@ -56,12 +59,16 @@ export class IncomeExpenseModalComponent implements OnInit, OnDestroy {
     this.incomeExpenseForm = this.formBuilder.group({
       id: null,
       payment_type: ['', Validators.required],
-      income_source: ['', Validators.required],
+      source: ['', Validators.required],
       date: [null, Validators.required],
       amount: ['', Validators.required],
       remarks: '',
       status: true,
     });
+  }
+
+  get paymentType() {
+    return this.incomeExpenseForm.controls['payment_type'].value;
   }
 
   ngOnDestroy(): void {

@@ -5,6 +5,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
 import { IncomeExpenseModalComponent } from './income-expense-modal/income-expense-modal.component';
+import { PaymentType } from 'src/app/shared/enum/payment-type';
 
 @Component({
   selector: 'app-income-expense',
@@ -22,8 +23,15 @@ export class IncomeExpenseComponent implements OnInit, OnDestroy {
   resultPerPage: number = 10;
   dataOrderBy: boolean = true;
   columnsSortBy: string = 'id';
+  dayType: number = 1;
 
+  paymentType: number | null = null;
+  date: Date[] = [];
+
+  totalIncome: number = 0;
+  totalExpense: number = 0;
   currentBalance: number = 0;
+  timeoutId: any;
 
   private submission$: Subscription = new Subscription();
   private subscriptions$: Subscription = new Subscription();
@@ -35,23 +43,42 @@ export class IncomeExpenseComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.getWebInvoiceItems();
+    this.getCashFlows();
+  }
+
+  handleSearch(event: KeyboardEvent) {
+    clearTimeout(this.timeoutId);
+
+    this.timeoutId = setTimeout(() => {
+      this.searchByData(this.searchValues);
+    }, 500);
   }
 
   getSl(i: number) {
     return (Number(this.resultPerPage) * (Number(this.pageNumber) - 1)) + i
   }
 
+  onChangeDate() {
+    this.getCashFlows();
+  }
+
+  onChangeDayType() {
+    this.getCashFlows();
+  }
+
+  onChangePaymentType() {
+    this.getCashFlows();
+  }
 
   changeResultPerPage(event: number) {
     this.pageNumber = 1;
     this.resultPerPage = event;
-    this.getWebInvoiceItems();
+    this.getCashFlows();
   }
 
   pageChange(newPage: number) {
     this.pageNumber = newPage;
-    this.getWebInvoiceItems();
+    this.getCashFlows();
   }
 
   searchByData(value: string) {
@@ -59,7 +86,7 @@ export class IncomeExpenseComponent implements OnInit, OnDestroy {
     this.pageNumber = 1;
     this.resultPerPage = 10;
     this.dataOrderBy = true;
-    this.getWebInvoiceItems();
+    this.getCashFlows();
   }
 
   sortBy(column: string) {
@@ -68,15 +95,21 @@ export class IncomeExpenseComponent implements OnInit, OnDestroy {
     } else {
       this.columnsSortBy = column;
     }
-    this.getWebInvoiceItems();
+    this.getCashFlows();
   }
 
-  getWebInvoiceItems() {
+  getCashFlows() {
+    const startDate = this.date[0] ? this.date[0].toLocaleDateString() : '';
+    const endDate = this.date[1] ? this.date[1].toLocaleDateString() : '';
     const queryParams = {
       search: this.searchValues,
       sort_column: `${this.columnsSortBy}`,
       sort_by: this.dataOrderBy ? 'DESC' : 'ASC',
+      start_date: `${startDate}`,
+      end_date: `${endDate}`,
+      day_type: `${this.dayType}`,
       per_page: `${this.resultPerPage}`,
+      payment_type: `${this.paymentType}`,
       page: `${this.pageNumber}`
     };
     this.commonService.onBufferEvent.emit(true);
@@ -114,7 +147,7 @@ export class IncomeExpenseComponent implements OnInit, OnDestroy {
         .subscribe((response) => {
           this.dialogOpen = false;
           if (response) {
-            this.getWebInvoiceItems()
+            this.getCashFlows()
           };
         });
     }
@@ -132,16 +165,22 @@ export class IncomeExpenseComponent implements OnInit, OnDestroy {
         .subscribe((response) => {
           this.dialogOpen = false;
           if (response) {
-            this.getWebInvoiceItems()
+            this.getCashFlows()
           };
         });
     }
   }
 
   onCalculateCurrentBalance() {
-    const filteredData = this.cashFlows.filter((transaction: any) => transaction.payment_type === 1);
+    this.totalIncome = this.processTotalAmount(PaymentType.Income);
+    this.totalExpense = this.processTotalAmount(PaymentType.Expense);
 
-    this.currentBalance = filteredData.reduce((accumulator, transaction) => {
+    this.currentBalance = this.totalIncome - this.totalExpense;
+  }
+
+  processTotalAmount(incomeType: number) {
+    const data = this.cashFlows.filter((transaction: any) => transaction.payment_type === incomeType);
+    return data.reduce((accumulator, transaction) => {
       return accumulator + parseFloat(transaction.amount);
     }, 0);
   }

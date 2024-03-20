@@ -13,7 +13,8 @@
                 <nz-form-label nzRequired nzFor="paymentType">Payment Type</nz-form-label>
                 <nz-form-item>
                     <nz-form-control nzErrorTip="Payment type is required!">
-                        <nz-select style="width: 100%" formControlName="payment_type" nzPlaceHolder="Select payment type" name="paymentType">
+                        <nz-select style="width: 100%" formControlName="payment_type"
+                            nzPlaceHolder="Select payment type" name="paymentType">
                             <nz-option [nzLabel]="'Income'" [nzValue]="1"></nz-option>
                             <nz-option [nzLabel]="'Expense'" [nzValue]="0"></nz-option>
                         </nz-select>
@@ -21,11 +22,15 @@
                 </nz-form-item>
             </div>
             <div class="col-md-12">
-                <nz-form-label nzRequired nzFor="income-source">Income Source</nz-form-label>
+                <nz-form-label nzRequired nzFor="source">
+                    <ng-container *ngIf="paymentType == payment.Income">Income</ng-container>
+                    <ng-container *ngIf="paymentType == payment.Expense">Expense</ng-container>
+                    Source
+                </nz-form-label>
                 <nz-form-item>
-                    <nz-form-control nzErrorTip="Income source is required!">
-                        <input nz-input type="text" style="width: 100%" formControlName="income_source" id="income-source"
-                            placeholder="Enter income source">
+                    <nz-form-control nzErrorTip="Source is required!">
+                        <input nz-input type="text" style="width: 100%" formControlName="source"
+                            id="source" placeholder="Enter source">
                     </nz-form-control>
                 </nz-form-item>
             </div>
@@ -33,8 +38,7 @@
                 <nz-form-label nzRequired nzFor="date">Date</nz-form-label>
                 <nz-form-item>
                     <nz-form-control nzErrorTip="date is required!">
-                        <nz-date-picker style="width: 100%" formControlName="date" id="date"
-                            placeholder="Enter date">
+                        <nz-date-picker style="width: 100%" formControlName="date" id="date" placeholder="Enter date">
                         </nz-date-picker>
                     </nz-form-control>
                 </nz-form-item>
