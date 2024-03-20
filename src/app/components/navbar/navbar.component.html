@@ -44,7 +44,7 @@
                 </p>
               </a>
             </li>
-            
+
             <nz-dropdown-menu #notification="nzDropdownMenu">
               <ul nz-menu nzSelectable>
                 <li nz-menu-item>Mike John responded to your email</li>
@@ -69,5 +69,7 @@
       </div>
     </nav>
   </div>
-  <mat-progress-bar *ngIf="showProgressBar" mode="query"></mat-progress-bar>
+  <mat-progress-bar *ngIf="(loader.isLoading$ | async)"
+    [mode]="(loader.requestType$ | async) === 'GET'? 'query': 'indeterminate'">
+  </mat-progress-bar>
 </div>

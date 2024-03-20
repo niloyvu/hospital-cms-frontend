@@ -1,10 +1,9 @@
-// import * as $ from 'jquery';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { DataService } from 'src/app/services/data.service';
 import { AuthService } from '../../shared/auth/auth.service';
 import { CommonService } from '../../services/common.service';
+import { LoaderService } from 'src/app/services/loader.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/core';
 
@@ -15,35 +14,25 @@ import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/co
 })
 export class NavbarComponent implements OnInit {
 
-  location: Location;
   authenticatedUser: any;
   private toggleButton: any;
   mobile_menu_visible: any = 0;
-  private sidebarVisible: boolean;
   showProgressBar: Boolean = false;
+  private sidebarVisible: boolean = false;
 
   @Output() handleSidenav = new EventEmitter<boolean>();
 
   constructor(
-    location: Location,
     private router: Router,
     public auth: AuthService,
     private element: ElementRef,
+    public loader: LoaderService,
     public common: CommonService,
     private dataService: DataService,
     public translate: TranslateService,
-    public _languageService: LanguageService
-  ) {
-
-    this.location = location;
-    this.sidebarVisible = false;
-    common.onBufferEvent.subscribe(
-      (showProgressBar) => {
-        this.showProgressBar = showProgressBar;
-      });
-
-  }
-
+    public _languageService: LanguageService,
+  ) {}
+  
   ngOnInit(): void {
     this.getAuthenticatedUser();
     const navbar: HTMLElement = this.element.nativeElement;
