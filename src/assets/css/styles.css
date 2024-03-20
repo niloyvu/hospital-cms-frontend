@@ -120,35 +120,6 @@ button#menu-toggle-2 {
   border-radius: 0px 0px 6px 6px;
 }
 
-.border-1 {
-  border: 1px solid #ffffff;
-  padding: 5px 5px 5px 20px;
-  background: #17d0c4;
-  font-weight: 600;
-  border-left: 3px solid red;
-}
-
-.border-2 {
-  border: 1px solid #fff;
-  padding: 5px 5px 5px 20px;
-  background: #e3bfff;
-  border-left: 3px solid blue;
-}
-
-.border-3 {
-  border: 1px solid #fff;
-  padding: 5px 5px 5px 20px;
-  background: #baf5cd;
-  border-left: 3px solid #1890ff
-}
-
-.border-4 {
-  border: 1px solid #fff;
-  padding: 5px 5px 5px 20px;
-  background: #eee0f8;
-  border-left: 3px solid #000;
-}
-
 .ant-breadcrumb {
   box-sizing: border-box;
   margin: 0;

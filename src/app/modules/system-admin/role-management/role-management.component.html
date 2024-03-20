@@ -134,9 +134,9 @@
                                         <nz-tag *ngIf="data.status=='0'" nzColor="error">Inactive</nz-tag>
                                     </td>
                                     <td class="text-center">
-                                        <button nz-button nzType="default"
-                                                [routerLink]="['/system/user-role-manager/role-edit/', data.id]"><i
-                                                class="fa fa-pencil me-2"></i> Edit
+                                        <button nz-button nzType="default" nzSize="small"
+                                                [routerLink]="['/system/user-role-manager/role-edit/', data.id]">
+                                                <i class="fa fa-pencil me-2"></i> Edit
                                         </button>
                                     </td>
                                 </tr>
@@ -145,7 +145,6 @@
                                         Data Not Found...
                                     </td>
                                 </tr>
-
                                 </tbody>
                             </table>
                         </div>
@@ -154,8 +153,7 @@
                                 <p class="table-total-count">Total Records {{totalItem}}</p>
                             </div>
                             <div class="col-md-6 text-end">
-                                <pagination-controls (pageChange)="pageChange($event)" id="first"
-                                                     class="my-pagination"></pagination-controls>
+                                <pagination-controls (pageChange)="pageChange($event)" id="first" class="my-pagination"></pagination-controls>
                             </div>
                         </div>
                     </div>
@@ -292,8 +290,7 @@
                                 <p class="table-total-count">Total Records {{totalItemUpdate}}</p>
                             </div>
                             <div class="col-md-6 text-end">
-                                <pagination-controls (pageChange)="pageChangeUpdate($event)" class="my-pagination"
-                                                     id="second"></pagination-controls>
+                                <pagination-controls (pageChange)="pageChangeUpdate($event)" class="my-pagination" id="second"></pagination-controls>
                             </div>
                         </div>
                     </div>

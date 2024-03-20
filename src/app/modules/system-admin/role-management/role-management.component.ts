@@ -586,7 +586,7 @@ export class RoleEditComponent implements OnInit {
         });
     }
 
-    saverole() {
+    saveRole() {
         if (this.permissionCollection.length > 0) {
             this.common.onBufferEvent.emit(true);
             this.submitButtonEnable = true;
