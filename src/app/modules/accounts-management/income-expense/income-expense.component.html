@@ -11,7 +11,34 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="row mb-3">
+                        <div class="row flex-row justify-content-between mb-4">
+                            <div class="col-md-4">
+                                <label style="display: flex;">
+                                    <nz-tag [nzColor]="'cyan'" class="info-box">Total
+                                        Income:
+                                        <strong>{{totalIncome}} ৳</strong>
+                                    </nz-tag>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label style="display: flex;">
+                                    <nz-tag [nzColor]="'yellow'" class="info-box">Total
+                                        Expense:
+                                        <strong>{{totalExpense}} ৳</strong>
+                                    </nz-tag>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label style="display: flex;">
+                                    <nz-tag [nzColor]="'green'" class="info-box">Current
+                                        Balance:
+                                        <strong>{{currentBalance}} ৳</strong>
+                                    </nz-tag>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row mb-3 justify-content-between">
+
                             <div class="col-md-3">
                                 <nz-select style="width: 100%" [(ngModel)]="paymentType"
                                     (ngModelChange)="onChangePaymentType()" nzShowSearch nzAllowClear
@@ -50,21 +77,7 @@
                                     </select>
                                     entries
                                 </label>
-                                <label>
-                                    <nz-tag [nzColor]="'cyan'" style="font-size: 20px; padding: 2px;">Total Income:
-                                        <strong>{{totalIncome}} ৳</strong>
-                                    </nz-tag>
-                                </label>
-                                <label>
-                                    <nz-tag [nzColor]="'yellow'" style="font-size: 20px; padding: 2px;">Total Expense:
-                                        <strong>{{totalExpense}} ৳</strong>
-                                    </nz-tag>
-                                </label>
-                                <label>
-                                    <nz-tag [nzColor]="'green'" style="font-size: 20px; padding: 2px;">Current Balance:
-                                        <strong>{{currentBalance}} ৳</strong>
-                                    </nz-tag>
-                                </label>
+
 
                                 <label class="search">Search:
                                     <input type="search" id="search" [(ngModel)]="searchValues"
@@ -73,6 +86,7 @@
                                 </label>
 
                             </div>
+
                         </div>
 
                         <div class="table-responsive">
