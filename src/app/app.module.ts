@@ -9,7 +9,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { environment } from 'src/environments/environment.development';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -56,6 +56,7 @@ import {
   UnorderedListOutline,
   CustomerServiceOutline,
 } from '@ant-design/icons-angular/icons';
+import { LoggingInterceptor } from './interceptors/logging.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, environment.API_URL + './i18n/', '.json');
@@ -128,7 +129,12 @@ const icons: IconDefinition[] = [
     }),
     NgbModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
