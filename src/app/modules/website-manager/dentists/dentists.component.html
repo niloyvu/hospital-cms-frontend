@@ -6,7 +6,7 @@
                 <div class="card form-head-color " data-color="azure">
                     <div class="card-header card-header-infinity d-flex justify-content-between">
                         <h4 class="card-title">Manage Dentists</h4>
-                        <button nz-button *ngIf="tabIndex == 0" (click)="createService()" nzType="primary">
+                        <button nz-button *ngIf="tabIndex == 0" (click)="createDentist()" nzType="primary">
                             <i class="fa fa-plus me-2"></i>
                             Add Dentist
                         </button>
@@ -202,7 +202,7 @@
                                                 </td>
                                                 <td class="text-center" style="width: 100px;">
                                                     <button nz-button nzType="default" nzSize="small"
-                                                        (click)="updateService(dentist)">
+                                                        (click)="updateDentist(dentist)">
                                                         <i class="fa fa-pencil me-2"></i>
                                                         Edit
                                                     </button>

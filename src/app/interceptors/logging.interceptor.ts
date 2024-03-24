@@ -18,7 +18,6 @@ export class LoggingInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // const isGetRequestOrPostRequest = request.method === 'GET' || request.method === 'POST';
     this.loaderService.setRequestType(request.method);
     this.loaderService.showLoader();
     console.log('Outgoing HTTP request', request);

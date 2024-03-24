@@ -14,6 +14,7 @@ import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/co
 })
 export class NavbarComponent implements OnInit {
 
+  modeType!: any;
   authenticatedUser: any;
   private toggleButton: any;
   mobile_menu_visible: any = 0;
@@ -34,6 +35,10 @@ export class NavbarComponent implements OnInit {
   ) {}
   
   ngOnInit(): void {
+    this.loader.requestType$.subscribe((type: string) => {
+      this.modeType = type === 'GET'? 'query' : 'indeterminate';
+    });
+
     this.getAuthenticatedUser();
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
