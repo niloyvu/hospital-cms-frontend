@@ -70,6 +70,6 @@
     </nav>
   </div>
   <mat-progress-bar *ngIf="(loader.isLoading$ | async)"
-    [mode]="(loader.requestType$ | async) === 'GET'? 'query': 'indeterminate'">
+    [mode]="modeType">
   </mat-progress-bar>
 </div>

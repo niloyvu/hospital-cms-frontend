@@ -15,7 +15,6 @@ import { DataService } from 'src/app/services/data.service';
 export class DentistsComponent implements OnInit, OnDestroy {
 
   dialogOpen: boolean = false;
-
   tabIndex: number = 0;
 
   dentists: any[] = [];
@@ -112,7 +111,7 @@ export class DentistsComponent implements OnInit, OnDestroy {
       });
   }
 
-  createService() {
+  createDentist() {
     if (!this.dialogOpen) {
       const dialogRef = this.dialog.open(DentistModalComponent, {
         width: "700px",
@@ -122,12 +121,14 @@ export class DentistsComponent implements OnInit, OnDestroy {
       dialogRef.afterClosed()
         .subscribe(result => {
           this.dialogOpen = false;
-          this.getDentists();
+          if (result) {
+            this.getDentists();
+          }
         });
     }
   }
 
-  updateService(service: any) {
+  updateDentist(service: any) {
     if (!this.dialogOpen) {
       this.dialogOpen = true;
       const dialogRef = this.dialog.open(DentistModalComponent, {
@@ -138,11 +139,13 @@ export class DentistsComponent implements OnInit, OnDestroy {
       dialogRef.afterClosed()
         .subscribe(result => {
           this.dialogOpen = false;
-          this.getDentists();
+          if (result) {
+            this.getDentists();
+          }
         });
     }
   }
- 
+
   ngOnDestroy(): void {
     this.submission$.unsubscribe();
     this.subscriptions$.unsubscribe();

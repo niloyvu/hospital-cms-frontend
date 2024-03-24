@@ -50,7 +50,7 @@ export class DentistModalComponent implements OnInit, OnDestroy {
           this.isDisabled = false;
           this.commonService.onBufferEvent.emit(false);
           if (response.code === 200) {
-            this.dialogRef.close();
+            this.dialogRef.close(true);
             this.commonService.openSnackBar(response.message, 'Close', 'submit-success')
           } else {
             this.commonService.openSnackBar(response.message, 'Close', 'submit-error')
@@ -67,12 +67,10 @@ export class DentistModalComponent implements OnInit, OnDestroy {
       id: null,
       name: ['', Validators.required],
       phone: [null, [
-        Validators.required,
         Validators.minLength(11),
         Validators.maxLength(11)]
       ],
       email: [null, [
-        Validators.required,
         Validators.email]
       ],
       designation: [null,
