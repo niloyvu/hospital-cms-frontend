@@ -129,7 +129,10 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
     if (!this.dialogOpen) {
       const dialogRef = this.dialog.open(InvoiceFormModalComponent, {
         width: "800px",
-        data: null,
+        data: {
+          invoice: null,
+          isPrint: false
+        },
         disableClose: true
       });
       dialogRef.afterClosed()
@@ -147,7 +150,10 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
       this.dialogOpen = true;
       const dialogRef = this.dialog.open(InvoiceFormModalComponent, {
         width: "800px",
-        data: invoice,
+        data: {
+          invoice: invoice,
+          isPrint: false
+        },
         disableClose: true
       });
       dialogRef.afterClosed()
@@ -156,6 +162,24 @@ export class InvoiceListsComponent implements OnInit, OnDestroy {
           if (response) {
             this.getWebInvoices()
           };
+        });
+    }
+  }
+
+  printInvoice(invoice: any) {
+    if (!this.dialogOpen) {
+      this.dialogOpen = true;
+      const dialogRef = this.dialog.open(InvoiceFormModalComponent, {
+        height: '100%',
+        width: '100%',
+        data: {
+          invoice: invoice,
+          isPrint: true
+        }
+      });
+      dialogRef.afterClosed()
+        .subscribe((response) => {
+          this.dialogOpen = false;
         });
     }
   }

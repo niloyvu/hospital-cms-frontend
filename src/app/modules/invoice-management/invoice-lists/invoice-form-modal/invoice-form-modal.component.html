@@ -1,11 +1,11 @@
-<h2 mat-dialog-title style="margin: 0;">
-    {{data? 'Update': 'Create'}} Invoice
+<h2 mat-dialog-title style="margin: 0;" *ngIf="!data.isPrint">
+    {{data.invoice? 'Update': 'Create'}} Invoice
     <button mat-dialog-close class="close mt-1 text-white" data-dismiss="modal" type="button">
         <span aria-hidden="true">×</span>
     </button>
 </h2>
-<form [formGroup]="invoiceForm" (ngSubmit)="onSubmitForm()">
-    <mat-dialog-content class="mat-typography">
+<form [formGroup]="invoiceForm" (ngSubmit)="onSubmitForm()" [class.print-mode]="data.isPrint">
+    <mat-dialog-content class="mat-typography" id="print-section">
         <div class="invoice-wrap">
             <div class="invoice-inner">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -46,9 +46,9 @@
 
                                                     <p class="d-flex mb-0">
                                                         <span nz-icon nzType="home" nzTheme="outline"></span>
-                                                        <small class="ms-2">11 Shahid Tazuddin Ahmed Shoroni,
-                                                            <br />
-                                                            Mogbazar, Dhaka-1217
+                                                        <small class="ms-2">11 Shahid Tazuddin Ahmed Shoroni, Mogbazar,
+                                                            Dhaka-1217 <br />
+                                                            <em>Serial: 09613-445544 (8 am-8 pm)</em>
                                                         </small>
                                                     </p>
                                                 </td>
@@ -70,8 +70,7 @@
                                     BMDC: 5483
                                 </small>
                                 <div class="contact">
-                                    Mobile: 01726-187603 <br>
-                                    Serial: 09613-445544 (8 am-8 pm)
+                                    Mobile: 01726-187603
                                 </div>
 
                             </td>
@@ -98,7 +97,8 @@
                                                                 <tr>
                                                                     <td style="padding-left:25px;">
                                                                         <nz-form-control>
-                                                                            <nz-select [nzDisabled]="isUpdate" nzShowSearch nzAllowClear
+                                                                            <nz-select [nzDisabled]="isUpdate"
+                                                                                nzShowSearch nzAllowClear
                                                                                 id="appointment_id"
                                                                                 nzPlaceHolder="Select a person"
                                                                                 formControlName="appointment_id"
@@ -153,8 +153,8 @@
                                                     <nz-form-label nzFor="date" nzRequired>Date</nz-form-label>
                                                 </td>
                                                 <td align="left" style="padding-left:20px">
-                                                    <nz-date-picker formControlName="date" [nzDisabled]="isUpdate" style="width: 100%"
-                                                        type="date" id="date" class="invoice-input">
+                                                    <nz-date-picker formControlName="date" [nzDisabled]="isUpdate"
+                                                        style="width: 100%" type="date" id="date" class="invoice-input">
                                                     </nz-date-picker>
                                                 </td>
                                             </tr>
@@ -164,8 +164,9 @@
                                                     <nz-form-label nzFor="due_date" nzRequired>Due Date </nz-form-label>
                                                 </td>
                                                 <td align="left" style="padding-left:20px;">
-                                                    <nz-date-picker formControlName="due_date" [nzDisabled]="isUpdate" style="width: 100%"
-                                                        type="date" id="due-date" class="invoice-input">
+                                                    <nz-date-picker formControlName="due_date" [nzDisabled]="isUpdate"
+                                                        style="width: 100%" type="date" id="due-date"
+                                                        class="invoice-input">
                                                     </nz-date-picker>
                                                 </td>
                                             </tr>
@@ -176,14 +177,20 @@
                         </tbody>
                     </table>
                 </div>
-                <nz-form-label nzFor="selected_items" nzRequired>Diagnosis</nz-form-label>
-                <nz-select formControlName="selected_items" [nzDisabled]="isUpdate" id="selected_items" [nzMaxTagCount]="3"
-                    [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple" nzPlaceHolder="Please select diagnosis">
-                    <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title" [nzValue]="item.id"></nz-option>
-                </nz-select>
-                <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+                <ng-container *ngIf="!data.isPrint">
+                    <nz-form-label nzFor="selected_items" nzRequired>Diagnosis</nz-form-label>
+                    <nz-select formControlName="selected_items" [nzDisabled]="isUpdate" id="selected_items"
+                        [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
+                        nzPlaceHolder="Please select diagnosis">
+                        <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title"
+                            [nzValue]="item.id"></nz-option>
+                    </nz-select>
+                    <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more
+                        selected
+                    </ng-template>
+                </ng-container>
                 <div id="items-list">
-                    <table class="table table-condensed table-bordered table-striped items-table">
+                    <table class="table table-condensed table-bordered table-striped items-table mb-0">
                         <thead>
                             <tr>
                                 <th style="width:75%">Item</th>
@@ -219,8 +226,8 @@
                                 </td>
                                 <td><small><strong>Discount %</strong></small></td>
                                 <td class="text-end">
-                                    <input style="width: 100px;" [readOnly]="isUpdate" type="text" formControlName="discount"
-                                        class="invoice-input editable text-end">
+                                    <input style="width: 100px;" [readOnly]="isUpdate" type="text"
+                                        formControlName="discount" class="invoice-input editable text-end">
                                 </td>
                             </tr>
                             <tr class="totals-row shaped">
@@ -247,15 +254,15 @@
                                 </td>
                                 <td><small><strong>Paid Amount</strong></small></td>
                                 <td class="text-end">
-                                    <input style="width: 100px;" type="text" [readOnly]="isUpdate" formControlName="paid_amount"
-                                        class="invoice-input editable text-end">
+                                    <input style="width: 100px;" type="text" [readOnly]="isUpdate"
+                                        formControlName="paid_amount" class="invoice-input editable text-end">
                                 </td>
                             </tr>
 
                             <tr class="totals-row shaped">
 
                                 <td class="wide-cell" colspan="2">
-                                    <nz-form-control>
+                                    <nz-form-control *ngIf="!data.isPrint">
                                         <nz-form-label nzFor="status">Status</nz-form-label>
                                         <nz-switch class="ms-2" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                                             formControlName="status" name="status" id="status">
@@ -275,15 +282,16 @@
                                 *ngFor="let item of selectedInvoiceItems.controls; let i = index;">
                                 <input formControlName="id" type="hidden" />
                                 <td>
-                                    <nz-select nzDisabled formControlName="item_id" name="item_id" id="item_id" type="text">
+                                    <nz-select nzDisabled formControlName="item_id" name="item_id" id="item_id"
+                                        type="text">
                                         <nz-option *ngFor="let item of invoiceItems" [nzLabel]="item.title"
                                             [nzValue]="item.id">
                                         </nz-option>
                                     </nz-select>
                                 </td>
                                 <td>
-                                    <nz-input-number [nzMin]="1" [nzDisabled]="isUpdate" [nzMax]="100" [nzStep]="1" formControlName="quantity"
-                                        class="editable input-mini text-center">
+                                    <nz-input-number [nzMin]="1" [nzDisabled]="isUpdate" [nzMax]="100" [nzStep]="1"
+                                        formControlName="quantity" class="editable input-mini text-center">
                                     </nz-input-number>
                                 </td>
                                 <td>
@@ -299,7 +307,7 @@
                     </table>
                 </div>
 
-                <div class="notes-block">
+                <div class="notes-block" *ngIf="!data.isPrint">
                     <table border="0" width="100%">
                         <tbody>
                             <tr>
@@ -322,12 +330,12 @@
 
     </mat-dialog-content>
 
-    <mat-dialog-actions align="end">
-        <button mat-dialog-close class="me-2" mat-raised-button>
+    <mat-dialog-actions align="end" *ngIf="!data.isPrint">
+        <button type="button" mat-dialog-close class="me-2" mat-raised-button>
             Close
         </button>
-        <button [disabled]="invoiceForm.invalid || isDisabled" color="primary" mat-raised-button>
-            {{data? 'Update': 'Create'}}
+        <button type="submit" [disabled]="invoiceForm.invalid || isDisabled" color="primary" mat-raised-button>
+            {{data.invoice? 'Update': 'Create'}}
         </button>
     </mat-dialog-actions>
 </form>

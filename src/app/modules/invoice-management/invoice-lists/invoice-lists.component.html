@@ -225,7 +225,7 @@
                                             </ng-template>
                                         </td>
                                         <td class="text-center">
-                                            <nz-tag [nzColor]="invoice.status? 'success':'processing'">
+                                            <nz-tag [nzColor]="invoice.status? 'success':'error'">
                                                 <b>{{invoice?.status? 'Active':'Inactive'}}</b>
                                             </nz-tag>
                                         </td>
@@ -234,6 +234,11 @@
                                                 (click)="updateInvoice(invoice)">
                                                 <i class="fa fa-pencil me-2"></i>
                                                 Edit
+                                            </button>
+                                            <button class="ms-2" nz-button nzType="default" nzSize="small"
+                                                (click)="printInvoice(invoice)">
+                                                <i class="fa fa-print me-2"></i>
+                                                Print
                                             </button>
                                         </td>
                                     </tr>

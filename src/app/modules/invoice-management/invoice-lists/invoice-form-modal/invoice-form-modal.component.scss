@@ -19,8 +19,8 @@
 
 .invoice-address {
     border-top: 3px double #000000;
-    margin: 25px 0;
-    padding-top: 25px;
+    margin: 20px 0;
+    padding-top: 20px;
 }
 
 .invoice-name {
@@ -145,4 +145,15 @@ table td {
 
 nz-select {
     width: 100%;
+}
+
+.print-mode {
+    .mat-mdc-dialog-content {
+        max-height: initial;
+    }
+
+}
+
+.contact {
+    font-size: 12px;
 }

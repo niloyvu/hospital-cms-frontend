@@ -80,3 +80,10 @@ a.close.disabled {
   display: flex;
   align-items: center;
 }
+
+@media print {
+  .cdk-overlay-pane {
+    max-width: 100vw !important;
+    background-color: white !important;
+  }
+}
