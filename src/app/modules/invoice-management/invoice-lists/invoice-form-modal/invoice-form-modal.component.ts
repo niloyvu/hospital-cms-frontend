@@ -1,16 +1,17 @@
 import { DataService } from 'src/app/services/data.service';
 import { CommonService } from 'src/app/services/common.service';
-import { Component, Inject, OnInit, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit, inject, AfterViewInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-invoice-form-modal',
   templateUrl: './invoice-form-modal.component.html',
   styleUrls: ['./invoice-form-modal.component.scss']
 })
-export class InvoiceFormModalComponent implements OnInit {
+export class InvoiceFormModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  public timeout: any = null;
   invoiceItems: any[] = [];
   appointmentUsers: any[] = [];
   invoiceForm!: FormGroup;
@@ -20,7 +21,7 @@ export class InvoiceFormModalComponent implements OnInit {
 
   selectedUser: any = null;
 
-  isUpdate: boolean = !!this.data;
+  isUpdate: boolean = !!this.data?.invoice;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,11 +36,11 @@ export class InvoiceFormModalComponent implements OnInit {
     this.getActiveInvoiceItems();
 
     if (this.isUpdate) {
-      this.invoiceForm.patchValue(this.data);
+      this.invoiceForm.patchValue(this.data?.invoice);
       this.populateInvoiceItems();
-      this.invoiceForm.get('sub_total')?.setValue(this.data.sub_total);
-      this.invoiceForm.get('due_amount')?.setValue(this.data.due_amount);
-      this.invoiceForm.get('total_amount')?.setValue(this.data.total_amount);
+      this.invoiceForm.get('sub_total')?.setValue(this.data?.invoice.sub_total);
+      this.invoiceForm.get('due_amount')?.setValue(this.data?.invoice.due_amount);
+      this.invoiceForm.get('total_amount')?.setValue(this.data?.invoice.total_amount);
       this.discount?.clearValidators();
     } else {
       this.getNextInvoiceId();
@@ -139,7 +140,7 @@ export class InvoiceFormModalComponent implements OnInit {
 
   populateInvoiceItems() {
     this.selectedInvoiceItems.clear();
-    this.data.invoice_items.forEach((item: any) => {
+    this.data?.invoice.invoice_items.forEach((item: any) => {
       this.selectedInvoiceItems.push(this.invoiceItem(item));
     });
   }
@@ -229,8 +230,8 @@ export class InvoiceFormModalComponent implements OnInit {
       .subscribe({
         next: ({ data }) => {
           this.appointmentUsers = data;
-          if (this.data) {
-            this.selectedUser = this.appointmentUsers?.find(user => user.id === this.data.appointment_id);
+          if (this.data?.invoice) {
+            this.selectedUser = this.appointmentUsers?.find(user => user.id === this.data?.invoice.appointment_id);
           }
         },
         error: error => {
@@ -255,7 +256,7 @@ export class InvoiceFormModalComponent implements OnInit {
     this.isDisabled = true;
     this.commonService.onBufferEvent.emit(true);
 
-    this.dataService.post(this.invoiceForm.value, 'website-cms/create-invoice')
+    this.dataService.post(this.invoiceForm.value, 'website-cms/invoice')
       .subscribe({
         next: (response) => {
           this.isDisabled = false;
@@ -271,5 +272,20 @@ export class InvoiceFormModalComponent implements OnInit {
           this.commonService.onBufferEvent.emit(false);
         }
       });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.data.isPrint) {
+      this.timeout = setTimeout(() => {
+        window.print();
+        this.dialogRef.close();
+      }, 1000)
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
   }
 }
