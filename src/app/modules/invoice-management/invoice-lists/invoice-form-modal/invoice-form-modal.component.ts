@@ -277,7 +277,7 @@ export class InvoiceFormModalComponent implements OnInit, AfterViewInit, OnDestr
   ngAfterViewInit(): void {
     if (this.data.isPrint) {
       this.timeout = setTimeout(() => {
-        window.print();
+        this.invoiceItems.length && window.print();
         this.dialogRef.close();
       }, 1000)
     }

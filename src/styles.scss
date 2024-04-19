@@ -82,6 +82,14 @@ a.close.disabled {
 }
 
 @media print {
+  .shaped td, 
+  .table thead tr th,
+  .ant-input-number-disabled,
+  .ant-picker.ant-picker-disabled,
+  .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background: #fff !important;
+  }
+
   .cdk-overlay-pane {
     max-width: 100vw !important;
     background-color: white !important;

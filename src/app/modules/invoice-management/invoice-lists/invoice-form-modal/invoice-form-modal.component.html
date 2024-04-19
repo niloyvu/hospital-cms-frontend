@@ -87,7 +87,7 @@
                                         <tbody>
                                             <tr>
                                                 <td valign="top">
-                                                    <nz-form-label nzFor="appointment_id" nzRequired>Bill
+                                                    <nz-form-label nzFor="appointment_id" [nzRequired]="!data.isPrint">Bill
                                                         To</nz-form-label>
                                                 </td>
                                                 <td valign="top">
@@ -139,7 +139,7 @@
                                         <tbody>
                                             <tr>
                                                 <td align="right">
-                                                    <nz-form-label nzFor="invoice_id" nzRequired>
+                                                    <nz-form-label nzFor="invoice_id" [nzRequired]="!data.isPrint">
                                                         Invoice #
                                                     </nz-form-label>
                                                 </td>
@@ -150,7 +150,7 @@
                                             </tr>
                                             <tr>
                                                 <td align="right">
-                                                    <nz-form-label nzFor="date" nzRequired>Date</nz-form-label>
+                                                    <nz-form-label nzFor="date" [nzRequired]="!data.isPrint">Date</nz-form-label>
                                                 </td>
                                                 <td align="left" style="padding-left:20px">
                                                     <nz-date-picker formControlName="date" [nzDisabled]="isUpdate"
@@ -161,7 +161,7 @@
 
                                             <tr class="field1_row">
                                                 <td align="right">
-                                                    <nz-form-label nzFor="due_date" nzRequired>Due Date </nz-form-label>
+                                                    <nz-form-label nzFor="due_date" [nzRequired]="!data.isPrint">Due Date </nz-form-label>
                                                 </td>
                                                 <td align="left" style="padding-left:20px;">
                                                     <nz-date-picker formControlName="due_date" [nzDisabled]="isUpdate"
@@ -178,7 +178,7 @@
                     </table>
                 </div>
                 <ng-container *ngIf="!data.isPrint">
-                    <nz-form-label nzFor="selected_items" nzRequired>Diagnosis</nz-form-label>
+                    <nz-form-label nzFor="selected_items" [nzRequired]="!data.isPrint">Diagnosis</nz-form-label>
                     <nz-select formControlName="selected_items" [nzDisabled]="isUpdate" id="selected_items"
                         [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
                         nzPlaceHolder="Please select diagnosis">
@@ -312,7 +312,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <nz-form-label nzFor="remarks" nzRequired>Notes</nz-form-label>
+                                    <nz-form-label nzFor="remarks" [nzRequired]="!data.isPrint">Notes</nz-form-label>
                                     <nz-form-item>
                                         <nz-form-control nzErrorTip="Note is required!">
                                             <textarea formControlName="remarks" id="remarks" nz-input rows="2"
