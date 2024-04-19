@@ -20,7 +20,14 @@ export class ServiceModalComponent implements OnInit, OnDestroy {
   imageError!: string;
   fileExtension!: string;
 
+  iconImageRequired: boolean = false;
+
+  imageIconFileUpload: any;
+  imageIconError!: string;
+  imageIconFileExtension!: string;
+
   imageFile: string | null = null;
+  imageIconFile: string | null = null;
   private submission$: Subscription = new Subscription();
 
   constructor(
@@ -35,8 +42,10 @@ export class ServiceModalComponent implements OnInit, OnDestroy {
     this.initializeFormGroup();
     if (this.data) {
       this.serviceForm.patchValue(this.data);
-      this.imageFile =
-        `${this.commonService.rootUrl}/uploads/${this.data.image}`;
+      this.imageFile =`${this.commonService.rootUrl}/uploads/${this.data.image}`;
+      if(this.data.image_icon) {
+        this.imageIconFile =`${this.commonService.rootUrl}/uploads/${this.data.image_icon}`;
+      }
     }
   }
 
@@ -45,6 +54,7 @@ export class ServiceModalComponent implements OnInit, OnDestroy {
     this.commonService.onBufferEvent.emit(true);
     const formValue = this.serviceForm.value;
     formValue.image = this.fileUpload;
+    formValue.image_icon = this.imageIconFileUpload;
     this.submission$ = this.dataService.post(formValue, 'website/service')
       .subscribe({
         next: (response) => {
@@ -67,40 +77,74 @@ export class ServiceModalComponent implements OnInit, OnDestroy {
     this.serviceForm = this.formBuilder.group({
       id: null,
       title: ['', Validators.required],
-      icon: ['', Validators.required],
+      graphics_type: ['', Validators.required],
+      icon: [''],
       description: ['', Validators.required],
       status: [true],
       feature: [false],
     });
+
+    this.serviceForm.get('graphics_type')?.valueChanges.subscribe(graphicsType => {
+      const iconControl = this.serviceForm.get('icon');
+      if (graphicsType === 1) {
+        this.imageIconError = '';
+        this.imageIconFile = null;
+        this.iconImageRequired = false;
+        iconControl?.setValidators(Validators.required);
+      } else {
+        iconControl?.reset();
+        iconControl?.clearValidators();
+        this.iconImageRequired = true;
+      }
+      iconControl?.updateValueAndValidity();
+    });
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any, type: string): void {
     this.imageError = '';
+    this.imageIconError = '';
+
     const file: File = event.target.files[0];
     const fileName = file.name;
-    this.fileExtension = fileName?.split('.')?.pop()?.toLowerCase() || '';
+    const fileExtension = fileName?.split('.')?.pop()?.toLowerCase();
+    const imageErrorMessage = 'Maximum file size allowed is 1 MB';
 
     if (this.commonService.isFileSizeExceedsMax(file)) {
-      this.imageError = 'Maximum size allowed is 1 MB';
+      type === 'service-image' ? this.imageError = imageErrorMessage : this.imageIconError = imageErrorMessage;
       return;
     }
 
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        this.imageFile = reader.result as string;
-        this.fileUpload = {
-          base64: this.imageFile,
-          extension: this.fileExtension,
+        const image = reader.result as string;
+
+        const imageFile = {
+          base64: image,
+          extension: fileExtension
         };
+
+        if (type === 'service-image') {
+          this.imageFile = image;
+          this.fileUpload = imageFile;
+        } else {
+          this.imageIconFile = image;
+          this.imageIconFileUpload = imageFile;
+        }
       };
       reader.readAsDataURL(file);
     }
   }
 
-  removeImage() {
-    this.imageFile = null;
-    this.imageError = "Image is required"
+  removeImage(fileType: string) {
+    if (fileType === 'service-image') {
+      this.imageFile = null;
+      this.imageError = "Image is required"
+    } else {
+      this.imageIconFile = null;
+      this.imageIconError = "Image icon is required"
+
+    }
   }
 
   ngOnDestroy(): void {
