@@ -19,8 +19,8 @@
                 <nz-form-item>
                     <nz-form-control nzValidateStatus="warning"
                         nzWarningTip="Suggested webp Transparent Background Image and Ratio: 565 * 380 px | Maximum Size: 1MB">
-                        <input #fileInput (change)="onFileSelected($event)" style="display: none;" accept="image/*"
-                            type="file">
+                        <input #fileInput (change)="onFileSelected($event, 'service-image')" style="display: none;"
+                            accept="image/*" type="file">
                         <button nz-button (click)="fileInput.click()" nz-tooltip nzTooltipPlacement="rightTop"
                             nzTooltipTitle="Only Image File" nzType="primary" type="button">
                             <i class="fa fa-cloud-upload me-2"></i>
@@ -29,7 +29,8 @@
 
                         <div class="mt-2" *ngIf="imageFile">
                             <img [src]="imageFile" alt="hero section image" height="200" width="250" />
-                            <button nz-button type="button" nzDanger (click)="removeImage()" class="ms-2">
+                            <button nz-button type="button" nzDanger (click)="removeImage('service-image')"
+                                class="ms-2">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
@@ -37,7 +38,48 @@
                     </nz-form-control>
                 </nz-form-item>
             </div>
+
             <div class="col-md-12">
+                <nz-form-label nzRequired nzFor="graphics_type">Graphics Type</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Graphics type is required!">
+                        <nz-select style="width: 100%" formControlName="graphics_type"
+                            nzPlaceHolder="Select graphics type" id="graphics_type" name="graphics_type">
+                            <nz-option nzLabel="Icon" [nzValue]="1"></nz-option>
+                            <nz-option nzLabel="Image" [nzValue]="2"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12" *ngIf="serviceForm.get('graphics_type')?.value == 2">
+                <nz-alert class="mb-2" *ngIf="imageIconError" nzType="error" nzMessage="{{imageIconError}}" nzShowIcon>
+                </nz-alert>
+                <nz-form-label nzFor="image" nzRequired>
+                    Image Icon
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzValidateStatus="warning"
+                        nzWarningTip="Suggested a png image icon and Ratio: 80 * 80 px | Maximum Size: 200kb">
+                        <input #fileInput1 (change)="onFileSelected($event, 'icon-image')" style="display: none;"
+                            accept="image/*" type="file">
+                        <button nz-button (click)="fileInput1.click()" nz-tooltip nzTooltipPlacement="rightTop"
+                            nzTooltipTitle="Only Image File" nzType="primary" type="button">
+                            <i class="fa fa-cloud-upload me-2"></i>
+                            Select Image Icon
+                        </button>
+
+                        <div class="mt-2" *ngIf="imageIconFile">
+                            <img [src]="imageIconFile" alt="hero section image" height="100" width="100" />
+                            <button nz-button type="button" nzDanger (click)="removeImage('icon-image')"
+                                class="ms-2">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12" *ngIf="serviceForm.get('graphics_type')?.value == 1">
                 <nz-form-label nzRequired nzFor="icon">Icon (Class Name) </nz-form-label>
                 <nz-form-item>
                     <nz-form-control nzErrorTip="Icon is required!">
@@ -45,6 +87,7 @@
                     </nz-form-control>
                 </nz-form-item>
             </div>
+
             <div class="col-md-12">
                 <nz-form-label nzRequired nzFor="title">Title
                 </nz-form-label>
@@ -95,7 +138,7 @@
             <i class="icofont icofont-close-line"></i>
             Close
         </button>
-        <button [disabled]="serviceForm.invalid || isDisabled || !imageFile" color="primary" mat-raised-button>
+        <button [disabled]="serviceForm.invalid || isDisabled || !imageFile || iconImageRequired && !imageIconFile" color="primary" mat-raised-button>
             <i class="icofont icofont-save"></i>
             {{data? 'Update': 'Create'}}
         </button>
