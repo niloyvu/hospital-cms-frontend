@@ -41,8 +41,8 @@ export class LoginComponent implements OnInit {
     const data = this.userLoginForm.value;
     this.authService.login(data).subscribe({
       next: (res) => {
+        this.showLoader = false;
         if (res.code == 200) {
-          this.showLoader = false;
           let token = res.data.token;
           const cookieValue = { 'bearertoken': token }
           const localStorageValue = res.data.permissions;

@@ -36,6 +36,7 @@ export class AppointmentModalComponent implements OnInit {
 
   initializeForm() {
     this.appointmentForm = new FormGroup({
+      id: new FormControl(),
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(6),

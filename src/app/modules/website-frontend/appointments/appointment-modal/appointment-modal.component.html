@@ -25,7 +25,7 @@
                 </nz-form-item>
             </div>
             <div class="col-md-6">
-                <nz-form-label nzFor="email">Email</nz-form-label>
+                <nz-form-label nzFor="email" nzRequired>Email</nz-form-label>
                 <nz-form-item>
                     <nz-form-control nzHasFeedback [nzErrorTip]="emailErrorTemplate">
                         <input nz-input type="email" formControlName="email" id="email" placeholder="Enter email" />
@@ -192,7 +192,7 @@
         </button>
         <button [disabled]="appointmentForm.invalid || isDisabled" color="primary" mat-raised-button>
             <i class="icofont icofont-save"></i>
-            {{data? 'Update': 'Add'}} Appointment
+            {{data? 'Update': 'Add'}}
         </button>
 
     </mat-dialog-actions>
