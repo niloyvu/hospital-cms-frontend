@@ -37,7 +37,7 @@ export class MakeOrderModalComponent implements OnInit {
       this.makeOrderForm.patchValue(this.data);
     }
   }
-  
+
   initializeForm() {
     this.makeOrderForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
@@ -59,23 +59,24 @@ export class MakeOrderModalComponent implements OnInit {
       const product = this.products?.find(p => p.id === product_id);
       this.makeOrderForm.get('product_price')?.setValue(product?.price);
     });
-
-    this.makeOrderForm.get('order_type')?.valueChanges.subscribe((type) => {
-      if (type === orderType.Online) {
-        const district = this.makeOrderForm.get('district')?.value.toLowerCase();
-        this.deliveryCharge = district === 'dhaka' ? 60 : 150;
-        this.makeOrderForm.get('delivery_charge')?.setValue(this.deliveryCharge);
-
-        this.makeOrderForm.get('district')?.valueChanges.subscribe((value) => {
-          const updatedDistrict = value.toLowerCase();
-          this.deliveryCharge = updatedDistrict === 'dhaka' ? 60 : 150;
+    
+    if (!this.data) {
+      this.makeOrderForm.get('order_type')?.valueChanges.subscribe((type) => {
+        if (type === orderType.Online) {
+          const district = this.makeOrderForm.get('district')?.value.toLowerCase();
+          this.deliveryCharge = district === 'dhaka' ? 60 : 150;
           this.makeOrderForm.get('delivery_charge')?.setValue(this.deliveryCharge);
-        });
-      } else {
-        this.makeOrderForm.get('delivery_charge')?.setValue(0);
-      }
-    });
 
+          this.makeOrderForm.get('district')?.valueChanges.subscribe((value) => {
+            const updatedDistrict = value.toLowerCase();
+            this.deliveryCharge = updatedDistrict === 'dhaka' ? 60 : 150;
+            this.makeOrderForm.get('delivery_charge')?.setValue(this.deliveryCharge);
+          });
+        } else {
+          this.makeOrderForm.get('delivery_charge')?.setValue(0);
+        }
+      });
+    }
   }
 
   subscribeToFormChanges() {

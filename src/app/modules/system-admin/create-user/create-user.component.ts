@@ -1,10 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {Subscription} from "rxjs";
-import { CommonService } from 'src/app/services/common.service';
-import { DataService } from 'src/app/services/data.service';
+import { Subscription } from "rxjs";
+import { Component, Inject, OnInit } from '@angular/core';
 import { AppError } from 'src/app/shared/core/app-error';
-import { BadInput } from 'src/app/shared/core/bad-input';
+import { DataService } from 'src/app/services/data.service';
+import { CommonService } from 'src/app/services/common.service';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 export interface DialogData {
     id: number;
     first_name: string;
@@ -60,8 +59,8 @@ export class CreateUserComponent implements OnInit {
     private updated_collection$: Subscription = new Subscription();
 
     constructor(private dataService: DataService,
-                private common: CommonService,
-                public dialog: MatDialog) {
+        private common: CommonService,
+        public dialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -124,50 +123,44 @@ export class CreateUserComponent implements OnInit {
         } else {
             orderBy = 'ASC';
         }
-        this.notFoundMessage = '';
+
         const queryString = "?"
             + "search=" + this.searchValues
             + "&sort_column=" + this.columnsSortBy
             + "&sort_by=" + orderBy
             + "&per_page=" + this.resultPerPage
-            + "&page=" + this.pageNumber + "";
+            + "&page=" + this.pageNumber;
         this.items$ = this.dataService.getJson('system/user/get', queryString)
-            .subscribe(async (response) => {
+            .subscribe({
+                next: ({ data, code }) => {
                     this.common.onBufferEvent.emit(false);
-                    if (response.code == 200) {
-                        this.collection = await response.data.users.data;
-                        this.totalItems = await response.data.users.total;
+                    if (code == 200) {
+                        this.collection = data.users.data;
+                        this.totalItems = data.users.total;
                     } else {
                         this.collection = [];
                         this.totalItems = 0;
-                        this.notFoundMessage = 'No data found.'
                     }
                 },
-                (error: AppError) => {
-                    if (error instanceof BadInput) {
-                    } else {
-                        throw error;
-                    }
+                error: (error) => {
+                    console.error(error);
                 }
-            );
+            });
 
-        const queryStringCountry = '';
-        this.countries$ = this.dataService.getJson('country/active/all', queryStringCountry)
-            .subscribe(async (response) => {
+        this.countries$ = this.dataService.getJson('country/active/all', '')
+            .subscribe({
+                next: (response) => {
                     this.common.onBufferEvent.emit(false);
                     if (response.code == 200) {
-                        this.country_list = await response.data.countries;
+                        this.country_list = response.data.countries;
                     } else {
                         this.country_list = [];
                     }
                 },
-                (error: AppError) => {
-                    if (error instanceof BadInput) {
-                    } else {
-                        throw error;
-                    }
+                error: (error) => {
+                    console.error(error);
                 }
-            );
+            });
     }
 
     updatedGetSl(i: number) {
@@ -222,22 +215,21 @@ export class CreateUserComponent implements OnInit {
     getUpdatedData(queryString: string) {
         this.common.onBufferEvent.emit(true);
         this.updated_collection$ = this.dataService.getJson('system/user/updated-list', queryString)
-            .subscribe(async (response) => {
+            .subscribe({
+                next: ({ data, code }) => {
                     this.common.onBufferEvent.emit(false);
-                    if (response.code == 200) {
-                        this.updated_collection = await response.data.activity_logs.data;
-                        this.updated_totalItems = await response.data.activity_logs.total;
+                    if (code == 200) {
+                        this.updated_collection = data.activity_logs.data;
+                        this.updated_totalItems = data.activity_logs.total;
                     } else {
                         this.updated_collection = [];
                         this.updated_totalItems = 0;
                     }
                 },
-                (error: AppError) => {
-                    if (error instanceof BadInput) {
-                    } else {
-                        throw error;
-                    }
-                });
+                error: (error) => {
+                    console.error(error);
+                }
+            });
     }
 
 
@@ -316,19 +308,17 @@ export class CreateUserComponent implements OnInit {
             const dialogRef = this.dialog.open(CreateUserAddEditDialog, {
                 width: "900px",
                 data: {
+                    password: '',
                     id: inputValue.id,
+                    country_list: this.country_list,
+                    email: inputValue.email ? inputValue.email : '',
                     first_name: inputValue.profile_info ? inputValue.profile_info.first_name : '',
                     middle_name: inputValue.profile_info ? inputValue.profile_info.middle_name : '',
                     last_name: inputValue.profile_info ? inputValue.profile_info.last_name : '',
-                    email: inputValue.email ? inputValue.email : '',
-                    password: '',
                     country_id: inputValue.country_id ? inputValue.country_id : '',
-                    // country_code: inputValue.phone_country.phone_code,
                     phone_number: inputValue.phone_number ? inputValue.phone_number : '',
                     alternate_country: inputValue.alternate_country ? inputValue.alternate_country : '',
-                    // alternate_country_code: itemData.alternate_country ? itemData.alt_phone_country.phone_code : '',
                     alternate_phone: inputValue.alternate_phone ? inputValue.alternate_phone : '',
-                    country_list: this.country_list,
                     user_name: inputValue.user_name ? inputValue.user_name : '',
                     prefix_code: inputValue.prefix_code ? inputValue.prefix_code : '',
                     prefix_name: inputValue.prefix_name ? inputValue.prefix_name : '',
@@ -357,9 +347,9 @@ export class CreateUserAddEditDialog {
     public role_collection: any[] = [];
 
     constructor(public dialogRef: MatDialogRef<CreateUserAddEditDialog>,
-                @Inject(MAT_DIALOG_DATA) public data: DialogData,
-                private dataService: DataService,
-                public common: CommonService) {
+        @Inject(MAT_DIALOG_DATA) public data: DialogData,
+        private dataService: DataService,
+        public common: CommonService) {
         this.getRoles();
         if (this.type == 'view') {
             if (this.data.country_id) {
@@ -375,20 +365,18 @@ export class CreateUserAddEditDialog {
     getRoles() {
         const queryStringRole = '';
         this.dataService.getJson('system/role/get/active/all', queryStringRole)
-            .subscribe(async (response) => {
-                    if (response.code == 200) {
-                        this.role_collection = await response.data.roles;
+            .subscribe({
+                next: ({ data, code }) => {
+                    if (code == 200) {
+                        this.role_collection = data.roles;
                     } else {
                         this.role_collection = [];
                     }
                 },
-                (error: AppError) => {
-                    if (error instanceof BadInput) {
-                    } else {
-                        throw error;
-                    }
+                error: (error: AppError) => {
+                    console.log(error);
                 }
-            );
+            });
     }
 
     countryWisePhoneCode(event: number) {
@@ -399,14 +387,6 @@ export class CreateUserAddEditDialog {
     countryWiseAltPhoneCode(event: number) {
         const countryCode = this.data.country_list.find((e: any) => e.id === event);
         this.data.alternate_country_code = (countryCode.phone_code);
-    }
-
-    changeStatus(event: boolean) {
-        if (event == true) {
-            this.data.status = '1'
-        } else {
-            this.data.status = '0'
-        }
     }
 
     onsubmit() {
@@ -436,7 +416,8 @@ export class CreateUserAddEditDialog {
 
         if (this.type == 'create') {
             this.dataService.post(postData, 'system/user/post')
-                .subscribe(async (response) => {
+                .subscribe({
+                    next: (response) => {
                         this.common.onBufferEvent.emit(false);
                         if (response.code === 200) {
                             this.submitButton = false;
@@ -448,15 +429,15 @@ export class CreateUserAddEditDialog {
                             this.common.openSnackBar(response.message, 'Close', 'submit-warning');
                         }
                     },
-                    (error: AppError) => {
-                        if (error instanceof BadInput) {
-                        } else {
-                            throw error;
-                        }
-                    });
+                    error: (error) => {
+                        console.error(error);
+                    }
+                });
+
         } else if (this.type == 'update') {
             this.dataService.post(postData, 'system/user/update')
-                .subscribe(async (response) => {
+                .subscribe({
+                    next: (response) => {
                         this.common.onBufferEvent.emit(false);
                         if (response.code === 200) {
                             this.submitButton = false;
@@ -468,12 +449,10 @@ export class CreateUserAddEditDialog {
                             this.common.openSnackBar(response.message, 'Close', 'submit-warning');
                         }
                     },
-                    (error: AppError) => {
-                        if (error instanceof BadInput) {
-                        } else {
-                            throw error;
-                        }
-                    });
+                    error: (error: AppError) => {
+                        console.error(error);
+                    }
+                });
         }
     }
 

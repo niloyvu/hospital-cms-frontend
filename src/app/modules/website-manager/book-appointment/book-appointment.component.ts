@@ -1,8 +1,8 @@
 import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonService } from 'src/app/services/common.service';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from 'src/app/services/data.service';
+import { CommonService } from 'src/app/services/common.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-book-appointment',
@@ -40,34 +40,8 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
       id: null,
       page_title: ['', Validators.required],
       specialty_title: ['', Validators.required],
-      subtitle: ['', Validators.required],
-      specialties: this.formBuilder.array([
-        this.createOurSpecialtyFormGroup()
-      ]),
+      subtitle: ['', Validators.required]
     });
-  }
-
-  createOurSpecialtyFormGroup() {
-    return this.formBuilder.group({
-      id: null,
-      icon_name: ['', Validators.required],
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-    });
-  }
-
-  addSpecialty() {
-    const specialtiesArray = this.bookAppointmentPageForm.get('specialties') as FormArray;
-    specialtiesArray.push(this.createOurSpecialtyFormGroup());
-  }
-
- get specialtyFormArray() {
-   return this.bookAppointmentPageForm.get('specialties') as FormArray;
-  }
-
-  removeSpecialty(index: number) {
-    const specialtiesArray = this.bookAppointmentPageForm.get('specialties') as FormArray;
-    specialtiesArray.removeAt(index);
   }
 
   onSubmitForm(): void {
@@ -102,7 +76,6 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
           this.commonService.onBufferEvent.emit(false);
           if (code == 200) {
             this.bookAppointmentPageForm.patchValue(data);
-            this.setFormValuesFromApiResponse(data?.specialties);
             this.imageFile = this.rootUrl + 'uploads/' + data.image;
           }
         },
@@ -110,20 +83,6 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
           console.error(error);
         }
       })
-  }
-
-  setFormValuesFromApiResponse(apiResponse: any) {
-
-    if(!apiResponse) return;
-    const specialtiesArray = this.bookAppointmentPageForm.get('specialties') as FormArray;
-
-    while (specialtiesArray.length !== 0) {
-      specialtiesArray.removeAt(0);
-    }
-
-    apiResponse?.forEach((specialtyData: any) => {
-      specialtiesArray.push(this.formBuilder.group(specialtyData));
-    });
   }
 
   onFileSelected(event: any) {

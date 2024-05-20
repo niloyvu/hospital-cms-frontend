@@ -8,7 +8,7 @@ export function bookingDateValidator(control: any) {
 
   const dayOfWeek = selectedDate.getDay();
   
-  if (dayOfWeek === 5 || dayOfWeek === 6) { 
+  if (dayOfWeek === 5) { 
 
     return { 'disabledDate': { value: selectedDate } };
   }

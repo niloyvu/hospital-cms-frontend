@@ -74,68 +74,6 @@
                                                     </nz-form-control>
                                                 </nz-form-item>
                                             </div>
-
-                                            <ng-container formArrayName="specialties">
-                                                <div class="col-md-12">
-                                                    <nz-alert nzType="info" class="mb-2"
-                                                        nzDescription="4 specialties will be good fit for your website."
-                                                        nzShowIcon>
-                                                    </nz-alert>
-                                                </div>
-
-                                                <div class="col-md-12 mt-2 pt-2 pb-2" *ngFor="let specialtyGroup of specialtyFormArray.controls;
-                                                        let i = index; 
-                                                        let isLast = last; 
-                                                        let isFirst = first" [formGroupName]="i">
-                                                    <input formControlName="id" type="hidden" />
-                                                    <div class="col-md-12 text-end">
-                                                        <nz-tag nzColor="#f50">Specialty- {{i+1}}</nz-tag>
-                                                    </div>
-
-                                                    <div class="col-md-12">
-                                                        <nz-form-label nzFor="icon_name" nzRequired>Icon (Class
-                                                            Name)</nz-form-label>
-                                                        <nz-form-item>
-                                                            <nz-form-control nzErrorTip="Icon is required!">
-                                                                <input nz-input type="text" formControlName="icon_name"
-                                                                    id="icon_name" placeholder="Icon class name" />
-                                                            </nz-form-control>
-                                                        </nz-form-item>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
-                                                        <nz-form-item>
-                                                            <nz-form-control nzErrorTip="Title is required!">
-                                                                <input nz-input type="text" formControlName="title"
-                                                                    id="title" placeholder="Enter title" />
-                                                            </nz-form-control>
-                                                        </nz-form-item>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <nz-form-label nzFor="description"
-                                                            nzRequired>Description</nz-form-label>
-                                                        <nz-form-item>
-                                                            <nz-form-control nzErrorTip="Description is required!">
-                                                                <textarea nz-input type="text"
-                                                                    formControlName="description"
-                                                                    placeholder="Write the description"
-                                                                    id="description">
-                                                                </textarea>
-                                                            </nz-form-control>
-                                                        </nz-form-item>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <button nz-button type="button" *ngIf="isLast" class="me-2"
-                                                            nzType="primary" (click)="addSpecialty()">
-                                                            Add Specialty
-                                                        </button>
-                                                        <button nz-button type="button" *ngIf="!isFirst" nzDanger
-                                                            (click)="removeSpecialty(i)">Remove
-                                                        </button>
-                                                    </div>
-                                                </div>
-
-                                            </ng-container>
                                         </div>
 
                                         <div class="text-end mb-2">
